@@ -2,7 +2,7 @@
 
 import pandas as pd
 import geopandas as gpd
-import numpy as np
+import os
 
 #sacar los datos del code y nombre de la localidad en base a un dataset de las llamadas del 123
 data_nombre_localidades = pd.read_csv('data\llamadas123_dic2025.csv', delimiter=';', encoding='MacRoman', decimal=',')
@@ -14,6 +14,7 @@ data_localidades = (
 data_localidades = data_localidades.drop_duplicates() #mantener solo elementos únicos
 data_localidades = data_localidades[data_localidades['localidad'] != 'SIN_D'] #quitar del dataframe el elemento que es "SIN_D", ya que ese no figura en el mapa
 data_localidades['codigo_localidad']=data_localidades['codigo_localidad'].astype(int) #solo por si acaso el tipo de dato de codigo_localidad NO es int, se convierte a int
+data_localidades['localidad'] = data_localidades['localidad'].str.title() #para hacer que dejen de estar todas las letras en mayusculas
 print(data_localidades.head())
 
 #sacar los datos del code y poligono de las localidades en base a un dataset de duplas
@@ -42,5 +43,8 @@ localidades_geo = gpd.GeoDataFrame( #este es para que se mantenga como un geodat
 )
 print(localidades_geo.head())
 
+#crea la carpeta outputs por si no existe
+os.makedirs('outputs', exist_ok=True)
+
 #exportar resultado como geojson
-localidades_geo.to_file('localidades_con_nombres.geojson', driver='GeoJSON')
+localidades_geo.to_file('outputs/localidades_con_nombres.geojson', driver='GeoJSON')
