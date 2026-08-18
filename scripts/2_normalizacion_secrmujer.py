@@ -197,7 +197,7 @@ riesgofeminicidio=pd.concat([riesgofeminicidio_062025, riesgofeminicidio_092025,
 #CAMBIAR EL CODIGO DE LOCALIDAD POR EL NOMBRE
 
 #hacer un diccionario de localidades en base al archivo localidades_con_nombres.geojson
-gdf_localidades = gpd.read_file('data\localidades_con_nombres.geojson')
+gdf_localidades = gpd.read_file('outputs\localidades_con_nombres.geojson')
 mapa_codigos = dict(zip(gdf_localidades['codigo_localidad'], gdf_localidades['localidad'])) #el mapa de códigos, ahí la variable es bastante explicita
 
 #cambiar el tipo de dato de Localidad de object a int y mapear

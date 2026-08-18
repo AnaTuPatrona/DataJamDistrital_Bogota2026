@@ -50,4 +50,4 @@ localidades_geo = gpd.GeoDataFrame( #este es para que se mantenga como un geodat
 print(localidades_geo.head())
 
 #exportar resultado como geojson
-localidades_geo.to_file('data/localidades_con_nombres.geojson', driver='GeoJSON')
+localidades_geo.to_file('outputs/localidades_con_nombres.geojson', driver='GeoJSON')
