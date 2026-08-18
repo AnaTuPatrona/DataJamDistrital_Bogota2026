@@ -1,0 +1,90 @@
+DIRECTORIO_MZ - Llave única para la identificación de la manzana
+DIRECTORIO_PRED - Llave única para la identificación del predio
+DIRECTORIO_HOG - Llave única para la identificación del hogar
+DIRECTORIO_PER - Llave única para la identificación de la persona
+
+periodo - Año y mes según el periodo de recolección de cada una de las encuestas
+SECTOR - Sector UPL correspondiente a donde fue realizada la encuesta
+Cod_Locali - Código de la localidad correspondiente a donde fue realizada la encuesta
+Nom_Locali - Nombre de la localidad correspondiente a donde fue realizada la encuesta
+Cod_UPL - Código de la UPL correspondiente a donde fue realizada la encuesta
+Nom_UPL - Nombre de la UPL correspondiente a donde fue realizada la encuesta
+
+A6x2 - Parentesco con el jefe del hogar
+A6x3 - Edad de la persona
+C1 - ¿Cuál es el nivel educativo más alto que usted ha alcanzado?
+D1 - Sexo al nacer
+E1 - ¿Usted se reconoce como?
+E1x1 - ¿Otra cuál? (identidad de género)
+G1 - ¿Cuál es su estado civil?
+H1 - Según el recibo o servicio de energía eléctrica ¿cuál es el estrato de esta vivienda?
+C303 - ¿Usted se considera pobre?
+sexo_jefe - Sexo del jefe de hogar
+
+Ax201 - a. Limpieza general de la casa
+Bx201 - b. Mantenimiento y reparaciones del hogar
+Cx201 - c. Lavado de ropa
+Dx201 - d. Planchar
+Ex201 - e. Cocinar
+Fx201 - f. Compras del supermercado
+Gx201 - g. Pago de facturas y planear/hacer el presupuesto del hogar
+Hx201 - h. Cuidado de los niños
+Ix201 - i. Ayuda con las tareas escolares de los niños
+Jx201 - j. Cuidado de personas mayores o dependientes
+Ax202 - 202. ¿Cómo afecta la anterior distribución de tareas domésticas y de cuidado en el bienestar de su hogar?
+ind_distribuciontareas_202 - Indicador: impacto de la distribución de tareas domésticas y de cuidado en el bienestar familiar
+
+Jx402 - j. Violencia intrafamiliar (delito sufrido este año)
+Jx403 - j. Violencia intrafamiliar (delito sufrido año anterior)
+
+Kx404_1 - k. Acoso sexual (silbidos, comentarios sexuales, etc.) - en su residencia u otra residencia
+Kx404_2 - k. Acoso sexual - en la cuadra, conjunto, barrio
+Kx404_3 - k. Acoso sexual - en otro espacio público
+Kx404_4 - k. Acoso sexual - en el transporte público
+Kx404_5 - k. Acoso sexual - en el lugar de trabajo
+Kx404_6 - k. Acoso sexual - no afrontó la situación
+Lx404_1 - l. Presenció casos de violencia intrafamiliar - en su residencia u otra residencia
+Lx404_2 - l. Presenció violencia intrafamiliar - en la cuadra, conjunto, barrio
+Lx404_3 - l. Presenció violencia intrafamiliar - en otro espacio público
+Lx404_4 - l. Presenció violencia intrafamiliar - en el transporte público
+Lx404_5 - l. Presenció violencia intrafamiliar - en el lugar de trabajo
+Lx404_6 - l. Presenció violencia intrafamiliar - no afrontó la situación
+Mx404_1 - m. Presenció casos de violencia contra la mujer - en su residencia u otra residencia
+Mx404_2 - m. Presenció violencia contra la mujer - en la cuadra, conjunto, barrio
+Mx404_3 - m. Presenció violencia contra la mujer - en otro espacio público
+Mx404_4 - m. Presenció violencia contra la mujer - en el transporte público
+Mx404_5 - m. Presenció violencia contra la mujer - en el lugar de trabajo
+Mx404_6 - m. Presenció violencia contra la mujer - no afrontó la situación
+Nx404_1 - n. Presenció violencia contra niños, niñas y adolescentes (NNA) - en su residencia u otra residencia
+Nx404_2 - n. Presenció violencia contra NNA - en la cuadra, conjunto, barrio
+Nx404_3 - n. Presenció violencia contra NNA - en otro espacio público
+Nx404_4 - n. Presenció violencia contra NNA - en el transporte público
+Nx404_5 - n. Presenció violencia contra NNA - en el lugar de trabajo
+Nx404_6 - n. Presenció violencia contra NNA - no afrontó la situación
+
+F405 - 405. ¿Qué tan seguro se siente usted caminando solo por su barrio de día?
+G406 - 406. ¿Qué tan seguro se siente usted caminando solo por su barrio de noche?
+IPS_dia - Indicador: percepción promedio de la seguridad al caminar de día por su barrio
+IPS_noche - Indicador: percepción promedio de la seguridad al caminar de noche por su barrio
+IPSJ_A - Indicador: percepción promedio sobre la rapidez de las autoridades ante incidentes de seguridad en el barrio
+IPSJ_C - Indicador: percepción promedio sobre la disponibilidad y facilidad de acceso a medios para denunciar delitos
+IPSJ_E - Indicador: percepción promedio de la aplicación de justicia sobre quienes cometen delitos
+
+Dx704 - d. En la ciudad las personas son incluyentes y respetan la diversidad (cultural, étnica, socioeconómica, orientación sexual, etc.)
+ICG_D - Indicador: percepción promedio sobre el respeto de los ciudadanos hacia la inclusión y la diversidad
+Bx704 - b. Confío en que mis vecinos me ayudarían ante cualquier problema o necesidad
+ICG_B - Indicador: confianza promedio en la ayuda que brindarían los vecinos ante cualquier problema o necesidad
+
+Ax102 - a. ¿Sensación de nerviosismo, de ansiedad, de tener los nervios de punta?
+Bx102 - b. ¿Incapacidad de evadir o controlar sus preocupaciones?
+Cx102 - c. ¿Preocupación excesiva por diferentes cosas o situaciones?
+Dx102 - d. ¿Dificultad para relajarse?
+Ex102 - e. ¿Tan intranquilo, inquieto o agitado que le resulta difícil quedarse quieto?
+Fx102 - f. ¿Que se enfada o irrita con facilidad?
+Gx102 - g. ¿Miedo o susto, como si algo malo pudiera suceder?
+A101 - 101. ¿Usted considera que su estado de salud actual es …?
+ind_salud_101 - Indicador de percepción del estado de salud
+ind_salud_102 - Indicador: Escala del Trastorno de Ansiedad Generalizada (GAD-7)
+
+fexp_calp_anu - Factor de expansión calibrado bimestral para personas
+fexp_calh_anu - Factor de expansión calibrado bimestral para hogares
