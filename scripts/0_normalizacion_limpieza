@@ -1,0 +1,68 @@
+#ESTE SCRIPT ES EL ÚNICO QUE SE EJECUTA, YA QUE LLAMA AL RESTO DE SCRIPTS DE LA CARPETA.
+
+#Ejecuta secuencialmente todos los archivos .py de una carpeta,excluyendo el script actual.
+# Args:
+    # directorio: Ruta de la carpeta. Si es None, usa el directorio donde se encuentra este script.
+    # detener_en_error: Si True, se detiene al primer fallo. Si False, continúa con los demás.
+
+import subprocess
+import sys
+from pathlib import Path
+
+def ejecutar_scripts_de_carpeta(directorio=None, detener_en_error=False):
+
+    if directorio is None:
+        # Directorio donde está este script principal
+        directorio = Path(__file__).parent
+    else:
+        directorio = Path(directorio)
+
+    # Listar todos los archivos .py en el directorio
+    scripts = sorted(directorio.glob("*.py"))
+
+    # Excluir el script actual (el que está ejecutando este código)
+    script_actual = Path(__file__).resolve()
+    scripts = [s for s in scripts if s.resolve() != script_actual]
+
+    if not scripts:
+        print("No se encontraron otros scripts .py en la carpeta.")
+        return
+
+    print(f"Se ejecutarán {len(scripts)} scripts en este orden:")
+    for s in scripts:
+        print(f"  - {s.name}")
+    print("\n" + "="*50 + "\n")
+
+    for script in scripts:
+        print(f"--- Ejecutando: {script.name} ---")
+        try:
+            # Ejecutar como proceso separado, usando el mismo intérprete
+            resultado = subprocess.run(
+                [sys.executable, str(script)],
+                capture_output=True,
+                text=True,
+                check=False
+            )
+
+            # Mostrar salida estándar y errores del script ejecutado
+            if resultado.stdout:
+                print(resultado.stdout, end="")
+            if resultado.stderr:
+                print("Errores:", resultado.stderr, end="")
+
+            if resultado.returncode != 0:
+                print(f"{script.name} terminó con código de error {resultado.returncode}")
+                if detener_en_error:
+                    print("Deteniendo ejecución por error.")
+                    break
+            else:
+                print(f"{script.name} ejecutado correctamente.")
+        except Exception as e:
+            print(f"Error al intentar ejecutar {script.name}: {e}")
+            if detener_en_error:
+                break
+        print("\n" + "-"*50 + "\n")
+
+if __name__ == "__main__":
+    # Por defecto ejecuta todos los .py de la carpeta actual (donde está este script)
+    ejecutar_scripts_de_carpeta(detener_en_error=True)
