@@ -1,0 +1,1182 @@
+indice_pregunta;etiqueta_pregunta;codigo_respuesta;etiqueta_respuesta
+9;H1;0;0
+9;H1;1;1
+9;H1;2;2
+9;H1;3;3
+9;H1;4;4
+9;H1;5;5
+9;H1;6;1
+9;H1;8;2
+9;H1;9;3
+9;H1;10;4
+9;H1;11;5
+9;H1;12;1
+9;H1;13;2
+9;H1;14;3
+9;H1;15;4
+9;H1;16;5
+9;H1;18;1
+9;H1;20;2
+9;H1;25;3
+9;H1;30;4
+9;H1;32;5
+9;H1;36;1
+9;H1;40;2
+9;H1;44;3
+9;H1;45;4
+9;H1;46;5
+9;H1;49;1
+9;H1;50;2
+9;H1;60;3
+9;H1;80;4
+9;H1;99;5
+10;H2;1;1
+10;H2;2;2
+10;H2;3;3
+10;H2;4;4
+10;H2;5;5
+10;H2;6;6
+10;H2;7;7
+22;V1;1;Usaquén
+22;V1;2;Chapinero
+22;V1;3;Santa Fe
+22;V1;4;San Cristobal
+22;V1;5;Usme
+22;V1;6;Tunjuelito
+22;V1;7;Bosa
+22;V1;8;Kennedy
+22;V1;9;Fontibón
+22;V1;10;Engativá
+22;V1;11;Suba
+22;V1;12;Barrios Unidos
+22;V1;13;Teusaquillo
+22;V1;14;Los Mártires
+22;V1;15;Antonio Nariño
+22;V1;16;Puente Aranda
+22;V1;17;La Candelaria
+22;V1;18;Rafael Uribe Uribe
+22;V1;19;Ciudad Bolívar
+22;V1;20;Sumapaz
+23;V2;1;Estrato 1
+23;V2;2;Estrato 2
+23;V2;3;Estrato 3
+23;V2;4;Estrato 4
+23;V2;5;Estrato 5
+23;V2;6;Estrato 6
+24;V3;1;Casa
+24;V3;2;Apartamento
+24;V3;3;Tipo Cuarto
+25;V4;1;En arriendo
+25;V4;2;Propio totalmente pago el dueño es alguno de los miembros con quien vive
+25;V4;3;Propio pero se está pagando el dueño es alguno de los miembros con quien vive
+25;V4;4;No paga arriendo pero tiene permiso del propietario para vivir allí
+25;V4;5;No paga arriendo y no tiene permiso del dueño
+25;V4;6;Otra relación
+26;1;1;En desacuerdo
+26;1;2;De acuerdo
+27;2;1;Se relaciona de manera tranquila
+27;2;2;Se relaciona de manera prevenida
+27;2;3;No se relaciona jamás
+27;2;4;No se relaciona a menos que sea necesario
+28;3;1;En desacuerdo
+28;3;2;De acuerdo
+29;4;1;1. Completamente en desacuerdo
+29;4;2;2. En desacuerdo
+29;4;3;3. De acuerdo
+29;4;4;4. Completamente de acuerdo
+30;5;0;No le disgustaría
+30;5;1;No le gustaría
+31;6;1;Sí
+31;6;2;No
+32;7;1;Sí
+32;7;2;No
+33;8;1;Sí
+33;8;2;No
+34;9;1;Por el color de su piel
+34;9;2;Por su condición económica
+34;9;3;Por ser hombre
+34;9;4;Por ser mujer
+34;9;5;Por su edad
+34;9;6;Por sus rasgos físicos
+34;9;7;Por su forma de vestir
+34;9;8;Por su pertenencia étnica
+34;9;9;Por su orientación sexual
+34;9;10;Por identificarse como LGBTI
+34;9;11;Por su condición de discapacidad
+34;9;12;Por su lugar de procedencia
+34;9;13;Por su pensamiento político
+34;9;14;Por el peso o tamaño su cuerpo
+34;9;15;Por su acento o su forma de hablar
+34;9;16;Otra
+34;9;17;Otra
+34;9;18;Otra
+34;9;19;Otra
+34;9;20;Otra
+34;9;21;Otra
+36;10;1;En desacuerdo
+36;10;2;De acuerdo
+37;11;1;Sí
+37;11;2;No
+38;12;1;En desacuerdo
+38;12;2;De acuerdo
+39;13;1;En desacuerdo
+39;13;2;De acuerdo
+40;14;1;Sí
+40;14;2;No
+41;15;1;Sí
+41;15;2;No
+42;16;1;1. Nada
+42;16;2;2. Poco
+42;16;3;3. Mucho
+43;17;1;Sí
+43;17;2;No
+44;18;1;Sí
+44;18;2;No
+45;19;1;Sí
+45;19;2;No
+46;20;1;Para que su situación mejore
+46;20;2;Para que la situación de su comunidad mejore
+46;20;3;Porque se siente inconforme
+46;20;4;Por el derecho a opinar
+46;20;5;Porque confía en las personas para emprender acciones colectivas de carácter ciudadano
+46;20;6;Porque confía en que las vías formales o institucionales darán respuesta a mis necesidades o las de mi comunidad
+46;20;7;Porque no confía en que las vías formales o institucionales darán respuesta a mis necesidades o las de mi comunidad
+46;20;8;Por costumbre
+46;20;9;Por presiones
+46;20;10;Otra razón cuál
+46;20;11;No sabe no responde
+48;21;1;1. Nada efectivo
+48;21;2;2. Poco efectivo
+48;21;3;3. Efectivo
+48;21;4;4. Muy efectivo
+49;22;1;2. No es útil
+49;22;2;3. Es indiferente
+49;22;3;4. Es útil
+49;22;4;1. No sabe
+50;23;1;1. No lo facilita
+50;23;2;2. Lo facilita un poco
+50;23;3;3. Lo facilita bastante
+50;23;4;4. Lo facilita totalmente
+51;24;1;En desacuerdo
+51;24;2;De acuerdo
+52;25;1;1. Nada de acuerdo
+52;25;2;2. Un poco de acuerdo
+52;25;3;3. De acuerdo
+52;25;4;4. Totalmente de acuerdo
+53;26;1;1. Nada importante
+53;26;2;2. Poco importante
+53;26;3;3. Importante
+53;26;4;4. Muy importante
+54;27;1;1. Nada importante
+54;27;2;2. Poco importante
+54;27;3;3. Importante
+54;27;4;4. Muy importante
+55;28;1;1. Nada
+55;28;2;2. Poco
+55;28;3;3. Normal
+55;28;4;4. Mucho
+56;29;1;1. Nada transparentes
+56;29;2;2. Poco transparentes
+56;29;3;3. Transparentes
+56;29;4;4. Muy transparentes
+57;30;1;1. Poco libre
+57;30;2;2. Libre
+57;30;3;3. Muy libre
+57;30;4;4. Prefiere no expresarse
+58;31;1;Sí
+58;31;2;No
+59;32;1;1. Para nada es justificable
+59;32;2;2. Poco justificable
+59;32;3;3 Justificable
+59;32;4;4. Totalmente justificable
+60;33;1;1 Totalmente en desacuerdo
+60;33;2;2. En desacuerdo
+60;33;3;3. De acuerdo
+60;33;4;4. Totalmente de acuerdo
+61;34;1;Menos de la mitad
+61;34;2;Más de la mitad
+62;35;1;Menos de la mitad
+62;35;2;Más de la mitad
+63;36;1;Menos de la mitad
+63;36;2;Más de la mitad
+64;37;1;Menos de la mitad
+64;37;2;Más de la mitad
+65;38;1;Menos de la mitad
+65;38;2;Más de la mitad
+66;39;1;Sí
+66;39;2;No
+67;40;1;Sí
+67;40;2;No
+68;41;1;1. Nada corrupta/o
+68;41;2;2. Algo corrupta/o
+68;41;3;3. Corrupta/o
+68;41;4;4. Muy corrupta/o
+69;42;1;Sí
+69;42;2;No
+70;43;1;1. Nada efectivas
+70;43;2;2. Poco efectivas
+70;43;3;3. Efectivas
+70;43;4;4. Muy efectivas
+70;43;5;5. NS/NR
+71;44;1;Sí
+71;44;2;No
+72;45;1;Sí
+72;45;2;No
+73;46;1;Sí
+73;46;2;No
+74;47;0;No
+74;47;1;Sí
+75;48;0;No
+75;48;1;Sí
+77;49;0;No
+77;49;1;Sí
+79;50;1;1. Nada importante
+79;50;2;2. Poco importante
+79;50;3;3. Importante
+79;50;4;4. Muy importante
+80;51;1;Sí
+80;51;2;No
+81;52;1;2. Poco libre
+81;52;2;3. Libre
+81;52;3;4. Muy libre
+81;52;4;1. Prefiere no expresarse
+82;53;1;Sí
+82;53;2;No
+83;54;1;En desacuerdo
+83;54;2;De acuerdo
+84;55;1;Sí
+84;55;2;No
+85;56;1;Sí
+85;56;2;No
+86;57;1;1. Nada Orgulloso
+86;57;2;2. Poco Orgulloso
+86;57;3;3. Orgulloso
+86;57;4;4. Muy Orgulloso
+87;58;1;Sí
+87;58;2;No
+88;59;1;1
+88;59;2;2
+88;59;3;3
+88;59;4;4
+88;59;5;5
+88;59;6;6
+88;59;7;7
+88;59;8;8
+88;59;9;9
+88;59;10;10
+89;60;1;Sale a parques senderos o espacios naturales
+89;60;2;Camina las calles de la ciudad
+89;60;3;Permanece en casa o va a casa de familiares o amigos
+89;60;4;Sale a realizar actividades artísticas o culturales
+89;60;5;Sale a realizar actividades recreativas o deportivas
+89;60;6;Va a supermercados centros comerciales lugares de comercio
+89;60;7;Sale a restaurantes bares y sitios de rumba
+89;60;8;Ve series o películas
+89;60;9;Leer
+89;60;10;Sale de la ciudad
+89;60;11;No tiene tiempo libre
+90;61;1;1. Nada satisfecho
+90;61;2;2 Poco satisfecho
+90;61;3;3. Satisfecho
+90;61;4;4. Muy satisfecho
+91;62;1;Sí
+91;62;2;No
+92;63;1;Agrado
+92;63;2;Alegría
+92;63;3;Miedo
+92;63;4;Incomodidad
+92;63;5;Desagrado
+92;63;6;Angustia
+92;63;7;Indiferencia/No le genera
+92;63;8;Ninguna emoción
+93;64;1;1. Muy dificil
+93;64;2;2. Difícil
+93;64;3;3. Fácil
+93;64;4;4. Muy Fácil
+94;65;1;Sí
+94;65;2;No
+95;66;1;1. Muy malo
+95;66;2;2. Malo
+95;66;3;3. Bueno
+95;66;4;4. Muy bueno
+96;67;1;Sí
+96;67;2;No
+97;68;1;1. 10 minutos o menos
+97;68;2;1. 10 minutos o menos
+97;68;3;1. 10 minutos o menos
+97;68;4;1. 10 minutos o menos
+97;68;5;1. 10 minutos o menos
+97;68;6;1. 10 minutos o menos
+97;68;7;1. 10 minutos o menos
+97;68;8;1. 10 minutos o menos
+97;68;9;1. 10 minutos o menos
+97;68;10;1. 10 minutos o menos
+97;68;12;2. Entre 11 y 20 minutos
+97;68;13;2. Entre 11 y 20 minutos
+97;68;15;2. Entre 11 y 20 minutos
+97;68;16;2. Entre 11 y 20 minutos
+97;68;18;2. Entre 11 y 20 minutos
+97;68;19;2. Entre 11 y 20 minutos
+97;68;20;2. Entre 11 y 20 minutos
+97;68;23;3. Más de 20 minutos
+97;68;25;3. Más de 20 minutos
+97;68;30;3. Más de 20 minutos
+97;68;32;3. Más de 20 minutos
+97;68;35;3. Más de 20 minutos
+97;68;40;3. Más de 20 minutos
+97;68;45;3. Más de 20 minutos
+97;68;50;3. Más de 20 minutos
+97;68;60;3. Más de 20 minutos
+97;68;90;3. Más de 20 minutos
+97;68;110;3. Más de 20 minutos
+97;68;120;3. Más de 20 minutos
+97;68;130;3. Más de 20 minutos
+97;68;138;3. Más de 20 minutos
+97;68;140;3. Más de 20 minutos
+97;68;145;3. Más de 20 minutos
+97;68;150;3. Más de 20 minutos
+97;68;152;3. Más de 20 minutos
+97;68;153;3. Más de 20 minutos
+97;68;160;3. Más de 20 minutos
+97;68;166;3. Más de 20 minutos
+97;68;180;3. Más de 20 minutos
+97;68;202;3. Más de 20 minutos
+97;68;283;3. Más de 20 minutos
+98;69;1;1. Todos los días
+98;69;2;2. Por lo menos una vez entre semana y los fines de semana
+98;69;3;3. Por lo menos una vez entre semana
+98;69;4;4. Los fines de semana
+98;69;5;5. Rara vez
+98;69;6;6. Nunca
+99;70;1;Hacer deporte o ejercicio
+99;70;2;Lugar de paso Recortar camino
+99;70;3;Acompañar a alguien niños as otras personas etc
+99;70;4;Pasear su mascota
+99;70;5;Relajarse Contemplar el paisaje
+99;70;6;Participar y desarrollar actividades artísticas o culturales pintar leer etc
+99;70;7;Actividades comunitarias para cuidar y mejorar el parque o lugar de encuentro
+99;70;8;Otro
+101;71;1;Sí
+101;71;2;No
+102;72;1;Sí
+102;72;2;No
+103;73;1;Sí
+103;73;2;No
+104;74;1;1. Muy insegura
+104;74;2;2. Insegura
+104;74;3;3. Normal
+104;74;4;4. Segura
+104;74;5;5. Muy segura
+105;75;1;Delincuencia común
+105;75;2;Indiferencia de las personas
+105;75;3;Consumo de drogas y alcohol
+105;75;4;Crimen organizado y tráfico de drogas
+105;75;5;Los organismos de seguridad no son confiables
+105;75;6;Presencia de pandillas
+105;75;7;Otra
+107;76;1;Hay control sobre consumo de drogas y alcohol
+107;76;2;La policía es confiable
+107;76;3;La vigilancia privada funciona
+107;76;4;La gente rechaza los comportamientos indebidos
+107;76;5;La gente colabora con las autoridades
+107;76;6;La gente colabora con los ciudadanos
+109;77;1;1. Más segura
+109;77;2;2. Permanece igual
+109;77;3;3. Menos segura
+110;78;1;Sí
+110;78;2;No
+111;79;1;1
+111;79;2;2
+111;79;3;3
+111;79;4;4
+111;79;5;5
+111;79;6;6
+111;79;7;7
+111;79;8;8
+111;79;9;9
+111;79;10;10
+112;80;1;Sí
+112;80;2;No
+113;81;1;1. Nada justificable
+113;81;2;2. Un poco justificable
+113;81;3;3. Justificable
+113;81;4;4. Totalmente justificable
+114;82;1;Sí
+114;82;2;No
+115;83;1;Sí
+115;83;2;No
+115;83;3;NS/NR
+116;84;1;Bolsa verde
+116;84;2;Bolsa negra
+116;84;3;Bolsa blanca
+116;84;4;Cualquier bolsa
+117;85;1;Sí
+117;85;2;No
+118;86;1;Sí
+118;86;2;No
+119;87;1;Sí
+119;87;2;No
+120;88;1;Espacios naturales
+120;88;2;Uso/aprovechamiento del compost
+120;88;3;Espacios del hogar
+120;88;4;Uso/aprovechamiento del compost
+120;88;5;Espacios del hogar
+120;88;6;Espacios del hogar
+120;88;7;Espacios naturales
+120;88;8;Espacios del hogar
+120;88;9;Proyectos comunitarios
+120;88;10;Espacios del hogar
+120;88;11;Espacios públicos
+120;88;12;Espacios naturales
+120;88;13;Espacios naturales
+120;88;14;Espacios del hogar
+120;88;15;Espacios naturales
+120;88;16;Espacios públicos
+120;88;17;Espacios del hogar
+120;88;18;Espacios naturales
+120;88;19;Espacios públicos
+120;88;20;Espacios públicos
+120;88;21;Espacios naturales
+120;88;22;Espacios naturales
+120;88;23;Uso/aprovechamiento del compost
+120;88;24;Espacios públicos
+120;88;25;Espacios del hogar
+120;88;26;Proyectos comunitarios
+120;88;27;Espacios del hogar
+120;88;28;Espacios públicos
+121;89;1;Productos que no tienen químicos que contaminan el agua
+121;89;2;Productos que no vienen en plásticos de un solo uso
+121;89;3;Que sean productos a granel
+121;89;4;El beneficio que recibo frente al precio pagado
+121;89;5;Que no sean probados en animales
+121;89;6;El lugar de origen
+121;89;7;El proceso de producción
+121;89;8;Ninguno de los anteriores
+122;90;1;Sí
+122;90;2;No
+123;91;1;Llamaría al Instituto de Protección Animal
+123;91;2;Llamaría a la policía
+123;91;3;Llamaría a la Secretaría de Ambiente
+123;91;4;Lo llevaría a su casa y lo cuidaría antes de liberarlo
+123;91;5;Socorrerlo Ayudarlo
+123;91;6;No sabría qué hacer
+123;91;7;Liberarlo en su ambiente natural
+123;91;8;No haría nada porque no es su problema
+123;91;9;Llevarlo al veterinario
+123;91;10;Adoptarlo
+123;91;11;No responde
+124;92;1;1. Nada
+124;92;2;2. Poco
+124;92;3;3. Mucho
+125;93;1;1. Nada
+125;93;2;2. Poco
+125;93;3;3. Mucho
+125;93;4;4. NS/NR
+126;94;1;1. Nada Importante
+126;94;2;2. Poco Importante
+126;94;3;3. Importante
+126;94;4;4. Muy importante
+127;95;1;Arrojar basuras en alcantarillas
+127;95;2;Botar residuos en inodoros y desagües
+127;95;3;No ahorrar o no reutilizar el agua
+127;95;4;Utilizar detergentes que no son amigables con el ambiente
+127;95;5;Verter aceite usado en el sifón
+127;95;6;No sabe
+127;95;7;No responde
+128;96;1;1. Muy malo
+128;96;2;2. Malo
+128;96;3;3. Bueno
+128;96;4;4. Muy bueno
+129;97;1;Sí
+129;97;2;No
+130;98;1;Sí
+130;98;2;No
+131;99;1;1. Malo
+131;99;2;2. Regular
+131;99;3;3. Bueno
+132;100;1;A pie
+132;100;2;Buses del SITP
+132;100;3;Transmilenio
+132;100;4;Transmicable
+132;100;5;Bus buseta o colectivo
+132;100;6;Carro particular a gasolina
+132;100;7;Carro particular a gas o eléctrico
+132;100;8;Moto
+132;100;9;Taxi
+132;100;10;Taxi colectivo
+132;100;11;Bicitaxi
+132;100;12;Mototaxi
+132;100;13;Bicicleta
+132;100;14;Bicicleta eléctrica
+132;100;15;Bicicleta a motor
+132;100;16;TemBici sistema público de bicicletas
+132;100;17;Patineta 
+132;100;18;Patineta eléctrica
+132;100;19;Servicio de transporte privado pedido por aplicación
+132;100;20;Otro
+133;101;1;1
+133;101;2;2
+133;101;3;3
+133;101;4;4
+133;101;5;5
+134;102;1;1. Más de 2 horas
+134;102;2;2. Entre una hora y media y 2 horas
+134;102;3;3. Entre una hora y una hora y media
+134;102;4;4. Entre 30 minutos y una hora
+134;102;5;5. Menos de 30 minutos
+135;103;1;Sí
+135;103;2;No
+136;104;1;1. Nada justificable
+136;104;2;2. Poco justificable
+136;104;3;3. Justificable
+136;104;4;4. Totalmente justificable
+137;105;1;En desacuerdo
+137;105;2;De acuerdo
+138;106;1;1. Nada orgulloso 
+138;106;2;2. Algo orgulloso
+138;106;3;3. Orgulloso 
+138;106;4;4. Muy Orgulloso
+139;107;1;1. Nada necesaria
+139;107;2;2. Poco necesaria
+139;107;3;3. Necesaria
+139;107;4;4. Muy necesaria
+140;108;1;Sí
+140;108;2;No
+141;109;1;
+141;109;2;
+141;109;3;
+141;109;4;
+141;109;5;
+141;109;6;
+141;109;7;
+141;109;8;
+141;109;9;
+141;109;10;
+141;109;11;
+141;109;12;
+141;109;13;
+141;109;14;
+141;109;15;
+141;109;16;
+141;109;17;
+141;109;18;
+141;109;19;
+141;109;20;
+141;109;21;
+141;109;22;
+141;109;23;
+141;109;24;
+141;109;25;
+141;109;26;
+141;109;27;
+141;109;28;
+141;109;29;
+141;109;30;
+141;109;31;
+141;109;32;
+141;109;33;
+141;109;34;
+141;109;35;
+141;109;36;
+141;109;37;
+141;109;38;
+141;109;39;
+141;109;40;
+141;109;41;
+141;109;42;
+141;109;43;
+141;109;44;
+141;109;45;
+141;109;46;
+141;109;47;
+141;109;48;
+141;109;49;
+141;109;50;
+141;109;51;
+141;109;52;
+141;109;53;
+141;109;54;
+141;109;55;
+141;109;56;
+141;109;57;
+141;109;58;
+141;109;59;
+141;109;60;
+141;109;61;
+141;109;62;
+141;109;63;
+141;109;64;
+141;109;65;
+141;109;66;
+141;109;67;
+141;109;68;
+141;109;69;
+141;109;70;
+141;109;71;
+141;109;72;
+141;109;73;
+141;109;74;
+141;109;75;
+141;109;76;
+141;109;77;
+141;109;78;
+141;109;79;
+141;109;80;
+141;109;81;
+141;109;82;
+141;109;83;
+141;109;84;
+141;109;85;
+141;109;86;
+141;109;87;
+141;109;88;
+141;109;89;
+141;109;90;
+141;109;91;
+141;109;92;
+141;109;93;
+141;109;94;
+141;109;95;
+141;109;96;
+141;109;97;
+141;109;98;
+141;109;99;
+141;109;100;
+141;109;101;
+141;109;102;
+141;109;103;
+141;109;104;
+141;109;105;
+141;109;106;
+141;109;107;
+141;109;108;
+141;109;109;
+141;109;110;
+141;109;111;
+141;109;112;
+141;109;113;
+141;109;114;
+141;109;115;
+141;109;116;
+141;109;117;
+141;109;118;
+141;109;119;
+141;109;120;
+141;109;121;
+141;109;122;
+141;109;123;
+141;109;124;
+141;109;125;
+141;109;126;
+141;109;127;
+141;109;129;
+141;109;130;
+141;109;131;
+141;109;132;
+141;109;133;
+141;109;134;
+141;109;135;
+141;109;136;
+141;109;137;
+141;109;138;
+141;109;139;
+141;109;140;
+141;109;141;
+141;109;142;
+141;109;143;
+141;109;144;
+141;109;145;
+141;109;146;
+141;109;147;
+141;109;148;
+141;109;149;
+141;109;150;
+141;109;151;
+141;109;152;
+141;109;153;
+141;109;154;
+141;109;155;
+141;109;156;
+141;109;157;
+141;109;158;
+141;109;159;
+141;109;160;
+141;109;161;
+141;109;162;
+141;109;163;
+141;109;164;
+141;109;165;
+141;109;166;
+141;109;167;
+141;109;168;
+141;109;169;
+141;109;170;
+141;109;171;
+141;109;172;
+141;109;173;
+141;109;174;
+141;109;175;
+141;109;176;
+141;109;177;
+141;109;178;
+141;109;179;
+141;109;180;
+141;109;181;
+141;109;182;
+141;109;183;
+141;109;184;
+141;109;185;
+141;109;186;
+141;109;187;
+141;109;188;
+141;109;189;
+141;109;190;
+141;109;191;
+141;109;192;
+141;109;193;
+141;109;194;
+141;109;195;
+141;109;196;
+141;109;197;
+141;109;198;
+141;109;199;
+141;109;200;
+141;109;201;
+141;109;202;
+141;109;203;
+141;109;204;
+141;109;205;
+141;109;206;
+141;109;207;
+141;109;208;
+141;109;209;
+141;109;210;
+141;109;211;
+141;109;212;
+141;109;213;
+141;109;214;
+141;109;215;
+141;109;216;
+141;109;217;
+141;109;218;
+141;109;219;
+141;109;220;
+141;109;221;
+141;109;222;
+141;109;223;
+141;109;224;
+141;109;225;
+141;109;226;
+141;109;227;
+141;109;228;
+141;109;229;
+141;109;230;
+141;109;231;
+141;109;232;
+141;109;233;
+141;109;234;
+141;109;235;
+141;109;236;
+141;109;237;
+141;109;238;
+141;109;239;
+141;109;240;
+141;109;241;
+141;109;242;
+141;109;243;
+141;109;244;
+141;109;245;
+141;109;246;
+141;109;247;
+141;109;248;
+141;109;249;
+141;109;250;
+141;109;251;
+141;109;252;
+141;109;253;
+141;109;254;
+141;109;255;
+141;109;256;
+141;109;257;
+141;109;258;
+141;109;259;
+141;109;260;
+141;109;261;
+141;109;262;
+141;109;263;
+141;109;264;
+141;109;265;
+141;109;266;
+141;109;267;
+141;109;268;
+141;109;269;
+141;109;270;
+141;109;271;
+141;109;272;
+141;109;273;
+141;109;274;
+141;109;275;
+141;109;276;
+141;109;277;
+141;109;278;
+141;109;279;
+141;109;280;
+141;109;281;
+141;109;282;
+141;109;283;
+141;109;284;
+141;109;285;
+141;109;286;
+141;109;287;
+141;109;288;
+141;109;289;
+141;109;290;
+141;109;291;
+141;109;292;
+141;109;293;
+141;109;294;
+141;109;295;
+141;109;296;
+141;109;297;
+141;109;298;
+141;109;299;
+141;109;300;
+141;109;301;
+141;109;302;
+141;109;303;
+141;109;304;
+141;109;305;
+141;109;306;
+141;109;307;
+141;109;308;
+141;109;309;
+141;109;310;
+141;109;311;
+141;109;312;
+141;109;313;
+141;109;314;
+141;109;315;
+141;109;316;
+141;109;317;
+141;109;318;
+141;109;319;
+141;109;320;
+141;109;321;
+141;109;322;
+141;109;323;
+141;109;324;
+141;109;325;
+141;109;326;
+141;109;327;
+141;109;328;
+141;109;329;
+141;109;330;
+141;109;331;
+141;109;332;
+141;109;333;
+141;109;334;
+141;109;335;
+141;109;336;
+141;109;337;
+141;109;338;
+141;109;339;
+141;109;340;
+141;109;341;
+141;109;342;
+141;109;343;
+141;109;344;
+141;109;345;
+141;109;346;
+141;109;347;
+141;109;348;
+141;109;349;
+141;109;350;
+141;109;351;
+141;109;352;
+141;109;353;
+141;109;354;
+141;109;355;
+141;109;356;
+141;109;357;
+141;109;358;
+141;109;359;
+141;109;360;
+141;109;361;
+141;109;362;
+141;109;363;
+141;109;364;
+141;109;365;
+141;109;366;
+141;109;367;
+141;109;368;
+141;109;369;
+141;109;370;
+141;109;371;
+141;109;372;
+141;109;373;
+141;109;374;
+141;109;375;
+141;109;376;
+141;109;377;
+141;109;378;
+141;109;379;
+141;109;380;
+141;109;381;
+141;109;382;
+141;109;383;
+141;109;384;
+141;109;385;
+141;109;386;
+141;109;387;
+141;109;388;
+141;109;389;
+141;109;390;
+141;109;391;
+141;109;392;
+141;109;393;
+141;109;394;
+141;109;395;
+141;109;396;
+141;109;397;
+141;109;398;
+141;109;399;
+141;109;400;
+141;109;401;
+141;109;402;
+141;109;403;
+141;109;404;
+141;109;405;
+141;109;406;
+141;109;407;
+141;109;408;
+141;109;409;
+141;109;410;
+141;109;411;
+141;109;412;
+141;109;413;
+141;109;414;
+141;109;415;
+141;109;416;
+141;109;417;
+141;109;418;
+141;109;419;
+141;109;420;
+141;109;421;
+141;109;422;
+142;110;0;Sí
+142;110;1;No
+143;D1;1;Hombre
+143;D1;2;Mujer
+144;D2;1;Masculino
+144;D2;2;Femenino
+144;D2;3;Transexual
+145;D3;13;13 a 28 años
+145;D3;14;13 a 28 años
+145;D3;15;13 a 28 años
+145;D3;16;13 a 28 años
+145;D3;17;13 a 28 años
+145;D3;18;13 a 28 años
+145;D3;19;13 a 28 años
+145;D3;20;13 a 28 años
+145;D3;21;13 a 28 años
+145;D3;22;13 a 28 años
+145;D3;23;13 a 28 años
+145;D3;24;13 a 28 años
+145;D3;25;13 a 28 años
+145;D3;26;13 a 28 años
+145;D3;27;13 a 28 años
+145;D3;28;13 a 28 años
+145;D3;29;29 a 59 años
+145;D3;30;29 a 59 años
+145;D3;31;29 a 59 años
+145;D3;32;29 a 59 años
+145;D3;33;29 a 59 años
+145;D3;34;29 a 59 años
+145;D3;35;29 a 59 años
+145;D3;36;29 a 59 años
+145;D3;37;29 a 59 años
+145;D3;38;29 a 59 años
+145;D3;39;29 a 59 años
+145;D3;40;29 a 59 años
+145;D3;41;29 a 59 años
+145;D3;42;29 a 59 años
+145;D3;43;29 a 59 años
+145;D3;44;29 a 59 años
+145;D3;45;29 a 59 años
+145;D3;46;29 a 59 años
+145;D3;47;29 a 59 años
+145;D3;48;29 a 59 años
+145;D3;49;29 a 59 años
+145;D3;50;29 a 59 años
+145;D3;51;29 a 59 años
+145;D3;52;29 a 59 años
+145;D3;53;29 a 59 años
+145;D3;54;29 a 59 años
+145;D3;55;29 a 59 años
+145;D3;56;29 a 59 años
+145;D3;57;29 a 59 años
+145;D3;58;29 a 59 años
+145;D3;59;29 a 59 años
+145;D3;60;60 años o más
+145;D3;61;60 años o más
+145;D3;62;60 años o más
+145;D3;63;60 años o más
+145;D3;64;60 años o más
+145;D3;65;60 años o más
+145;D3;66;60 años o más
+145;D3;67;60 años o más
+145;D3;68;60 años o más
+145;D3;69;60 años o más
+145;D3;70;60 años o más
+145;D3;71;60 años o más
+145;D3;72;60 años o más
+145;D3;73;60 años o más
+145;D3;74;60 años o más
+145;D3;75;60 años o más
+145;D3;76;60 años o más
+145;D3;77;60 años o más
+145;D3;78;60 años o más
+145;D3;79;60 años o más
+145;D3;80;60 años o más
+145;D3;81;60 años o más
+145;D3;82;60 años o más
+145;D3;83;60 años o más
+145;D3;84;60 años o más
+145;D3;85;60 años o más
+145;D3;86;60 años o más
+145;D3;87;60 años o más
+145;D3;88;60 años o más
+145;D3;89;60 años o más
+145;D3;90;60 años o más
+145;D3;92;60 años o más
+145;D3;93;60 años o más
+146;D3.1;2;13 a 28 - Jóvenes
+146;D3.1;3;29 a 59 - Adultos
+146;D3.1;4;60 o más - Adultos mayores
+147;D4;1;Bogotá
+147;D4;2;Otro municipio
+147;D4;3;Otro país
+148;D5;1;1. Un año
+148;D5;2;2. Entre uno y dos años
+148;D5;3;3. Entre 3 y 5 años
+148;D5;4;3. Entre 3 y 5 años
+148;D5;5;3. Entre 3 y 5 años
+148;D5;6;4. Entre 6 y 10 años
+148;D5;7;4. Entre 6 y 10 años
+148;D5;8;4. Entre 6 y 10 años
+148;D5;9;4. Entre 6 y 10 años
+148;D5;10;4. Entre 6 y 10 años
+148;D5;11;5. Entre 11 y 20 años
+148;D5;12;5. Entre 11 y 20 años
+148;D5;13;5. Entre 11 y 20 años
+148;D5;14;5. Entre 11 y 20 años
+148;D5;15;5. Entre 11 y 20 años
+148;D5;16;5. Entre 11 y 20 años
+148;D5;17;5. Entre 11 y 20 años
+148;D5;18;5. Entre 11 y 20 años
+148;D5;19;5. Entre 11 y 20 años
+148;D5;20;5. Entre 11 y 20 años
+148;D5;21;6. Más de 20 años
+148;D5;22;6. Más de 20 años
+148;D5;23;6. Más de 20 años
+148;D5;24;6. Más de 20 años
+148;D5;25;6. Más de 20 años
+148;D5;26;6. Más de 20 años
+148;D5;27;6. Más de 20 años
+148;D5;28;6. Más de 20 años
+148;D5;29;6. Más de 20 años
+148;D5;30;6. Más de 20 años
+148;D5;32;6. Más de 20 años
+148;D5;33;6. Más de 20 años
+148;D5;35;6. Más de 20 años
+148;D5;36;6. Más de 20 años
+148;D5;37;6. Más de 20 años
+148;D5;38;6. Más de 20 años
+148;D5;39;6. Más de 20 años
+148;D5;40;6. Más de 20 años
+148;D5;42;6. Más de 20 años
+148;D5;43;6. Más de 20 años
+148;D5;44;6. Más de 20 años
+148;D5;45;6. Más de 20 años
+148;D5;46;6. Más de 20 años
+148;D5;47;6. Más de 20 años
+148;D5;48;6. Más de 20 años
+148;D5;49;6. Más de 20 años
+148;D5;50;6. Más de 20 años
+148;D5;51;6. Más de 20 años
+148;D5;52;6. Más de 20 años
+148;D5;53;6. Más de 20 años
+148;D5;54;6. Más de 20 años
+148;D5;55;6. Más de 20 años
+148;D5;56;6. Más de 20 años
+148;D5;58;6. Más de 20 años
+148;D5;59;6. Más de 20 años
+148;D5;60;6. Más de 20 años
+148;D5;61;6. Más de 20 años
+148;D5;62;6. Más de 20 años
+148;D5;63;6. Más de 20 años
+148;D5;65;6. Más de 20 años
+148;D5;72;6. Más de 20 años
+148;D5;74;6. Más de 20 años
+149;D6;1;Motivos laborales
+149;D6;2;Estudiar
+149;D6;3;Conflicto armado
+149;D6;4;Motivos familiares
+149;D6;5;Desastres naturales
+149;D6;6;Otros motivos
+150;D7;1;Casada/o
+150;D7;2;Soltero/a
+150;D7;3;Vive en pareja hace más de dos años
+150;D7;4;Vive en pareja hace menos de dos años
+150;D7;5;Divorciado/a
+150;D7;6;Viudo/a
+151;D8;1;Trabajar
+151;D8;2;Estudiar
+151;D8;3;Trabajar y estudiar
+151;D8;4;Exclusivamente a oficios del hogar
+151;D8;5;Buscar trabajo
+151;D8;98;Otra
+153;D9;1;1. Primaria incompleta
+153;D9;2;2. Primaria completa
+153;D9;3;3. Secundaria incompleta
+153;D9;4;4. Secundaria completa
+153;D9;5;5. Técnica o tecnológica Incompleta
+153;D9;6;6. Técnica o tecnológica completa
+153;D9;7;7. Universitaria incompleta
+153;D9;8;8. Universitaria completa
+153;D9;9;9. Especialización
+153;D9;10;10. Maestría
+153;D9;11;11. Doctorado
+153;D9;12;12. Ninguno
+154;D10;1;Afrocolombiana/o Negra/
+154;D10;2;Rom
+154;D10;3;Blanca/o
+154;D10;4;Indígena
+154;D10;5;Mestiza/o
+154;D10;6;Raizal
+154;D10;7;Ninguno
+154;D10;98;Otro
+155;D11;1;Sí
+155;D11;2;No
+156;D12;1;Hombre
+156;D12;2;Mujer
+156;D12;3;Intersexual
+156;D12;4;De identidad femenina
+156;D12;5;De identidad masculina
+156;D12;6;De identidad transgénero
+156;D12;7;Lesbiana
+156;D12;8;Gay
+156;D12;9;Bisexual
+156;D12;10;Heterosexual
+156;D12;11;Ninguno
+158;D13;1;Sí
+158;D13;2;No
+159;D14;1;1. $ 0 a $1.423.500
+159;D14;2;2. $1.423.500 a $1.500.000
+159;D14;3;3. 1.500.001  a $ 2.000.000
+159;D14;4;4. $2.000.001 a $2.500.000
+159;D14;5;5. $2.500.001  a $3.500.000
+159;D14;6;6. $3.500.001 a $4.900.000
+159;D14;7;7. $4.900.001 a $6.800.000
+159;D14;8;8. $6.800.001 a $9.000.000
+159;D14;9;9. Más de $9.000.000
