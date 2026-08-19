@@ -1,14 +1,9 @@
-DIRECTORIO_MZ - Llave única para la identificación de la manzana
-DIRECTORIO_PRED - Llave única para la identificación del predio
-DIRECTORIO_HOG - Llave única para la identificación del hogar
-DIRECTORIO_PER - Llave única para la identificación de la persona
 
-periodo - Año y mes según el periodo de recolección de cada una de las encuestas
-SECTOR - Sector UPL correspondiente a donde fue realizada la encuesta
-Cod_Locali - Código de la localidad correspondiente a donde fue realizada la encuesta
-Nom_Locali - Nombre de la localidad correspondiente a donde fue realizada la encuesta
-Cod_UPL - Código de la UPL correspondiente a donde fue realizada la encuesta
-Nom_UPL - Nombre de la UPL correspondiente a donde fue realizada la encuesta
+
+Fecha - Año y mes según el periodo de recolección de cada una de las encuestas
+SectorUPL - Sector UPL correspondiente a donde fue realizada la encuesta
+Localidad - Nombre de la localidad correspondiente a donde fue realizada la encuesta
+Unidad_de_Planeamiento_Local_UPL - Nombre de la UPL correspondiente a donde fue realizada la encuesta
 
 A6x2 - Parentesco con el jefe del hogar
 A6x3 - Edad de la persona
