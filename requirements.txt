@@ -4,3 +4,5 @@ numpy
 seaborn
 chardet
 matplotlib
+nbconvert
+ipykernel
