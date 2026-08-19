@@ -6,6 +6,8 @@
     # directorio: Ruta de la carpeta. Si es None, usa el directorio donde se encuentra este script.
     # detener_en_error: Si True, se detiene al primer fallo. Si False, continúa con los demás.
 
+#si algo no funciona, ejecutar este en consola una vez instalado los requerimientos: python -m ipykernel install --user --name python3
+
 import subprocess
 import sys
 from pathlib import Path
