@@ -15,84 +15,15 @@ Cambios respecto a la version anterior:
     inconsistencias de mayusculas/tildes.
   - Jx402 / Jx403: Jx402 = fue victima del delito (Si/No); Jx403 = denuncio el delito (Si/No),
     solo aplica a quienes respondieron Si en Jx402. NO representa "ano anterior".
+  - C303, Ax401, Jx402, Jx403: se estandarizo "Si"/"No" SIN tilde en "Si", para quedar
+    cohesionado con el resto de variables binarias del diccionario (Kx404_*, Lx404_*,
+    Mx404_*, Nx404_*), que ya usaban "Si"/"No" sin tilde. Antes estas cuatro variables
+    quedaban como "Sí"/"No" (con tilde), lo cual generaba inconsistencia de codificacion
+    dentro del mismo dataset legible.
 """
 
 RENAME_MAP = {
-    "A3": "3. ¿Cuántas personas conforman su hogar?",
-    "A4": "4. ¿Cuántas personas de su hogar tienen menos de 18 años?",
-    "A5": "5. ¿Cuántas  personas tienen 18 años cumplidos o más?",
-    "A6x2": "2. Parentesco con el jefe del hogar",
-    "A6x3": "Edad de la persona.",
-    "C1": "C. ¿Cuál es el nivel educativo más alto que usted ha alcanzado?",
-    "D1": "D. Sexo al nacer",
-    "E1": "E. ¿Usted se reconoce como?",
-    "E1x1": "¿Otra cuál?",
-    "G1": "G. ¿Cuál es su estado civil?",
-    "H1": "H. Según el recibo o servicio de energía eléctrica  ¿cuál es el estrato de esta vivienda?",
-    "C303": "303. ¿Usted se considera pobre?",
-    "sexo_jefe": "Sexo del jefe de hogar",
-    "Ax201": "a. Limpieza general de la casa",
-    "Bx201": "b. Mantenimiento y reparaciones del hogar",
-    "Cx201": "c. Lavado de ropa",
-    "Dx201": "d. Planchar",
-    "Ex201": "e. Cocinar",
-    "Fx201": "f. Compras del supermercado",
-    "Gx201": "g. Pago de facturas y Planear/hacer el presupuesto del hogar",
-    "Hx201": "h. Cuidado de los niños",
-    "Ix201": "i. Ayuda con las tareas escolares de los niños",
-    "Jx201": "j. Cuidado de personas mayores o dependientes",
-    "Ax202": "202. ¿Cómo afecta la anterior distribución de tareas domésticas y de cuidado en el bienestar de su hogar? Por favor elija una de las frases que le voy a leer.",
-    "ind_distribuciontareas_202": "Impacto de la distribución de tareas domésticas y de cuidado en el bienestar familiar.",
-    "Ax401": "401. ¿Durante este año, usted o algún miembro del hogar, ha sido víctima de algún delito en la ciudad de Bogotá?",
-    "Jx402": "j. Violencia intrafamiliar (¿fue víctima de este delito?)",
-    "Jx403": "j. Violencia intrafamiliar (¿denunció este delito?)",
-    "Kx404_1": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En su residencia u otra residencia)",
-    "Kx404_2": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En la cuadra, conjunto, barrio)",
-    "Kx404_3": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En otro espacio público)",
-    "Kx404_4": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En el transporte público)",
-    "Kx404_5": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En el lugar de trabajo)",
-    "Kx404_6": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (No afrontó la situación)",
-    "Lx404_1": "l. Presenció casos de violencia intrafamiliar (En su residencia u otra residencia)",
-    "Lx404_2": "l. Presenció casos de violencia intrafamiliar (En la cuadra, conjunto, barrio)",
-    "Lx404_3": "l. Presenció casos de violencia intrafamiliar (En otro espacio público)",
-    "Lx404_4": "l. Presenció casos de violencia intrafamiliar (En el transporte público)",
-    "Lx404_5": "l. Presenció casos de violencia intrafamiliar (En el lugar de trabajo)",
-    "Lx404_6": "l. Presenció casos de violencia intrafamiliar (No afrontó la situación)",
-    "Mx404_1": "m. Presenció casos de violencia contra la mujer (En su residencia u otra residencia)",
-    "Mx404_2": "m. Presenció casos de violencia contra la mujer (En la cuadra, conjunto, barrio)",
-    "Mx404_3": "m. Presenció casos de violencia contra la mujer (En otro espacio público)",
-    "Mx404_4": "m. Presenció casos de violencia contra la mujer (En el transporte público)",
-    "Mx404_5": "m. Presenció casos de violencia contra la mujer (En el lugar de trabajo)",
-    "Mx404_6": "m. Presenció casos de violencia contra la mujer (No afrontó la situación)",
-    "Nx404_1": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En su residencia u otra residencia)",
-    "Nx404_2": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En la cuadra, conjunto, barrio)",
-    "Nx404_3": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En otro espacio público)",
-    "Nx404_4": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En el transporte público)",
-    "Nx404_5": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En el lugar de trabajo)",
-    "Nx404_6": "n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (No afrontó la situación)",
-    "F405": "405. ¿Qué tan seguro se siente usted caminando solo por su barrio de día",
-    "G406": "406. ¿Qué tan seguro se siente usted caminando solo por su barrio de noche",
-    "IPS_dia": "Percepción promedio de la seguridad al caminar de día por su barrio.",
-    "IPS_noche": "Percepción promedio de la seguridad al caminar de noche por su barrio.",
-    "IPSJ_A": "Percepción promedio sobre la rapidez de las autoridades ante incidentes de seguridad que ocurren en el barrio.",
-    "IPSJ_C": "Percepción promedio sobre la disponibilidad y facilidad de acceso a la información y los medios para denunciar delitos.",
-    "IPSJ_E": "Percepción promedio de la aplicación de justicia sobre quienes cometen delitos.",
-    "Dx704": "d. En la ciudad las personas son incluyentes y respetan la diversidad (cultural, étnica, socioeconómica, orientación sexual, etc.)",
-    "ICG_D": "Percepción promedio sobre el respeto de los ciudadanos hacia la inclusión y la diversidad.",
-    "Bx704": "b. Confío en que mis vecinos me ayudarían ante cualquier problema o necesidad",
-    "ICG_B": "Confianza promedio en la ayuda que brindarían los vecinos ante cualquier problema o necesidad.",
-    "Ax102": "a. ¿Sensación de nerviosismo, de ansiedad, de tener los nervios de punta?",
-    "Bx102": "b. ¿Incapacidad de evadir o controlar sus preocupaciones?",
-    "Cx102": "c. ¿Preocupación excesiva por diferentes cosas o situaciones?",
-    "Dx102": "d. ¿Dificultad para relajarse?",
-    "Ex102": "e. ¿Tan intranquilo, inquieto o agitado que le resulta difícil quedarse quieto?",
-    "Fx102": "f. ¿Que se enfada o irrita con facilidad?",
-    "Gx102": "g. ¿Miedo o susto, como si algo malo pudiera suceder?",
-    "A101": "101. ¿Usted considera que su estado de salud actual es …?",
-    "ind_salud_101": "Indicador de percepción del estado de salud",
-    "ind_salud_102": "Escala del Trastorno de Ansiedad Generalizada (GAD-7)",
-    "fexp_calp_anu": "Factor de expansión calibrado bimestral para personas.",
-    "fexp_calh_anu": "Factor de expansión calibrado bimestral para hogares"
+
 }
 
 VALUE_MAPS = {
@@ -151,7 +82,7 @@ VALUE_MAPS = {
         "99": "No informa"
     },
     "C303": {
-        "1": "Sí",
+        "1": "Si",
         "2": "No"
     },
     "sexo_jefe": {
@@ -273,15 +204,15 @@ VALUE_MAPS = {
         "3": "Impacto negativo"
     },
     "Ax401": {
-        "1": "Sí",
+        "1": "Si",
         "2": "No"
     },
     "Jx402": {
-        "1": "Sí",
+        "1": "Si",
         "2": "No"
     },
     "Jx403": {
-        "1": "Sí",
+        "1": "Si",
         "2": "No"
     },
     "Kx404_1": {

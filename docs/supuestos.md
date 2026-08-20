@@ -253,3 +253,445 @@ Las tablas de hechos tienen granularidades distintas (localidad, localidad × tr
 > Cualquier cambio posterior al congelamiento de la Sección 1 se registra aquí. Formato: qué cambió, por qué, y si el cambio se decidió antes o después de ver el resultado afectado.
 
 *(Sin enmiendas a la fecha.)*
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Tratamiento — análisis de sensibilidad, no recodificación unilateral:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Correlación con `ICG_B` (validación interna de H-B): -0.0476 (versión A) vs.
+  -0.0486 (versión B). Diferencia: 0.0010.
+
+**Conclusión:** la magnitud de la diferencia (17 casos, 0,13%) es marginal frente al
+tamaño de muestra, y la correlación con `ICG_B` que sustenta H-B es robusta ante esta
+decisión de codificación. Se usa `TAC_A_original` como definición principal en el resto
+del análisis, por ser la más directamente trazable a la pregunta del cuestionario, y se
+deja `TAC_B_recodificada` documentada y disponible como prueba de robustez citable en
+la sustentación si el jurado cuestiona el tratamiento de estos 17 casos.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4 — Semántica del bloque 404, variable M (registrado 2026-08-20)
+
+Verificaciones empíricas sobre `Mx404_1..6` (n=13082):
+1. Proporción de `Mx404_6 == "Si"` = 0.8122 (≈ 0,812)
+2. `n(Mx404_6 == "No")` = 2457
+3. Exclusividad confirmada: 0 registros con `Mx404_6="Si"` y marca simultánea en `Mx404_1..5`
+
+**Conclusión:** `_6 = "Si"` no distingue entre no haber presenciado y haber presenciado sin
+actuar; solo `_6 = "No"` es interpretable, como afrontamiento efectivo. Por lo tanto:
+
+- El Índice de Silencio (ITS) queda eliminado del plan: no tiene denominador observable.
+- Se define la **TAC — Tasa de Afrontamiento Ciudadano** = proporción de personas con
+  `Mx404_6 = "No"` (2457 positivos), directamente observable y usada como cota
+  inferior de la exposición.
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4 — Semántica del bloque 404, variable M (registrado 2026-08-20)
+
+Verificaciones empíricas sobre `Mx404_1..6` (n=13082):
+1. Proporción de `Mx404_6 == "Si"` = 0.8122 (≈ 0,812)
+2. `n(Mx404_6 == "No")` = 2457
+3. Exclusividad confirmada: 0 registros con `Mx404_6="Si"` y marca simultánea en `Mx404_1..5`
+
+**Conclusión:** `_6 = "Si"` no distingue entre no haber presenciado y haber presenciado sin
+actuar; solo `_6 = "No"` es interpretable, como afrontamiento efectivo. Por lo tanto:
+
+- El Índice de Silencio (ITS) queda eliminado del plan: no tiene denominador observable.
+- Se define la **TAC — Tasa de Afrontamiento Ciudadano** = proporción de personas con
+  `Mx404_6 = "No"` (2457 positivos), directamente observable y usada como cota
+  inferior de la exposición.
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4 — Semántica del bloque 404, variable M (registrado 2026-08-20)
+
+Verificaciones empíricas sobre `Mx404_1..6` (n=13082):
+1. Proporción de `Mx404_6 == "Si"` = 0.8122 (≈ 0,812)
+2. `n(Mx404_6 == "No")` = 2457
+3. Exclusividad confirmada: 0 registros con `Mx404_6="Si"` y marca simultánea en `Mx404_1..5`
+
+**Conclusión:** `_6 = "Si"` no distingue entre no haber presenciado y haber presenciado sin
+actuar; solo `_6 = "No"` es interpretable, como afrontamiento efectivo. Por lo tanto:
+
+- El Índice de Silencio (ITS) queda eliminado del plan: no tiene denominador observable.
+- Se define la **TAC — Tasa de Afrontamiento Ciudadano** = proporción de personas con
+  `Mx404_6 = "No"` (2457 positivos), directamente observable y usada como cota
+  inferior de la exposición.
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.5 — Construcción de `dim_localidad` (registrado 2026-08-20)
+
+Se construyó `dim_localidad` con 20 filas (`codigo_localidad` 1–20, `nombre_oficial`,
+`nombre_norm`, `sector_upl`, `en_encuesta`, `PobMujeres`), usando `normalizar()` =
+`unidecode().upper().strip()` con espacios múltiples colapsados.
+
+**Codificación confirmada empíricamente:** se cruzó `codigo_localidad` de la Encuesta de
+Percepción contra su propia columna `Localidad` (texto) y coincide exactamente con la
+codificación DANE estándar asumida (1=Usaquén ... 19=Ciudad Bolívar, 20=Sumapaz). No se
+asumió a ciegas — se verificó código por código.
+
+**`en_encuesta`:** única localidad marcada `False` es Sumapaz (código 20), como se esperaba.
+
+**`PobMujeres`:** extraída de `riesgofeminicidio.csv`, corte más reciente (2026-03-31),
+sin faltantes en las 20 localidades.
+
+**Verificación cruzada de las 6 fuentes contra `dim_localidad`:**
+
+| Fuente | Resultado |
+|---|---|
+| `riesgofeminicidio.csv` | OK — 0 no coincidencias |
+| `duplas.csv` | OK — 0 no coincidencias |
+| `lineapurpura.csv` | OK — 0 no coincidencias |
+| `delitossexuales.csv` | OK — 0 no coincidencias |
+| `llamadas123_consolidado_limpio.csv` | OK — 0 no coincidencias (tras corregir separador `;` y encoding) |
+| Encuesta de Percepción (`df`) | OK — solo Sumapaz ausente, tolerado por diseño |
+
+**Excepción documentada — `llamadas123_consolidado_limpio.csv`:** 222 registros
+(0.42% de 52717) tienen `CODIGO_LOCALIDAD` nulo tras la
+conversión numérica. Se excluyen de toda agregación territorial (Nivel 2 de la jerarquía
+de integración) por no tener llave de cruce válida contra `dim_localidad`. No se imputan.
+Su magnitud (<0,5%) se considera marginal frente al volumen total del dataset.
+
+**Nota técnica:** `llamadas123_consolidado_limpio.csv` usa separador `;` (no `,`) y
+codificación con BOM (`utf-8-sig`) — debe cargarse con `sep=";"` explícito o las 13
+columnas colapsan en una sola.
+
+## Paso 1.6 — Diseño muestral: estrato y conglomerado (registrado 2026-08-20)
+
+**Decisión:** se fija `codigo_UPL` como unidad de conglomerado (30
+grupos) y `codigo_localidad` como estrato (19 grupos, sobre las
+19 localidades encuestadas).
+
+**Motivo:** la encuesta no trae identificador de manzana ni de UPZ (se eliminó
+`DIRECTORIO_MZ` en el ETL por no ser un identificador reutilizable de conglomerado
+espacial estable), y `codigo_UPL` es el nivel geográfico más fino disponible que agrupa
+personas por cercanía real dentro de una misma localidad. Usar `codigo_localidad` como
+conglomerado en vez de estrato sería demasiado grueso (perdería variación intra-localidad
+en los errores estándar); usar `codigo_UPL` como estrato sería excesivamente granular
+para los modelos con efectos fijos de localidad que se van a estimar en la Fase 3.
+
+**Advertencia de tamaño de muestra:** 30 conglomerados
+está en el límite inferior aceptable para inferencia con errores estándar robustos
+clusterizados (la literatura recomienda ≥30–50 clusters para que la asintótica de
+White/Huber-clusterizado sea confiable). Tamaño de conglomerado: media
+436.1, rango [32, 756].
+
+**Mitigación:** se usará corrección de muestras pequeñas en todos los modelos con errores
+estándar clusterizados por `codigo_UPL`, vía `cov_kwds={'use_correction': True}`
+(statsmodels), que aplica el factor de corrección G/(G-1) · (N-1)/(N-k) sobre la matriz
+de covarianza cluster-robusta. Esta decisión se reporta explícitamente en cualquier tabla
+de resultados de la Fase 3 (regresión logística de H-A), con una nota al pie indicando
+que los ICs pueden ser algo anticonservadores dado el número de conglomerados.
+
+**Ponderación:** toda estimación agregada usa `fexp_calp_anu` (personas) o
+`fexp_calh_anu` (hogares) según corresponda — nunca conteos crudos sin ponderar para
+estimaciones poblacionales, solo para descriptivos exploratorios ya identificados como
+tales (ej. Pasos 1.3, 1.4, 1.4b).
+
+## Paso 1.7 — Validación de factores de expansión (registrado 2026-08-20)
+
+**Población adulta de Bogotá de referencia:** 6,201,042
+(orden de magnitud declarado: 6-7 millones). Tolerancia aceptada: 15%.
+
+**Interpretación A (suma directa, 12 meses):** 6,110,290
+→ diferencia relativa 1.5% (dentro de tolerancia)
+
+**Interpretación B (bimestral, promedio de la suma entre los 6
+bimestres del año móvil):** 1,018,382
+→ diferencia relativa 83.6% (FALLA tolerancia)
+
+**Método adoptado:** `suma_directa_por_localidad`. Suma total final: 6,110,290
+(diferencia relativa 1.5%).
+
+**Regla operativa para el resto del pipeline:** toda estimación poblacional agregada
+(por localidad, UPL, o total ciudad) que use `fexp_calp_anu` debe replicar este mismo
+método — sumar directamente, sin promediar por bimestre.
+Aplicar el método incorrecto no aplica en este caso.
+
+## Gráfico de control 1 — Población femenina expandida vs. oficial (registrado 2026-08-20)
+
+Comparación por localidad entre `PobMujeres` (oficial, `riesgofeminicidio.csv`, corte
+2026-03-31) y la población femenina estimada desde la Encuesta de Percepción
+(suma de `fexp_calp_anu` para `D1 == "Mujer"`, agrupada por `codigo_localidad`).
+
+**Propósito:** control de calidad interno del factor de expansión a nivel de localidad
+(no solo a nivel ciudad, como en el Paso 1.7). No se incluye en el dashboard de Tableau —
+es un diagnóstico de proceso, guardado en `docs/grafico_control_1_pobmujeres.png`.
+
+**Resultado:** 12 localidad(es) exceden ±15% de diferencia: Antonio Nariño, Los Mártires, Barrios Unidos, Teusaquillo, Tunjuelito, Puente Aranda, Rafael Uribe Uribe, Usme, Usaquén, Ciudad Bolívar, Bosa, Suba. Investigar antes de usar estimaciones de localidad específicas de estas zonas con alta confianza.
+
+Diferencia relativa promedio (valor absoluto) entre localidades: 17.3%.
+
+## Gráfico de control 1 — Diagnóstico de discrepancias por localidad (registrado 2026-08-20)
+
+A nivel ciudad, la población femenina expandida desde la encuesta (adultos, `fexp_calp_anu`)
+difiere -16.3% de `PobMujeres` oficial (todas las edades). A nivel localidad, 12 de 19
+exceden ±15% de diferencia (todas subestiman).
+
+**Hipótesis descartadas por falta de correlación:**
+- Proporción de menores en el hogar (proxy de estructura etaria): correlación 0.023 con
+  `diff_pct` — no explica la variación entre localidades.
+- Tamaño de muestra por localidad: correlación -0.172 con `|diff_pct|` — débil, solo
+  visible en los extremos (las 3 localidades de menor `n`: La Candelaria, Los Mártires,
+  Antonio Nariño, concentran los errores más extremos en ambas direcciones).
+
+**Conclusión:** la discrepancia responde a una combinación de (1) un componente
+sistemático de ciudad, consistente con que `PobMujeres` incluye todas las edades mientras
+la encuesta solo mide población adulta (18+), y (2) ruido muestral que se amplifica en
+localidades con `n` bajo. No se identifica un error del factor de expansión ni del
+pipeline de limpieza — el Paso 1.7 ya confirmó que la suma total del factor es correcta
+(1.5% de diferencia contra la población adulta oficial de Bogotá, 6.201.042).
+
+**Regla operativa:** los indicadores basados en la Encuesta de Percepción para
+**Los Mártires, Antonio Nariño, Barrios Unidos y La Candelaria** deben reportarse con una
+nota de precaución adicional por bajo tamaño muestral (n entre 151 y 270), siguiendo el
+mismo criterio ya aplicado a Sumapaz. El resto de localidades (n≥296) se consideran
+confiables para estimación, con el entendido de que cualquier tasa que use `PobMujeres`
+(todas las edades) como denominador administrativo y un numerador derivado de la encuesta
+(solo adultos) tiene un descalce conceptual de denominador que debe declararse en el
+dashboard, no ocultarse.

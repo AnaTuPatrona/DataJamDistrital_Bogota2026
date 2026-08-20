@@ -1,0 +1,17 @@
+{
+  "unidad_conglomerado": "codigo_UPL",
+  "n_conglomerados": 30,
+  "variable_estrato": "codigo_localidad",
+  "n_estratos": 19,
+  "ponderacion_personas": "fexp_calp_anu",
+  "ponderacion_hogares": "fexp_calh_anu",
+  "correccion_muestras_pequeñas": true,
+  "cov_kwds": {
+    "use_correction": true
+  },
+  "tamaño_conglomerado_media": 436.06666666666666,
+  "tamaño_conglomerado_min": 32,
+  "tamaño_conglomerado_max": 756,
+  "fecha_definicion": "2026-08-20",
+  "notebook_origen": "01_preparacion.ipynb — Paso 1.6"
+}
