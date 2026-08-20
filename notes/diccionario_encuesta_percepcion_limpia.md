@@ -349,7 +349,7 @@ df_con_delito['Jx402'].value_counts(dropna=False)
 ## Composición del hogar
 
 ### `A3`
-**Pregunta:** 3. Para comenzar.  ¿Cuántas personas conforman su hogar?
+**Pregunta:** 3. ¿Cuántas personas conforman su hogar?
 
 **Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
