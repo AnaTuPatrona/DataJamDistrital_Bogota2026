@@ -3,9 +3,15 @@
 import pandas as pd
 import geopandas as gpd
 import os
+import warnings
 
+warnings.filterwarnings(
+    "ignore",
+    category=SyntaxWarning
+)
+warnings.filterwarnings("ignore")
 #sacar los datos del code y nombre de la localidad en base a un dataset de las llamadas del 123
-data_nombre_localidades = pd.read_csv('data\llamadas123_dic2025.csv', delimiter=';', encoding='MacRoman', decimal=',')
+data_nombre_localidades = pd.read_csv('..\data\llamadas123_dic2025.csv', delimiter=';', encoding='MacRoman', decimal=',')
 data_localidades = (
     data_nombre_localidades[['CODIGO_LOCALIDAD', 'LOCALIDAD']]
     .rename(columns=str.lower) #volver columnas en minusculas
@@ -24,7 +30,7 @@ data_localidades.loc[len(data_localidades)] = { #añade a Sumapaz, que no está 
 print(data_localidades.head())
 
 #sacar los datos del code y poligono de las localidades en base a un dataset de duplas
-mapa_localidades=gpd.read_file('data\duplas_062025.geojson')
+mapa_localidades=gpd.read_file('..\data\duplas_062025.geojson')
 poligono_localidades=(
     mapa_localidades[['Localidad', 'Shape_Leng', 'Shape_Area', 'geometry']]
     .rename(columns={'Localidad': 'codigo_localidad'}) #cambio el nombre acá para poder hacer un left join de manera sencilla
@@ -50,4 +56,4 @@ localidades_geo = gpd.GeoDataFrame( #este es para que se mantenga como un geodat
 print(localidades_geo.head())
 
 #exportar resultado como geojson
-localidades_geo.to_file('outputs/localidades_con_nombres.geojson', driver='GeoJSON')
+localidades_geo.to_file('../outputs/localidades_con_nombres.geojson', driver='GeoJSON')

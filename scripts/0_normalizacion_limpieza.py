@@ -8,6 +8,14 @@
 
 #si algo no funciona, ejecutar este en consola una vez instalado los requerimientos: python -m ipykernel install --user --name python3
 
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    category=SyntaxWarning
+)
+warnings.filterwarnings("ignore")
+
 import subprocess
 import sys
 from pathlib import Path

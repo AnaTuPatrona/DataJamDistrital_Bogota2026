@@ -2,6 +2,14 @@
 from pathlib import Path
 import csv
 
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    category=SyntaxWarning
+)
+warnings.filterwarnings("ignore")
+
 # En Google Colab puedes dejar los archivos en /content.
 BASE = Path("../data/encuestaBienal")
 OUT = Path("../outputs")
