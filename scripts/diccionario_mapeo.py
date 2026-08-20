@@ -18,11 +18,6 @@ Cambios respecto a la version anterior:
 """
 
 RENAME_MAP = {
-    "Fecha": "Año y mes según el periodo de recolección de cada una de las encuestas.",
-    "SectorUPL": "Sector UPL correspondiente a donde fue realizada la encuesta.",
-    "Localidad": "Nombre de la localidad correspondiente a donde fue realizada la encuesta.",
-    "Unidad_de_Planeamiento_Local_UPL": "Nombre de la UPL correspondiente a donde fue realizada la encuesta.",
-    "codigo_localidad": "Código de la localidad correspondiente a donde fue realizada la encuesta.",
     "A3": "3. ¿Cuántas personas conforman su hogar?",
     "A4": "4. ¿Cuántas personas de su hogar tienen menos de 18 años?",
     "A5": "5. ¿Cuántas  personas tienen 18 años cumplidos o más?",
