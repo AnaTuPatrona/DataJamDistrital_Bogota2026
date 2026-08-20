@@ -18,14 +18,6 @@ de respuestas y permite hacer JOIN cuando los datos se transformen a formato lar
 from pathlib import Path
 import csv
 
-import warnings
-
-warnings.filterwarnings(
-    "ignore",
-    category=SyntaxWarning
-)
-warnings.filterwarnings("ignore")
-
 BASE = Path("../data/encuestaBienal")
 OUT = Path("../outputs")
 
