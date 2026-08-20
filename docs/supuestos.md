@@ -1613,3 +1613,57 @@ como parte del reporte de H-B, en vez de omitirlo o buscar una recodificación q
 produzca el signo esperado. La validación cruzada con el análisis factorial de la Bienal
 (pendiente) será determinante para la evaluación final de H-B — este resultado individual
 NO se trata como la prueba definitiva ni en un sentido ni en el otro.
+
+## Paso 2.15 — Variables de control y mediadores (registrado 2026-08-20)
+
+Se recodificaron las variables de control y mediadores usando `diccionario_mapeo.py` para los mapeos inversos (etiqueta → código). Todas las distribuciones coinciden con las documentadas en la Fase 1.
+
+**1. GAD-7 (`ind_salud_102`) → ordinal `GAD7_ordinal` (0–3)**
+- 0: No se aprecia ansiedad → 10.440 (79,8%)
+- 1: Síntomas leves → 1.876 (14,3%)
+- 2: Síntomas moderados → 588 (4,5%)
+- 3: Síntomas severos → 178 (1,4%)
+
+**2. Pobreza subjetiva (`C303`) → binaria `pobreza_subjetiva` (1=Si)**
+- 1: Sí → 2.241 (17,1%)
+- 0: No → 10.841 (82,9%)
+
+**3. Estrato (`H1`) → categórica `estrato_cat` (agrupado 5-6)**
+- Estrato 1: 1.327 (10,1%)
+- Estrato 2: 5.355 (40,9%)
+- Estrato 3: 4.540 (34,7%)
+- Estrato 4: 1.448 (11,1%)
+- Estrato 5-6: 379 (2,9%) — agrupado para evitar celdas vacías
+- Sin servicio / No informa: 33 (0,3%)
+
+**4. Edad (`A6x3`) y edad²**
+- Rango: 18–99, media: 49,6 años. Se incluye `edad` y `edad_cuadrado` en los modelos para capturar no linealidad.
+
+**5. Tamaño del hogar (`A3`), menores de 18 (`A4`), adultos (`A5`)**
+- `A3`: media 2,57, rango [1, 12]
+- `A4`: media 0,54, rango [0, 7]
+- `A5`: media 2,03, rango [1, 9]
+
+**6. Impacto de la distribución de tareas (`ind_distribuciontareas_202`) → ordinal `distribucion_tareas_ord` (1–3)**
+- 1: Impacto positivo → 10.819 (82,7%)
+- 2: Impacto neutro → 1.250 (9,6%)
+- 3: Impacto negativo → 1.013 (7,7%)
+
+---
+
+**Verificación de índices construidos en la Fase 2** — todos dentro del rango teórico esperado:
+
+| Índice | n válidos | media | min | max | Rango OK |
+|--------|-----------|-------|-----|-----|----------|
+| HHI    | 13.022    | 0.6955 | 0.1837 | 1.0000 | [0,1] |
+| ICC_mujer | 13.022 | 0.2507 | 0.0000 | 1.0000 | [0,1] |
+| ICD    | 6.517     | 0.3161 | 0.0000 | 1.0000 | [0,1] |
+| IBA    | 11.361    | -0.0114 | -2.5203 | 1.5062 | valores z (~[-3,3]) |
+| afronto_M | 13.082 | 0.1891 | 0 | 1 | - |
+| afronto_K | 13.082 | 0.1917 | 0 | 1 | - |
+| afronto_L | 13.082 | 0.1669 | 0 | 1 | - |
+| afronto_N | 13.082 | 0.1321 | 0 | 1 | - |
+
+**Nota metodológica:** los mapeos inversos se obtuvieron automáticamente desde `VALUE_MAPS` de `diccionario_mapeo.py`, evitando definiciones manuales y asegurando consistencia con el resto del pipeline.
+
+**Consecuencia:** todas las variables de control y mediadores quedan correctamente tipadas y listas para su uso en los modelos de la Fase 3. Ningún índice tiene valores fuera de rango teórico.
