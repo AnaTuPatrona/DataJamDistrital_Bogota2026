@@ -1,20 +1,19 @@
-# Diccionario de datos — `Encuesta_percepcion_limpia_v3.csv`
+# Diccionario de datos — `Encuesta_percepcion_limpia_v2.csv`
 
 Encuesta Distrital de Percepción y Cultura Ciudadana — Bogotá  
 Eje temático: **Violencia contra la mujer**
 
 - Total de registros (personas encuestadas): **13082**
-- Total de variables: **81**
+- Total de variables: **80**
 - Fuente del texto de preguntas y opciones: `20260331_diccionario_base_ano_movil_2025.xlsx` (hoja *Diccionario de datos*)
-- Fuente de los resultados/conteos: `Encuesta_percepcion_limpia_v3.csv`
+- Fuente de los resultados/conteos: `Encuesta_percepcion_limpia_v2.csv`
 
-## Historial de cambios
+## Cambios respecto a la versión anterior (75 → 80 variables)
 
-- **`codigo_localidad`** (antes `Cod_Locali`): se conserva como llave numérica de cruce (1–19) contra `localidades_con_nombres.geojson` y registros administrativos.
-- **`codigo_UPL`** (antes `Cod_UPL`, nueva en esta versión): se conserva como llave alfanumérica de cruce (ej. `UPL20`), en vez de eliminarse. 30 valores únicos, 0 nulos.
-- **`A3`, `A4`, `A5`**: tamaño del hogar, menores y mayores de 18. Validado `A3 = A4 + A5` en el 100% de registros.
-- **`Ax401`**: filtro maestro de victimización. Verificado: los 11,094 `NaN` de `Jx402` coinciden exactamente con `Ax401 = 2` (No víctima) — un `NaN` en `Jx402` es "no aplica", no falta de respuesta.
-- **`Jx402` / `Jx403` (etiqueta corregida):** `Jx402` = ¿fue víctima de violencia intrafamiliar?; `Jx403` = de quienes respondieron Sí en Jx402, ¿denunció ese delito? No se refieren a periodos de tiempo distintos.
+- **`codigo_localidad`** (antes `Cod_Locali`): se conserva en vez de eliminarse. Es la llave numérica de cruce contra `localidades_con_nombres.geojson` (`codigo_localidad`) y `llamadas123_consolidado_limpio.csv` (`CODIGO_LOCALIDAD`). Cruzar solo por el nombre de texto (`Localidad`) es frágil por inconsistencias de mayúsculas/tildes entre fuentes.
+- **`A3`, `A4`, `A5`** (nuevas): tamaño del hogar, menores de 18 y mayores de 18 en el hogar. Se validó que `A3 = A4 + A5` en el 100% de los 13,082 registros. Sirven como denominador para índices de cuidado y como control de tamaño del hogar.
+- **`Ax401`** (nueva): filtro maestro de victimización — *"¿usted o algún miembro del hogar ha sido víctima de algún delito en Bogotá?"*. Se verificó que los 11,094 `NaN` en `Jx402` corresponden exactamente a las 11,094 personas con `Ax401 = 2` (No víctima). Con `Ax401` presente, un `NaN` en `Jx402` deja de ser ambiguo: significa "no aplica" (verdadero No), no falta de respuesta.
+- **`Jx402` / `Jx403` (corrección de etiqueta):** `Jx402` = ¿fue víctima de violencia intrafamiliar?; `Jx403` = de quienes respondieron Sí en Jx402, ¿denunció ese delito? La etiqueta anterior ("año anterior") era incorrecta y ya fue corregida — no se refiere a un periodo de tiempo distinto.
 
 ## Cómo buscar un resultado específico
 
@@ -22,25 +21,25 @@ Eje temático: **Violencia contra la mujer**
 2. Cada variable muestra:
    - **Pregunta**: el texto exacto tal como se hizo en la encuesta.
    - **Opciones de respuesta**: el código numérico y su etiqueta (ej. `1. Hombre`, `2. Mujer`).
-   - **Resultados**: cuántas personas (y qué porcentaje del total) respondieron cada opción, calculado directamente sobre `Encuesta_percepcion_limpia_v3.csv`.
+   - **Resultados**: cuántas personas (y qué porcentaje del total) respondieron cada opción, calculado directamente sobre `Encuesta_percepcion_limpia_v2.csv`.
 3. Para replicar cualquier resultado en Python:
 ```python
 import pandas as pd
-df = pd.read_csv('Encuesta_percepcion_limpia_v3.csv')
+df = pd.read_csv('Encuesta_percepcion_limpia_v2.csv')
 df['ID_DE_LA_VARIABLE'].value_counts(dropna=False, normalize=False)
 ```
 4. Para ver resultados en porcentaje directamente:
 ```python
 df['ID_DE_LA_VARIABLE'].value_counts(dropna=False, normalize=True) * 100
 ```
-5. Para cruzar una variable por localidad, UPL o fecha:
+5. Para cruzar una variable por localidad o por fecha:
 ```python
 df.groupby('Localidad')['ID_DE_LA_VARIABLE'].value_counts(normalize=True)
-df.groupby('codigo_UPL')['ID_DE_LA_VARIABLE'].mean()
 df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numéricos continuos
 ```
 6. Para filtrar correctamente `Jx402` usando el filtro maestro `Ax401`:
 ```python
+# Solo personas cuyo hogar SI fue víctima de algún delito
 df_con_delito = df[df['Ax401'] == 1]
 df_con_delito['Jx402'].value_counts(dropna=False)
 ```
@@ -164,9 +163,9 @@ df_con_delito['Jx402'].value_counts(dropna=False)
 ### `codigo_localidad`
 **Pregunta:** Código de la localidad correspondiente a donde fue realizada la encuesta.
 
-**Tipo:** llave de cruce. No se traduce a etiqueta de texto; úsala para validar cruces con otras fuentes administrativas o geoespaciales.
+**Tipo:** llave numérica de cruce (código de localidad). No se traduce a etiqueta de texto; úsala junto con `Localidad` para validar cruces con otras fuentes administrativas.
 
-**Valores reales encontrados (19 distintos):**
+**Valores reales encontrados:**
   - 1
   - 2
   - 3
@@ -277,79 +276,10 @@ df_con_delito['Jx402'].value_counts(dropna=False)
   - **Usaquén** → 408 respuestas (3.1%)
   - **Usme - Entrenubes** → 616 respuestas (4.7%)
 
-### `codigo_UPL`
-**Pregunta:** Código de la UPL correspondiente a donde fue realizada la encuesta.
-
-**Tipo:** llave de cruce. No se traduce a etiqueta de texto; úsala para validar cruces con otras fuentes administrativas o geoespaciales.
-
-**Valores reales encontrados (30 distintos):**
-  - UPL03
-  - UPL04
-  - UPL05
-  - UPL07
-  - UPL08
-  - UPL09
-  - UPL10
-  - UPL11
-  - UPL12
-  - UPL13
-  - UPL14
-  - UPL15
-  - UPL16
-  - UPL17
-  - UPL18
-  - UPL19
-  - UPL20
-  - UPL21
-  - UPL22
-  - UPL23
-  - UPL24
-  - UPL25
-  - UPL26
-  - UPL27
-  - UPL28
-  - UPL29
-  - UPL30
-  - UPL31
-  - UPL32
-  - UPL33
-
-**Resultados (base limpia, n=13082):**
-  - **UPL03** → 482 respuestas (3.7%)
-  - **UPL04** → 376 respuestas (2.9%)
-  - **UPL05** → 616 respuestas (4.7%)
-  - **UPL07** → 32 respuestas (0.2%)
-  - **UPL08** → 343 respuestas (2.6%)
-  - **UPL09** → 313 respuestas (2.4%)
-  - **UPL10** → 374 respuestas (2.9%)
-  - **UPL11** → 527 respuestas (4.0%)
-  - **UPL12** → 365 respuestas (2.8%)
-  - **UPL13** → 371 respuestas (2.8%)
-  - **UPL14** → 387 respuestas (3.0%)
-  - **UPL15** → 357 respuestas (2.7%)
-  - **UPL16** → 579 respuestas (4.4%)
-  - **UPL17** → 701 respuestas (5.4%)
-  - **UPL18** → 592 respuestas (4.5%)
-  - **UPL19** → 308 respuestas (2.4%)
-  - **UPL20** → 756 respuestas (5.8%)
-  - **UPL21** → 497 respuestas (3.8%)
-  - **UPL22** → 569 respuestas (4.3%)
-  - **UPL23** → 690 respuestas (5.3%)
-  - **UPL24** → 296 respuestas (2.3%)
-  - **UPL25** → 408 respuestas (3.1%)
-  - **UPL26** → 394 respuestas (3.0%)
-  - **UPL27** → 332 respuestas (2.5%)
-  - **UPL28** → 440 respuestas (3.4%)
-  - **UPL29** → 500 respuestas (3.8%)
-  - **UPL30** → 494 respuestas (3.8%)
-  - **UPL31** → 378 respuestas (2.9%)
-  - **UPL32** → 335 respuestas (2.6%)
-  - **UPL33** → 270 respuestas (2.1%)
-
 ## Composición del hogar
 
 ### `A3`
-**Pregunta:** 3. ¿Cuántas personas conforman su hogar?
+**Pregunta:** 3. Para comenzar.  ¿Cuántas personas conforman su hogar?
 
 **Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
