@@ -695,3 +695,921 @@ confiables para estimación, con el entendido de que cualquier tasa que use `Pob
 (todas las edades) como denominador administrativo y un numerador derivado de la encuesta
 (solo adultos) tiene un descalce conceptual de denominador que debe declararse en el
 dashboard, no ocultarse.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4 — Semántica del bloque 404, variable M (registrado 2026-08-20)
+
+Verificaciones empíricas sobre `Mx404_1..6` (n=13082):
+1. Proporción de `Mx404_6 == "Si"` = 0.8122 (≈ 0,812)
+2. `n(Mx404_6 == "No")` = 2457
+3. Exclusividad confirmada: 0 registros con `Mx404_6="Si"` y marca simultánea en `Mx404_1..5`
+
+**Conclusión:** `_6 = "Si"` no distingue entre no haber presenciado y haber presenciado sin
+actuar; solo `_6 = "No"` es interpretable, como afrontamiento efectivo. Por lo tanto:
+
+- El Índice de Silencio (ITS) queda eliminado del plan: no tiene denominador observable.
+- Se define la **TAC — Tasa de Afrontamiento Ciudadano** = proporción de personas con
+  `Mx404_6 = "No"` (2457 positivos), directamente observable y usada como cota
+  inferior de la exposición.
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.5 — Construcción de `dim_localidad` (registrado 2026-08-20)
+
+Se construyó `dim_localidad` con 20 filas (`codigo_localidad` 1–20, `nombre_oficial`,
+`nombre_norm`, `sector_upl`, `en_encuesta`, `PobMujeres`), usando `normalizar()` =
+`unidecode().upper().strip()` con espacios múltiples colapsados.
+
+**Codificación confirmada empíricamente:** se cruzó `codigo_localidad` de la Encuesta de
+Percepción contra su propia columna `Localidad` (texto) y coincide exactamente con la
+codificación DANE estándar asumida (1=Usaquén ... 19=Ciudad Bolívar, 20=Sumapaz). No se
+asumió a ciegas — se verificó código por código.
+
+**`en_encuesta`:** única localidad marcada `False` es Sumapaz (código 20), como se esperaba.
+
+**`PobMujeres`:** extraída de `riesgofeminicidio.csv`, corte más reciente (2026-03-31),
+sin faltantes en las 20 localidades.
+
+**Verificación cruzada de las 6 fuentes contra `dim_localidad`:**
+
+| Fuente | Resultado |
+|---|---|
+| `riesgofeminicidio.csv` | OK — 0 no coincidencias |
+| `duplas.csv` | OK — 0 no coincidencias |
+| `lineapurpura.csv` | OK — 0 no coincidencias |
+| `delitossexuales.csv` | OK — 0 no coincidencias |
+| `llamadas123_consolidado_limpio.csv` | OK — 0 no coincidencias (tras corregir separador `;` y encoding) |
+| Encuesta de Percepción (`df`) | OK — solo Sumapaz ausente, tolerado por diseño |
+
+**Excepción documentada — `llamadas123_consolidado_limpio.csv`:** 222 registros
+(0.42% de 52717) tienen `CODIGO_LOCALIDAD` nulo tras la
+conversión numérica. Se excluyen de toda agregación territorial (Nivel 2 de la jerarquía
+de integración) por no tener llave de cruce válida contra `dim_localidad`. No se imputan.
+Su magnitud (<0,5%) se considera marginal frente al volumen total del dataset.
+
+**Nota técnica:** `llamadas123_consolidado_limpio.csv` usa separador `;` (no `,`) y
+codificación con BOM (`utf-8-sig`) — debe cargarse con `sep=";"` explícito o las 13
+columnas colapsan en una sola.
+
+## Paso 1.6 — Diseño muestral: estrato y conglomerado (registrado 2026-08-20)
+
+**Decisión:** se fija `codigo_UPL` como unidad de conglomerado (30
+grupos) y `codigo_localidad` como estrato (19 grupos, sobre las
+19 localidades encuestadas).
+
+**Motivo:** la encuesta no trae identificador de manzana ni de UPZ (se eliminó
+`DIRECTORIO_MZ` en el ETL por no ser un identificador reutilizable de conglomerado
+espacial estable), y `codigo_UPL` es el nivel geográfico más fino disponible que agrupa
+personas por cercanía real dentro de una misma localidad. Usar `codigo_localidad` como
+conglomerado en vez de estrato sería demasiado grueso (perdería variación intra-localidad
+en los errores estándar); usar `codigo_UPL` como estrato sería excesivamente granular
+para los modelos con efectos fijos de localidad que se van a estimar en la Fase 3.
+
+**Advertencia de tamaño de muestra:** 30 conglomerados
+está en el límite inferior aceptable para inferencia con errores estándar robustos
+clusterizados (la literatura recomienda ≥30–50 clusters para que la asintótica de
+White/Huber-clusterizado sea confiable). Tamaño de conglomerado: media
+436.1, rango [32, 756].
+
+**Mitigación:** se usará corrección de muestras pequeñas en todos los modelos con errores
+estándar clusterizados por `codigo_UPL`, vía `cov_kwds={'use_correction': True}`
+(statsmodels), que aplica el factor de corrección G/(G-1) · (N-1)/(N-k) sobre la matriz
+de covarianza cluster-robusta. Esta decisión se reporta explícitamente en cualquier tabla
+de resultados de la Fase 3 (regresión logística de H-A), con una nota al pie indicando
+que los ICs pueden ser algo anticonservadores dado el número de conglomerados.
+
+**Ponderación:** toda estimación agregada usa `fexp_calp_anu` (personas) o
+`fexp_calh_anu` (hogares) según corresponda — nunca conteos crudos sin ponderar para
+estimaciones poblacionales, solo para descriptivos exploratorios ya identificados como
+tales (ej. Pasos 1.3, 1.4, 1.4b).
+
+## Paso 1.7 — Validación de factores de expansión (registrado 2026-08-20)
+
+**Población adulta de Bogotá de referencia:** 6,201,042
+(orden de magnitud declarado: 6-7 millones). Tolerancia aceptada: 15%.
+
+**Interpretación A (suma directa, 12 meses):** 6,110,290
+→ diferencia relativa 1.5% (dentro de tolerancia)
+
+**Interpretación B (bimestral, promedio de la suma entre los 6
+bimestres del año móvil):** 1,018,382
+→ diferencia relativa 83.6% (FALLA tolerancia)
+
+**Método adoptado:** `suma_directa_por_localidad`. Suma total final: 6,110,290
+(diferencia relativa 1.5%).
+
+**Regla operativa para el resto del pipeline:** toda estimación poblacional agregada
+(por localidad, UPL, o total ciudad) que use `fexp_calp_anu` debe replicar este mismo
+método — sumar directamente, sin promediar por bimestre.
+Aplicar el método incorrecto no aplica en este caso.
+
+## Gráfico de control 1 — Población femenina expandida vs. oficial (registrado 2026-08-20)
+
+Comparación por localidad entre `PobMujeres` (oficial, `riesgofeminicidio.csv`, corte
+2026-03-31) y la población femenina estimada desde la Encuesta de Percepción
+(suma de `fexp_calp_anu` para `D1 == "Mujer"`, agrupada por `codigo_localidad`).
+
+**Propósito:** control de calidad interno del factor de expansión a nivel de localidad
+(no solo a nivel ciudad, como en el Paso 1.7). No se incluye en el dashboard de Tableau —
+es un diagnóstico de proceso, guardado en `docs/grafico_control_1_pobmujeres.png`.
+
+**Resultado:** 12 localidad(es) exceden ±15% de diferencia: Antonio Nariño, Los Mártires, Barrios Unidos, Teusaquillo, Tunjuelito, Puente Aranda, Rafael Uribe Uribe, Usme, Usaquén, Ciudad Bolívar, Bosa, Suba. Investigar antes de usar estimaciones de localidad específicas de estas zonas con alta confianza.
+
+Diferencia relativa promedio (valor absoluto) entre localidades: 17.3%.
+
+## Gráfico de control 1 — Diagnóstico de discrepancias por localidad (registrado 2026-08-20)
+
+A nivel ciudad, la población femenina expandida desde la encuesta (adultos, `fexp_calp_anu`)
+difiere -16.3% de `PobMujeres` oficial (todas las edades). A nivel localidad, 12 de 19
+exceden ±15% de diferencia (todas subestiman).
+
+**Hipótesis descartadas por falta de correlación:**
+- Proporción de menores en el hogar (proxy de estructura etaria): correlación 0.023 con
+  `diff_pct` — no explica la variación entre localidades.
+- Tamaño de muestra por localidad: correlación -0.172 con `|diff_pct|` — débil, solo
+  visible en los extremos (las 3 localidades de menor `n`: La Candelaria, Los Mártires,
+  Antonio Nariño, concentran los errores más extremos en ambas direcciones).
+
+**Conclusión:** la discrepancia responde a una combinación de (1) un componente
+sistemático de ciudad, consistente con que `PobMujeres` incluye todas las edades mientras
+la encuesta solo mide población adulta (18+), y (2) ruido muestral que se amplifica en
+localidades con `n` bajo. No se identifica un error del factor de expansión ni del
+pipeline de limpieza — el Paso 1.7 ya confirmó que la suma total del factor es correcta
+(1.5% de diferencia contra la población adulta oficial de Bogotá, 6.201.042).
+
+**Regla operativa:** los indicadores basados en la Encuesta de Percepción para
+**Los Mártires, Antonio Nariño, Barrios Unidos y La Candelaria** deben reportarse con una
+nota de precaución adicional por bajo tamaño muestral (n entre 151 y 270), siguiendo el
+mismo criterio ya aplicado a Sumapaz. El resto de localidades (n≥296) se consideran
+confiables para estimación, con el entendido de que cualquier tasa que use `PobMujeres`
+(todas las edades) como denominador administrativo y un numerador derivado de la encuesta
+(solo adultos) tiene un descalce conceptual de denominador que debe declararse en el
+dashboard, no ocultarse.
+
+## Paso 1.3 — Restricción de `Jx402` (registrado 2026-08-20)
+
+`Jx402` tiene **24 casos positivos** de 13.082 personas encuestadas (0,2%).
+El chequeo *go/no-go* de la Fase 3 (mínimo 150 positivos) **falla**. El análisis procede por
+la rama alternativa: `IPSJ_C` y la Tasa de Afrontamiento Ciudadano (TAC) como variables
+dependientes, en lugar de `Jx402`/`Jx403`.
+
+`Jx403` se distribuye en **17 Sí / 7 No**, calculado únicamente como descriptivo,
+**etiquetado como NO inferencial**. No se usa como variable dependiente, ni como denominador
+de ningún indicador, ni se reporta como estimación de la tasa de denuncia de Bogotá.
+
+Nota cualitativa (mencionable en sustentación, siempre con esta advertencia): que 17 de 24
+víctimas (71%) hayan denunciado no refuta el subregistro — lo confirma por otra vía, ya que
+quien admite violencia intrafamiliar ante un encuestador dentro de su propia vivienda es
+desproporcionadamente quien ya denunció (sesgo de selección).
+
+## Paso 1.4 — Semántica del bloque 404, variable M (registrado 2026-08-20)
+
+Verificaciones empíricas sobre `Mx404_1..6` (n=13082):
+1. Proporción de `Mx404_6 == "Si"` = 0.8122 (≈ 0,812)
+2. `n(Mx404_6 == "No")` = 2457
+3. Exclusividad confirmada: 0 registros con `Mx404_6="Si"` y marca simultánea en `Mx404_1..5`
+
+**Conclusión:** `_6 = "Si"` no distingue entre no haber presenciado y haber presenciado sin
+actuar; solo `_6 = "No"` es interpretable, como afrontamiento efectivo. Por lo tanto:
+
+- El Índice de Silencio (ITS) queda eliminado del plan: no tiene denominador observable.
+- Se define la **TAC — Tasa de Afrontamiento Ciudadano** = proporción de personas con
+  `Mx404_6 = "No"` (2457 positivos), directamente observable y usada como cota
+  inferior de la exposición.
+
+## Paso 1.4b — Análisis de sensibilidad de la TAC, parte 1: magnitud (registrado 2026-08-20)
+
+Se identificaron 17 registros (0,13% de n=13.082) donde `Mx404_6="Si"` coexiste con al
+menos una marca en `Mx404_1..5`, violando la exclusividad esperada. Diagnóstico:
+
+- Sin patrón por opción específica marcada (`_1` a `_5` distribuidos 1–5 casos c/u).
+- Sin patrón geográfico (13 localidades distintas, máx. 3 casos c/u) ni temporal
+  (10 de 12 meses).
+- Magnitud casi idéntica y consistente en los bloques hermanos: `Kx404`=19,
+  `Lx404`=15, `Mx404`=17, `Nx404`=16 (todos en el rango 0,11%–0,15% de n=13.082).
+
+Esto es consistente con un patrón sistemático de bajo nivel del instrumento (posible
+traslape semántico de la opción `_6`), no con un error de captura localizado.
+
+**Dos versiones construidas para análisis de sensibilidad posterior:**
+- `TAC_A_original`: 2457 positivos (0.1878), tal como se definió en el Paso 1.4.
+- `TAC_B_recodificada`: 2474 positivos (0.1891), donde los 17 casos con
+  acción concreta declarada en `_1..5` se recodifican a `_6="No"` (la acción concreta
+  manda sobre la ambigüedad de `_6`).
+- Diferencia: 17 casos (0,130 pp) — marginal frente al tamaño de muestra.
+
+**Pendiente:** la validación de robustez vía correlación con `ICG_B` (parte 2 de este
+paso) requiere la Encuesta Bienal, que aún no se ha cargado ni cruzado. `ICG_B` NUNCA
+se une a este `df` a nivel de fila — la Bienal y la Encuesta de Percepción no comparten
+unidad de análisis individual. Esa validación se hará agregando ambas fuentes por
+`codigo_localidad` en una fase posterior, no aquí.
+
+Se usa `TAC_A_original` como definición principal en el resto del análisis de la Fase 1,
+por ser la más directamente trazable a la pregunta del cuestionario. `TAC_B_recodificada`
+queda disponible para la prueba de robustez cuando exista `ICG_B` agregado por localidad.
+
+## Paso 1.5 — Construcción de `dim_localidad` (registrado 2026-08-20)
+
+Se construyó `dim_localidad` con 20 filas (`codigo_localidad` 1–20, `nombre_oficial`,
+`nombre_norm`, `sector_upl`, `en_encuesta`, `PobMujeres`), usando `normalizar()` =
+`unidecode().upper().strip()` con espacios múltiples colapsados.
+
+**Codificación confirmada empíricamente:** se cruzó `codigo_localidad` de la Encuesta de
+Percepción contra su propia columna `Localidad` (texto) y coincide exactamente con la
+codificación DANE estándar asumida (1=Usaquén ... 19=Ciudad Bolívar, 20=Sumapaz). No se
+asumió a ciegas — se verificó código por código.
+
+**`en_encuesta`:** única localidad marcada `False` es Sumapaz (código 20), como se esperaba.
+
+**`PobMujeres`:** extraída de `riesgofeminicidio.csv`, corte más reciente (2026-03-31),
+sin faltantes en las 20 localidades.
+
+**Verificación cruzada de las 6 fuentes contra `dim_localidad`:**
+
+| Fuente | Resultado |
+|---|---|
+| `riesgofeminicidio.csv` | OK — 0 no coincidencias |
+| `duplas.csv` | OK — 0 no coincidencias |
+| `lineapurpura.csv` | OK — 0 no coincidencias |
+| `delitossexuales.csv` | OK — 0 no coincidencias |
+| `llamadas123_consolidado_limpio.csv` | OK — 0 no coincidencias (tras corregir separador `;` y encoding) |
+| Encuesta de Percepción (`df`) | OK — solo Sumapaz ausente, tolerado por diseño |
+
+**Excepción documentada — `llamadas123_consolidado_limpio.csv`:** 222 registros
+(0.42% de 52717) tienen `CODIGO_LOCALIDAD` nulo tras la
+conversión numérica. Se excluyen de toda agregación territorial (Nivel 2 de la jerarquía
+de integración) por no tener llave de cruce válida contra `dim_localidad`. No se imputan.
+Su magnitud (<0,5%) se considera marginal frente al volumen total del dataset.
+
+**Nota técnica:** `llamadas123_consolidado_limpio.csv` usa separador `;` (no `,`) y
+codificación con BOM (`utf-8-sig`) — debe cargarse con `sep=";"` explícito o las 13
+columnas colapsan en una sola.
+
+## Paso 1.6 — Diseño muestral: estrato y conglomerado (registrado 2026-08-20)
+
+**Decisión:** se fija `codigo_UPL` como unidad de conglomerado (30
+grupos) y `codigo_localidad` como estrato (19 grupos, sobre las
+19 localidades encuestadas).
+
+**Motivo:** la encuesta no trae identificador de manzana ni de UPZ (se eliminó
+`DIRECTORIO_MZ` en el ETL por no ser un identificador reutilizable de conglomerado
+espacial estable), y `codigo_UPL` es el nivel geográfico más fino disponible que agrupa
+personas por cercanía real dentro de una misma localidad. Usar `codigo_localidad` como
+conglomerado en vez de estrato sería demasiado grueso (perdería variación intra-localidad
+en los errores estándar); usar `codigo_UPL` como estrato sería excesivamente granular
+para los modelos con efectos fijos de localidad que se van a estimar en la Fase 3.
+
+**Advertencia de tamaño de muestra:** 30 conglomerados
+está en el límite inferior aceptable para inferencia con errores estándar robustos
+clusterizados (la literatura recomienda ≥30–50 clusters para que la asintótica de
+White/Huber-clusterizado sea confiable). Tamaño de conglomerado: media
+436.1, rango [32, 756].
+
+**Mitigación:** se usará corrección de muestras pequeñas en todos los modelos con errores
+estándar clusterizados por `codigo_UPL`, vía `cov_kwds={'use_correction': True}`
+(statsmodels), que aplica el factor de corrección G/(G-1) · (N-1)/(N-k) sobre la matriz
+de covarianza cluster-robusta. Esta decisión se reporta explícitamente en cualquier tabla
+de resultados de la Fase 3 (regresión logística de H-A), con una nota al pie indicando
+que los ICs pueden ser algo anticonservadores dado el número de conglomerados.
+
+**Ponderación:** toda estimación agregada usa `fexp_calp_anu` (personas) o
+`fexp_calh_anu` (hogares) según corresponda — nunca conteos crudos sin ponderar para
+estimaciones poblacionales, solo para descriptivos exploratorios ya identificados como
+tales (ej. Pasos 1.3, 1.4, 1.4b).
+
+## Paso 1.7 — Validación de factores de expansión (registrado 2026-08-20)
+
+**Población adulta de Bogotá de referencia:** 6,201,042
+(orden de magnitud declarado: 6-7 millones). Tolerancia aceptada: 15%.
+
+**Interpretación A (suma directa, 12 meses):** 6,110,290
+→ diferencia relativa 1.5% (dentro de tolerancia)
+
+**Interpretación B (bimestral, promedio de la suma entre los 6
+bimestres del año móvil):** 1,018,382
+→ diferencia relativa 83.6% (FALLA tolerancia)
+
+**Método adoptado:** `suma_directa_por_localidad`. Suma total final: 6,110,290
+(diferencia relativa 1.5%).
+
+**Regla operativa para el resto del pipeline:** toda estimación poblacional agregada
+(por localidad, UPL, o total ciudad) que use `fexp_calp_anu` debe replicar este mismo
+método — sumar directamente, sin promediar por bimestre.
+Aplicar el método incorrecto no aplica en este caso.
+
+## Gráfico de control 1 — Población femenina expandida vs. oficial (registrado 2026-08-20)
+
+Comparación por localidad entre `PobMujeres` (oficial, `riesgofeminicidio.csv`, corte
+2026-03-31) y la población femenina estimada desde la Encuesta de Percepción
+(suma de `fexp_calp_anu` para `D1 == "Mujer"`, agrupada por `codigo_localidad`).
+
+**Propósito:** control de calidad interno del factor de expansión a nivel de localidad
+(no solo a nivel ciudad, como en el Paso 1.7). No se incluye en el dashboard de Tableau —
+es un diagnóstico de proceso, guardado en `docs/grafico_control_1_pobmujeres.png`.
+
+**Resultado:** 12 localidad(es) exceden ±15% de diferencia: Antonio Nariño, Los Mártires, Barrios Unidos, Teusaquillo, Tunjuelito, Puente Aranda, Rafael Uribe Uribe, Usme, Usaquén, Ciudad Bolívar, Bosa, Suba. Investigar antes de usar estimaciones de localidad específicas de estas zonas con alta confianza.
+
+Diferencia relativa promedio (valor absoluto) entre localidades: 17.3%.
+
+## Gráfico de control 1 — Diagnóstico de discrepancias por localidad (registrado 2026-08-20)
+
+A nivel ciudad, la población femenina expandida desde la encuesta (adultos, `fexp_calp_anu`)
+difiere -16.3% de `PobMujeres` oficial (todas las edades). A nivel localidad, 12 de 19
+exceden ±15% de diferencia (todas subestiman).
+
+**Hipótesis descartadas por falta de correlación:**
+- Proporción de menores en el hogar (proxy de estructura etaria): correlación 0.023 con
+  `diff_pct` — no explica la variación entre localidades.
+- Tamaño de muestra por localidad: correlación -0.172 con `|diff_pct|` — débil, solo
+  visible en los extremos (las 3 localidades de menor `n`: La Candelaria, Los Mártires,
+  Antonio Nariño, concentran los errores más extremos en ambas direcciones).
+
+**Conclusión:** la discrepancia responde a una combinación de (1) un componente
+sistemático de ciudad, consistente con que `PobMujeres` incluye todas las edades mientras
+la encuesta solo mide población adulta (18+), y (2) ruido muestral que se amplifica en
+localidades con `n` bajo. No se identifica un error del factor de expansión ni del
+pipeline de limpieza — el Paso 1.7 ya confirmó que la suma total del factor es correcta
+(1.5% de diferencia contra la población adulta oficial de Bogotá, 6.201.042).
+
+**Regla operativa:** los indicadores basados en la Encuesta de Percepción para
+**Los Mártires, Antonio Nariño, Barrios Unidos y La Candelaria** deben reportarse con una
+nota de precaución adicional por bajo tamaño muestral (n entre 151 y 270), siguiendo el
+mismo criterio ya aplicado a Sumapaz. El resto de localidades (n≥296) se consideran
+confiables para estimación, con el entendido de que cualquier tasa que use `PobMujeres`
+(todas las edades) como denominador administrativo y un numerador derivado de la encuesta
+(solo adultos) tiene un descalce conceptual de denominador que debe declararse en el
+dashboard, no ocultarse.
+
+## Paso 2.2 — Tareas efectivas y exclusión por información insuficiente (registrado 2026-08-20)
+
+Nota de unidad de análisis: `DIRECTORIO_HOG` fue eliminado en el ETL original, por lo que
+no existe identificador de hogar independiente del respondiente. Se trata cada fila de
+`df` como un "hogar" a efectos del ICC — el respondiente reporta sobre la distribución
+de tareas de su propio hogar, y no hay forma de agregar múltiples respondientes al mismo
+hogar en esta base.
+
+`T_e` = tareas del bloque 201 donde la respuesta no es nula ni "No se realiza".
+Se excluyen filas con `|T_e| < 5` (información insuficiente).
+
+**Excluidos:** 60 de 13082 (0.46%).
+Base resultante para el ICC: 13022 filas.
+
+## Paso 2.4 — Índice de Herfindahl de concentración del cuidado, HHI (registrado 2026-08-20)
+
+`HHI = Σ_k (n_k / |T_e|)²`, calculado sobre las 13022 filas que pasaron el
+filtro de `|T_e| ≥ 5` (Paso 2.2), con 7 categorías de responsable (Paso 2.3).
+
+**Rango teórico:** [0.1429, 1.0000]. Rango observado:
+[0.1837, 1.0000] — dentro del rango teórico, validado.
+
+**Distribución:** media 0.6955, mediana 0.7222,
+desviación estándar 0.2465.
+
+**Casos de concentración total (HHI=1.0):** 4162
+(32.0% de la base filtrada).
+
+**Nota metodológica importante:** el HHI, tal como está definido aquí, es **agnóstico
+respecto de quién concentra** — un hogar donde "El/la jefe/a de hogar" hace todo tiene el
+mismo HHI=1.0 que uno donde "Servicio contratado" hace todo. Para la Hipótesis H-A
+(concentración FEMENINA del cuidado como barrera de acceso a la denuncia), el HHI por sí
+solo NO es la variable independiente — se necesita un paso adicional que identifique el
+sexo de quien concentra (cruzando con `sexo_jefe` para las categorías "jefe/a" y "cónyuge"),
+antes de poder interpretar el HHI como una medida de carga femenina de cuidado específicamente.
+
+## Paso 2.5 — Responsable principal (k*) y determinación de sexo (registrado 2026-08-20)
+
+`k* = argmax_k(n_k)` por fila, sobre las 7 categorías de responsable. Empates se marcan
+explícitamente como "Empate — no determinable", sin resolución arbitraria por orden de
+columna: **799** filas (6.14%).
+
+**Distribución de k\*:**
+- El/la jefe/a de hogar: 5.329 (40,7%)
+- Todos los miembros del hogar: 2.444
+- Ambos cónyuges o pareja: 2.283
+- El/la cónyuge o pareja: 1.067
+- Empate — no determinable: 799
+- Servicio contratado: 542
+- Otros miembros del hogar: 402
+- Familiar externo: 156
+
+**Regla de determinación de sexo:**
+- `k*="jefe/a de hogar"` → sexo = `sexo_jefe` directo. **5329** casos
+  (40.9%), sin supuesto adicional.
+- `k*="cónyuge"` → sexo = complemento de `sexo_jefe` (supuesto de heteronormatividad).
+  **1067** casos (8.2%). Ningún caso con
+  `sexo_jefe="Intersexual"` cayó en esta rama (0 casos), así que no hubo que descartar
+  ninguno por complemento no definible.
+- Cualquier otro `k*` (incl. empates) → "No determinable".
+
+**Total con sexo determinado (Hombre/Mujer/Intersexual):** 6396
+(49.1% de 13022).
+De ellos, **16.7%** (1067 de 6396)
+depende del supuesto de heteronormatividad — no son un dato directo de la encuesta.
+
+**Total "No determinable":** 6626 (50.9%).
+Nota: esta cifra YA incluye los 799 empates (no se suman aparte).
+
+**Distribución del sexo determinado:** Mujer 4484
+(70.1% de los determinables),
+Hombre 1909
+(29.8%),
+Intersexual 3.
+
+**Limitación declarada:** casi la mitad de la base (50.9%)
+queda sin responsable principal de sexo determinable — sobre todo por reparto compartido
+("Todos los miembros", "Ambos cónyuges"), que en sí mismo es información válida (ausencia
+de concentración individual) pero no sirve para H-A, que requiere identificar una persona
+concentradora. El 16.7% de los casos SÍ determinables depende del
+supuesto de heteronormatividad; se recomienda repetir los modelos de la Fase 3 excluyendo
+estos casos como análisis de sensibilidad.
+
+## Paso 2.5 (adenda) — Composición del sexo determinado y sesgo de selección potencial (registrado 2026-08-20)
+
+**Composición del subconjunto con sexo determinado** (n=6396):
+- Mujer: 4484 (70.1%)
+- Hombre: 1909 (29.8%)
+- Intersexual: 3
+
+La mujer es responsable principal en 70.1% de los casos donde el responsable
+es identificable — consistente con la hipótesis general del proyecto sobre concentración
+femenina del trabajo de cuidado.
+
+**Advertencia de sesgo de selección declarada de antemano:** el subconjunto analizable
+para H-A (6396 de 13022, 49.1%) **no es una
+muestra aleatoria** del total. Queda excluido el 50.9% de los casos donde el
+cuidado se reparte sin una persona concentradora única ("Todos los miembros del hogar",
+"Ambos cónyuges o pareja", empates), que en sí mismo es información sustantiva (ausencia
+de concentración) pero no es utilizable para identificar el sexo de un responsable
+principal.
+
+**Implicación:** es plausible que el subconjunto "determinable" esté sesgado hacia hogares
+con división de tareas más tradicional/menos igualitaria — precisamente los hogares donde
+SÍ existe una persona que concentra el cuidado son los que producen un `k*` no compartido.
+Hogares más igualitarios en la distribución de tareas (que podrían tener perfiles
+sociodemográficos distintos — mayor estrato, parejas más jóvenes, etc.) tienden a caer en
+"No determinable" por reparto compartido, y quedan fuera del análisis de H-A.
+
+**Consecuencia para la interpretación de resultados:** cualquier hallazgo de H-A (efecto de
+la concentración de cuidado sobre `IPSJ_C` o la TAC) debe leerse como válido para el
+subconjunto de hogares con responsable de cuidado identificable, no como representativo
+de la población general de Bogotá. Esto se declara explícitamente en la Fase 3, no se
+extrapola sin esta salvedad.
+
+**Diagnóstico exploratorio realizado** (perfil determinable vs. no determinable):
+                    n  pct_pobre_subjetivo
+es_determinable                           
+False            6626                 13.0
+True             6396                 21.3
+
+Se recomienda revisar si esta diferencia de perfil es sistemática (ej. vía estrato `H1`
+o pobreza subjetiva `C303`) antes de interpretar los coeficientes de H-A en la Fase 3, y
+mencionar esta limitación en la sustentación como una de las razones por las que H-A se
+declaró como hipótesis de *soporte individual*, no como prueba poblacional generalizable.
+
+## Paso 2.2 — Tareas efectivas y exclusión por información insuficiente (registrado 2026-08-20)
+
+Nota de unidad de análisis: `DIRECTORIO_HOG` fue eliminado en el ETL original, por lo que
+no existe identificador de hogar independiente del respondiente. Se trata cada fila de
+`df` como un "hogar" a efectos del ICC — el respondiente reporta sobre la distribución
+de tareas de su propio hogar, y no hay forma de agregar múltiples respondientes al mismo
+hogar en esta base.
+
+`T_e` = tareas del bloque 201 donde la respuesta no es nula ni "No se realiza".
+Se excluyen filas con `|T_e| < 5` (información insuficiente).
+
+**Excluidos:** 60 de 13082 (0.46%).
+Base resultante para el ICC: 13022 filas.
+
+## Paso 2.4 — Índice de Herfindahl de concentración del cuidado, HHI (registrado 2026-08-20)
+
+`HHI = Σ_k (n_k / |T_e|)²`, calculado sobre las 13022 filas que pasaron el
+filtro de `|T_e| ≥ 5` (Paso 2.2), con 7 categorías de responsable (Paso 2.3).
+
+**Rango teórico:** [0.1429, 1.0000]. Rango observado:
+[0.1837, 1.0000] — dentro del rango teórico, validado.
+
+**Distribución:** media 0.6955, mediana 0.7222,
+desviación estándar 0.2465.
+
+**Casos de concentración total (HHI=1.0):** 4162
+(32.0% de la base filtrada).
+
+**Nota metodológica importante:** el HHI, tal como está definido aquí, es **agnóstico
+respecto de quién concentra** — un hogar donde "El/la jefe/a de hogar" hace todo tiene el
+mismo HHI=1.0 que uno donde "Servicio contratado" hace todo. Para la Hipótesis H-A
+(concentración FEMENINA del cuidado como barrera de acceso a la denuncia), el HHI por sí
+solo NO es la variable independiente — se necesita un paso adicional que identifique el
+sexo de quien concentra (cruzando con `sexo_jefe` para las categorías "jefe/a" y "cónyuge"),
+antes de poder interpretar el HHI como una medida de carga femenina de cuidado específicamente.
+
+## Paso 2.5 — Responsable principal (k*) y determinación de sexo (registrado 2026-08-20)
+
+`k* = argmax_k(n_k)` por fila, sobre las 7 categorías de responsable. Empates se marcan
+explícitamente como "Empate — no determinable", sin resolución arbitraria por orden de
+columna: **799** filas (6.14%).
+
+**Distribución de k\*:**
+- El/la jefe/a de hogar: 5.329 (40,7%)
+- Todos los miembros del hogar: 2.444
+- Ambos cónyuges o pareja: 2.283
+- El/la cónyuge o pareja: 1.067
+- Empate — no determinable: 799
+- Servicio contratado: 542
+- Otros miembros del hogar: 402
+- Familiar externo: 156
+
+**Regla de determinación de sexo:**
+- `k*="jefe/a de hogar"` → sexo = `sexo_jefe` directo. **5329** casos
+  (40.9%), sin supuesto adicional.
+- `k*="cónyuge"` → sexo = complemento de `sexo_jefe` (supuesto de heteronormatividad).
+  **1067** casos (8.2%). Ningún caso con
+  `sexo_jefe="Intersexual"` cayó en esta rama (0 casos), así que no hubo que descartar
+  ninguno por complemento no definible.
+- Cualquier otro `k*` (incl. empates) → "No determinable".
+
+**Total con sexo determinado (Hombre/Mujer/Intersexual):** 6396
+(49.1% de 13022).
+De ellos, **16.7%** (1067 de 6396)
+depende del supuesto de heteronormatividad — no son un dato directo de la encuesta.
+
+**Total "No determinable":** 6626 (50.9%).
+Nota: esta cifra YA incluye los 799 empates (no se suman aparte).
+
+**Distribución del sexo determinado:** Mujer 4484
+(70.1% de los determinables),
+Hombre 1909
+(29.8%),
+Intersexual 3.
+
+**Limitación declarada:** casi la mitad de la base (50.9%)
+queda sin responsable principal de sexo determinable — sobre todo por reparto compartido
+("Todos los miembros", "Ambos cónyuges"), que en sí mismo es información válida (ausencia
+de concentración individual) pero no sirve para H-A, que requiere identificar una persona
+concentradora. El 16.7% de los casos SÍ determinables depende del
+supuesto de heteronormatividad; se recomienda repetir los modelos de la Fase 3 excluyendo
+estos casos como análisis de sensibilidad.
+
+## Paso 2.5 (adenda) — Composición del sexo determinado y sesgo de selección potencial (registrado 2026-08-20)
+
+**Composición del subconjunto con sexo determinado** (n=6396):
+- Mujer: 4484 (70.1%)
+- Hombre: 1909 (29.8%)
+- Intersexual: 3
+
+La mujer es responsable principal en 70.1% de los casos donde el responsable
+es identificable — consistente con la hipótesis general del proyecto sobre concentración
+femenina del trabajo de cuidado.
+
+**Advertencia de sesgo de selección declarada de antemano:** el subconjunto analizable
+para H-A (6396 de 13022, 49.1%) **no es una
+muestra aleatoria** del total. Queda excluido el 50.9% de los casos donde el
+cuidado se reparte sin una persona concentradora única ("Todos los miembros del hogar",
+"Ambos cónyuges o pareja", empates), que en sí mismo es información sustantiva (ausencia
+de concentración) pero no es utilizable para identificar el sexo de un responsable
+principal.
+
+**Implicación:** es plausible que el subconjunto "determinable" esté sesgado hacia hogares
+con división de tareas más tradicional/menos igualitaria — precisamente los hogares donde
+SÍ existe una persona que concentra el cuidado son los que producen un `k*` no compartido.
+Hogares más igualitarios en la distribución de tareas (que podrían tener perfiles
+sociodemográficos distintos — mayor estrato, parejas más jóvenes, etc.) tienden a caer en
+"No determinable" por reparto compartido, y quedan fuera del análisis de H-A.
+
+**Consecuencia para la interpretación de resultados:** cualquier hallazgo de H-A (efecto de
+la concentración de cuidado sobre `IPSJ_C` o la TAC) debe leerse como válido para el
+subconjunto de hogares con responsable de cuidado identificable, no como representativo
+de la población general de Bogotá. Esto se declara explícitamente en la Fase 3, no se
+extrapola sin esta salvedad.
+
+**Diagnóstico exploratorio realizado** (perfil determinable vs. no determinable):
+                    n  pct_pobre_subjetivo
+es_determinable                           
+False            6626                 13.0
+True             6396                 21.3
+
+Se recomienda revisar si esta diferencia de perfil es sistemática (ej. vía estrato `H1`
+o pobreza subjetiva `C303`) antes de interpretar los coeficientes de H-A en la Fase 3, y
+mencionar esta limitación en la sustentación como una de las razones por las que H-A se
+declaró como hipótesis de *soporte individual*, no como prueba poblacional generalizable.
+
+## Paso 2.7 — Variable categórica de comunicación (registrado 2026-08-20)
+
+Se construyó `carga_cuidado_categoria` según la regla del enunciado, con una 4ª categoría
+explícita para un caso borde no cubierto por las 3 reglas originales:
+
+| Categoría | Criterio | n | % |
+|---|---|---|---|
+| Carga concentrada en mujer | ICC_mujer ≥ 0,50 | 3585 | 27.5% |
+| Carga concentrada en hombre | HHI ≥ 0,50 ∧ responsable=Hombre | 1713 | 13.2% |
+| Carga compartida | HHI < 0,50 | 3218 | 24.7% |
+| **Concentrada, responsable no determinable** *(añadida)* | HHI ≥ 0,50 ∧ responsable ∉ {Mujer, Hombre} | 4506 | 34.6% |
+
+**Por qué se añadió la 4ª categoría:** las 3 reglas originales dejan un vacío lógico —
+`HHI ≥ 0,50` con responsable "No determinable" (empates, o `k*` en categorías compartidas
+como "Ambos cónyuges"/"Todos los miembros" que igual concentran ≥50% del HHI) no cumple
+ninguna de las 3 condiciones originales. Forzarlo silenciosamente a "compartida" sería
+incorrecto (HHI alto = SÍ hay concentración), y forzarlo a "mujer" u "hombre" inventaría
+un sexo no determinado. Se prefiere una 4ª categoría explícita y minoritaria antes que
+ocultar el caso dentro de una de las 3 originales.
+
+**Uso en dashboard:** esta variable es la que se usará para el Gráfico 1 y cualquier
+visual de "quién carga el cuidado" — se recomienda mostrar las 4 categorías o, si el
+espacio del dashboard lo exige, fusionar la 4ª dentro de "Carga compartida" con una nota
+al pie que aclare la diferencia conceptual (concentración existe, pero no en una persona
+de sexo identificable).
+
+## Gráfico 1 (dashboard) — Distribución de HHI por sexo del responsable principal (registrado 2026-08-20)
+
+**Estadísticos** (n=6393 con sexo determinado):
+
+| Sexo | Media HHI | Mediana HHI | n | % con HHI≥0,50 |
+|---|---|---|---|---|
+| Mujer | 0,728 | 0,755 | 4.484 | 80,0% |
+| Hombre | 0,832 | 1,000 | 1.909 | 89,7% |
+
+**Hallazgo — no confundir con la hipótesis principal del proyecto:** cuando el hombre
+es responsable principal, concentra las tareas de cuidado en mayor grado que cuando lo
+es la mujer (mediana 1,00 vs. 0,76). Esto es un hallazgo *condicional* — mide intensidad
+de concentración dado que ya se es el responsable, no la probabilidad de llegar a serlo.
+
+**No contradice H-A:** la evidencia central de H-A no es la intensidad de concentración
+por sexo, sino la **prevalencia**: 4.484 mujeres son responsables principales frente a
+1.909 hombres (2,35× más mujeres), documentado en el Paso 2.5. Son dos preguntas
+distintas — "¿quién llega a concentrar el cuidado?" (mayoritariamente mujeres) vs.
+"¿cuánto concentra quien ya lo hace?" (más intenso en hombres, posiblemente porque los
+hombres que terminan siendo responsable único de cuidado en este contexto lo hacen en
+hogares con menos alternativas de reparto — hipótesis no verificada aquí, requeriría
+análisis adicional).
+
+**Título del dashboard elegido para evitar esta confusión:** *"Cuando el hombre asume la
+responsabilidad principal del cuidado, la concentra más"* — describe el hallazgo del HHI
+específicamente, sin insinuar que contradice o reemplaza el hallazgo de prevalencia.
+Ambos gráficos (este y el de prevalencia de responsable principal por sexo) deben
+presentarse juntos en el dashboard para evitar lectura parcial.
+
+Archivo: `outputs/tableau/grafico1_hhi_por_sexo.png`.
+
+## Paso 2.8b — Análisis de sensibilidad TAC_A vs. TAC_B, K/L/M/N (registrado 2026-08-20)
+
+**Resultado: diferencia de 0 en los cuatro bloques (K, L, M, N), en casos y en TAC ponderada.**
+
+Esto NO significa que la ambigüedad de `_6` haya dejado de existir — significa que la
+definición de `TAC_A` (= `afronto_X`) cambió entre el Paso 1.4b y el Paso 2.8, y por eso
+esta comparación específica se volvió un no-op:
+
+- **Paso 1.4b** (`TAC_A_original`, solo para M): definida como `Mx404_6 == "No"` —
+  **basada en `_6`**. Bajo esa definición, los 17 casos ambiguos (`_6="Si"` + marca en
+  `_1..5`) quedaban con `TAC_A=0`, y la recodificación a `TAC_B` sí producía una
+  diferencia real de 17 casos.
+- **Paso 2.8** (`afronto_X`, para K/L/M/N): definida directamente desde `_1..5`
+  (`any(Xx404_1..5 == "Si")`) — **basada en `_1..5`**, siguiendo la definición primaria
+  del enunciado del Paso 2.8. Bajo esta definición, los casos ambiguos YA tienen
+  `afronto=1` desde el origen (porque sí tienen marca en `_1..5`), así que "recodificarlos
+  a 1" no cambia nada — de ahí la diferencia de 0 en los cuatro bloques.
+
+**Conclusión correcta:** al fijar `_1..5` como fuente primaria de `TAC_A` (Paso 2.8), la
+ambigüedad de `_6` deja de ser relevante para el cálculo de la TAC — se resuelve por
+construcción, no por una decisión de sensibilidad. El análisis de sensibilidad de este
+paso queda sin objeto bajo la definición vigente. Se mantiene la constancia de los 17/19/15/16
+casos de no-exclusividad por bloque (documentados en el Paso 2.8 principal) como nota de
+calidad del instrumento, pero no requiere tratamiento adicional porque no afecta el
+cálculo de la TAC tal como está definida.
+
+`TAC_B_{prefijo}` calculada en esta celda es idéntica a `TAC_A_{prefijo}` en los
+cuatro bloques y puede eliminarse del dataframe sin pérdida de información.
+
+## Paso 2.9 — Interpretación y límites de la TAC (registrado 2026-08-20)
+
+**Advertencia estructural:** `TAC_X` mide simultáneamente dos fenómenos que no se pueden
+separar con los datos disponibles:
+1. Cuánta violencia de tipo X ocurre y es **visible** para terceros (exposición).
+2. De la violencia visible, cuánta **provoca una acción** de quien la presencia (afrontamiento).
+
+Una TAC baja en una localidad puede deberse a poca violencia visible, a poca disposición
+a actuar, o a ambas — el indicador no permite distinguir cuál de las dos domina.
+
+**Reglas de redacción obligatorias para el informe y el dashboard:**
+
+1. **`TAC` se usa exclusivamente como cota inferior de la exposición, nunca como
+   estimación puntual.** No se reporta como "la tasa de violencia contra la mujer en la
+   localidad X es Y%" — eso confundiría el numerador (afrontamiento) con el fenómeno
+   completo (violencia total, incluida la no presenciada o presenciada-y-callada, que
+   por diseño no es observable — Restricción B, Sección 0.3).
+
+2. **Toda afirmación cuantitativa se redacta en la forma:**
+   > *"Al menos X% de la población de [localidad] presenció y afrontó una situación de
+   > violencia contra una mujer [en el periodo de referencia]."*
+
+   Nunca se omite "al menos" ni "y afrontó" — ambas piezas son necesarias para que la
+   frase sea metodológicamente correcta.
+
+3. **Nunca se afirma que una localidad "tiene más violencia" a partir de `TAC`.** La
+   redacción correcta es que la localidad **tiene más violencia socialmente visible y
+   afrontada** — la diferencia no es cosmética: una localidad con TAC alta podría tener
+   más violencia real, o simplemente más disposición ciudadana a actuar ante lo que ve
+   (que es justamente lo que H-B busca explicar, vía `ICG_B` y la norma de no-injerencia).
+   Interpretar TAC como proxy directo de prevalencia invalidaría la lógica completa de
+   H-B, que depende de que TAC capture algo distinto (o adicional) a la prevalencia bruta.
+
+**Consecuencia para los índices de la Fase 4 (RC_real, INA, etc.):** cualquier indicador
+posterior que use `TAC` como insumo del "denominador de necesidad real" hereda esta misma
+limitación y debe propagarla en su propia documentación — no se puede purificar la
+ambigüedad de TAC agregándola en un índice compuesto.
+
+**Aplicación práctica:** esta regla ya afecta la redacción de los resultados del Paso 2.8
+— la tabla de TAC por bloque (K/L/M/N) reportada ahí debe leerse, comunicarse y citarse
+siempre con la fórmula de "al menos X%", nunca como una tasa de prevalencia directa.
+
+## Paso 2.11 — Espacio predominante de afrontamiento (registrado 2026-08-20)
+
+**Nota metodológica obligatoria (respuesta múltiple):** normalizado sobre el **total de
+marcas** (3217), no sobre personas (2474 afrontaron),
+porque una misma persona puede señalar más de un espacio. Verificado exacto contra el
+enunciado: 285/1.139/1.239/405/149.
+
+**Distribución ciudad, bloque M:**
+
+| Espacio | Marcas (ciudad) | % del total de marcas |
+|---|---|---|
+| Residencia | 285 | 8.9% |
+| Barrio | 1139 | 35.4% |
+| Otro espacio público | 1239 | 38.5% |
+| Transporte | 405 | 12.6% |
+| Trabajo | 149 | 4.6% |
+
+
+**Hallazgo de política — la residencia NO es el espacio predominante en ninguna
+localidad.** El espacio predominante por localidad se distribuye así:
+- Otro espacio público: 14 localidades
+- Barrio: 4 localidades
+- Transporte: 1 localidades
+
+En las 19 localidades, "Otro espacio público" o "Barrio" dominan sobre "Residencia"
+— incluso en la localidad con mayor proporción residencial (Ciudad Bolívar,
+17.2%), el espacio público sigue siendo más frecuente. Esto tiene una
+implicación directa de política: **la ruta de atención no puede diseñarse principalmente
+como intervención domiciliaria** — la mayoría del afrontamiento reportado ocurre en
+barrio y espacio público abierto, seguido de transporte, con residencia y trabajo como
+las categorías menos marcadas en todas las localidades.
+
+**Advertencia de tamaño muestral:** localidades con menos de 20 marcas
+totales (La Candelaria=29, Antonio Nariño=50, Tunjuelito=75, Fontibón=78, Barrios
+Unidos=71, Los Mártires=96, Teusaquillo=93) tienen lectura frágil al desagregar en 5
+categorías — un solo caso puede mover varios puntos porcentuales. Se recomienda no
+sobreinterpretar diferencias finas entre estas localidades específicamente.
+
+**Gráfico 2 (dashboard):** `outputs/tableau/grafico2_espacio_afrontamiento_M.png`.
+
+## Paso 2.12 — Verificación de escalas continuas (IPSJ_A/C/E, ICG_B) (registrado 2026-08-20)
+
+Se verificaron rango [1,5] y conteo de válidos contra los valores documentados en la Fase 1
+(diccionario de datos de `encuesta_percepcion_legible.csv`).
+
+| Variable | n válidos | n nulos | n esperado | Coincide | Rango |
+|---|---|---|---|---|---|
+| IPSJ_C | 11904 | 1178 | 11904 | Sí | [1.0, 5.0] |
+| IPSJ_A | 12460 | 622  | 12460 | Sí | [1.0, 5.0] |
+| IPSJ_E | 12776 | 306  | 12776 | Sí | [1.0, 5.0] |
+| ICG_B  | 12912 | 170  | 12912 | Sí | [1.0, 5.0] |
+
+
+**Resultado: verificación exitosa en las 4 variables** — coinciden exactamente con los
+conteos esperados (11.904 / 12.460 / 12.776 / 12.912) y todas están dentro del rango
+[1,5] sin valores fuera de escala.
+
+Estas cuatro variables ya vienen como escalas continuas nativas del CSV (no requieren
+transformación de códigos a etiquetas, a diferencia de las variables categóricas del
+resto del pipeline) — sus nulos ({"IPSJ_C": 1178, "IPSJ_A": 622, "IPSJ_E": 306, "ICG_B": 170})
+corresponden a no respuesta / salto condicional en el cuestionario original, no a un
+problema de limpieza. Se conservan como `NaN` y se excluyen fila por fila (`.dropna()`)
+en cualquier modelo o correlación que las use, sin imputación.
+
+**Variable dependiente principal de H-A (según Sección 0.4):** `IPSJ_C` — la de mayor
+tasa de no respuesta (1.178, 9,0%) entre las cuatro, lo cual debe tenerse presente al
+reportar el n efectivo de cualquier modelo que la use como variable dependiente.
+
+## Paso 2.13 — Índice de Barrera de Acceso, IBA (registrado 2026-08-20)
+
+**Alfa de Cronbach** sobre `IPSJ_A`, `IPSJ_C`, `IPSJ_E` (listwise, n=11.361 filas con los
+3 ítems presentes): **0,6155**.
+
+**Umbral de decisión:** 0,60. Alfa por encima del umbral (0,6155 > 0,60), aunque por un
+margen estrecho (0,0155) — se promedia según la regla del paso, pero se documenta el
+margen ajustado.
+
+**Método construido:** `IBA = -(z(IPSJ_A) + z(IPSJ_C) + z(IPSJ_E)) / 3`, calculado
+únicamente sobre las 11.361 filas con los 3 componentes presentes simultáneamente (no se
+promedia sobre subconjuntos parciales de ítems fila por fila).
+
+**Distribución de IBA (n=11.361):**
+- Media: -0,011 · Desviación estándar: 0,752
+- Mediana: -0,061 · Rango intercuartílico: [-0,499, 0,500]
+- Rango: [-2,520, 1,506]
+
+**n válidos:** 11.361 de 13.082 (86,8%). La pérdida de 1.721 filas (13,2%) respecto al
+total de la encuesta se debe a exigir los 3 componentes simultáneamente presentes
+(listwise deletion) — mayor que la pérdida de cualquier componente individual
+(`IPSJ_C` sola: 1.178 nulos; `IPSJ_A`: 622; `IPSJ_E`: 306), porque la exigencia conjunta
+acumula los patrones de no respuesta de los tres ítems.
+
+**Consecuencia para H-A:** el alfa de 0,6155 está apenas por encima del umbral mínimo
+convencional de confiabilidad (0,60) — la consistencia interna entre los tres componentes
+institucionales es aceptable pero no fuerte. Se recomienda reportar el IBA compuesto como
+variable principal según lo indicado en este paso, pero acompañarlo de un análisis de
+sensibilidad usando `IPSJ_C` sola (que no exige la triple presencia y por tanto conserva
+más n, 11.904) para confirmar que los hallazgos de H-A no dependen de la construcción
+compuesta ni de la reducción de muestra por listwise deletion.
+
+## Paso 2.14 — Validación interna de H-B: TAC_M vs. ICG_B (registrado 2026-08-20)
+
+**Resultado: signo NEGATIVO en ambos niveles — contrario a lo esperado por H-B.**
+
+- **Nivel individual** (afronto_M vs. ICG_B, n=12.912): r = **-0,0486**. Correlación
+  débil pero de signo negativo.
+- **Nivel localidad** (TAC_M ponderada vs. ICG_B promedio ponderado, n=19 localidades):
+  r = **-0,4606**. Correlación moderada, también negativa.
+
+**Interpretación:** la hipótesis H-B esperaba que la Tasa de Afrontamiento Ciudadano
+correlacionara *positivamente* con la confianza en los vecinos (`ICG_B`), como evidencia
+de que la norma de no-injerencia (y no el machismo general) explica la inacción social
+frente a la violencia. El resultado observado es el opuesto: **las localidades con menor
+confianza vecinal promedio tienden a tener MAYOR afrontamiento** (ej. Los Mártires y
+Santa Fe, las de menor ICG_B, están entre las de mayor TAC_M; Teusaquillo, la de mayor
+ICG_B, tiene TAC_M intermedio-alto pero no la más alta).
+
+**Consecuencia declarada de antemano (Sección 0.5 — Hipótesis normativa H-B):** el
+enunciado original de H-B especificaba: *"Validación interna: la Tasa de Afrontamiento
+Ciudadano debe correlacionar positivamente con `ICG_B` dentro de la propia Encuesta de
+Percepción."* Este criterio de validación **no se cumple** — la correlación es negativa
+en ambos niveles de agregación. Bajo el criterio de refutación declarado explícitamente
+en el diseño del proyecto, este resultado **debilita la validación interna de H-B desde
+la propia Encuesta de Percepción**.
+
+**Lo que esto NO significa por sí solo:** no refuta H-B en su totalidad — la hipótesis
+normativa completa depende también del análisis factorial de la Bienal (distinguir
+roles tradicionales de no-injerencia/privatización, ítems P10.x/P12.x), que aún no se ha
+realizado. Es posible que `ICG_B` ("confío en que mis vecinos me ayudarían ante cualquier
+problema") no sea un proxy adecuado de la norma específica de no-injerencia frente a
+violencia de pareja — son constructos relacionados pero no idénticos: una localidad puede
+tener alta confianza vecinal general y aun así sostener la norma de "no meterse" en
+asuntos de pareja específicamente, lo cual invalidaría el supuesto de que ambos
+correlacionan.
+
+**Hipótesis alternativa a explorar:** la correlación negativa podría explicarse por
+un factor de confusión territorial — localidades con menor confianza vecinal e ingreso
+más bajo podrían tener también más violencia visible en espacios públicos/compartidos
+(ver Paso 2.11: predominancia de "Barrio"/"Otro espacio público" sobre "Residencia" en
+TODAS las localidades), lo que mecánicamente eleva las oportunidades de presenciar y
+por tanto de afrontar, independientemente de la norma de no-injerencia. Esto no se
+verifica en este paso — requeriría controlar por exposición/densidad poblacional en un
+modelo multivariado (Fase 3).
+
+**Decisión metodológica:** se mantiene la documentación transparente de este resultado
+como parte del reporte de H-B, en vez de omitirlo o buscar una recodificación que
+produzca el signo esperado. La validación cruzada con el análisis factorial de la Bienal
+(pendiente) será determinante para la evaluación final de H-B — este resultado individual
+NO se trata como la prueba definitiva ni en un sentido ni en el otro.
