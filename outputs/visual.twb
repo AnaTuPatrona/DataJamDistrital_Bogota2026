@@ -1830,6 +1830,15 @@
       <column caption='Coeficiente a graficar' datatype='real' name='[Calculation_1195755234168860]' role='measure' type='quantitative'>
         <calculation class='tableau' formula='IF [tipo] = &quot;logistico&quot; THEN [odds_ratio] ELSE [coeficiente] END' />
       </column>
+      <column caption='Límite inferior del coeficiente' datatype='real' name='[Calculation_1195755235209245]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [tipo] = &quot;logistico&quot; THEN [or_ic_inf] ELSE [coef_ic_inf] END' />
+      </column>
+      <column caption='Ancho IC del coeficiente' datatype='real' name='[Calculation_1195755235741728]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='[Límite inferior del coeficiente (copia)_1195755235512351]-[Calculation_1195755235209245]' />
+      </column>
+      <column caption='Línea nula' datatype='integer' name='[Calculation_1195755236085793]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [tipo] = &quot;logistico&quot; THEN 1 ELSE 0 END' />
+      </column>
       <column caption='Geometría' datatype='spatial' name='[Geometry]' role='measure' type='nominal' />
       <column caption='ICG B prom' datatype='real' name='[ICG_B_prom]' role='measure' type='quantitative' />
       <column caption='INA escenario' datatype='real' name='[INA_escenario]' role='measure' type='quantitative' />
@@ -1839,6 +1848,9 @@
       <column caption='IPSJ C prom' datatype='real' name='[IPSJ_C_prom]' role='measure' type='quantitative' />
       <column caption='IPSJ E prom' datatype='real' name='[IPSJ_E_prom]' role='measure' type='quantitative' />
       <column caption='IPS noche prom' datatype='real' name='[IPS_noche_prom]' role='measure' type='quantitative' />
+      <column caption='Límite superior del coeficiente' datatype='real' name='[Límite inferior del coeficiente (copia)_1195755235512351]' role='measure' type='quantitative'>
+        <calculation class='tableau' formula='IF [tipo] = &quot;logistico&quot; THEN [or_ic_sup] ELSE [coef_ic_sup] END' />
+      </column>
       <column caption='RC admin' datatype='real' name='[RC_admin]' role='measure' type='quantitative' />
       <column caption='RC real' datatype='real' name='[RC_real]' role='measure' type='quantitative' />
       <column caption='Shape Area' datatype='real' name='[Shape_Area]' role='measure' type='quantitative' />
@@ -3933,8 +3945,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='17' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98120' id='16' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
+            <zone h='100000' id='19' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98120' id='18' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
                 <zone h='6815' id='7' type-v2='title' w='99034' x='483' y='940'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -3994,8 +4006,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='17' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98120' id='16' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
+            <zone h='100000' id='19' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98120' id='18' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
                 <zone h='6815' id='7' type-v2='title' w='99034' x='483' y='940'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
@@ -4055,8 +4067,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='17' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98120' id='16' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
+            <zone h='100000' id='19' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='98120' id='18' param='vert' type-v2='layout-flow' w='99034' x='483' y='940'>
                 <zone h='6815' id='7' type-v2='title' w='99034' x='483' y='940'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
