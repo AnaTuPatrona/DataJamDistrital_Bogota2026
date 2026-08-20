@@ -1,1 +1,6 @@
 osb_saludmental-vintrafamiliar.csv
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
