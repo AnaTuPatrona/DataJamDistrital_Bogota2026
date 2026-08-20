@@ -1,38 +1,84 @@
 from pathlib import Path
 import pandas as pd
 import re
+import unicodedata
 
 
 # ============================================================
-# CONFIGURACIÓN DEL DATASET
+# CONFIGURACIÓN
 # ============================================================
 
 BASE_DIR = Path("../data")
 OUTPUT_DIR = Path("../outputs")
 
+OUTPUT_DIR.mkdir(exist_ok=True)
 
-# Archivos aceptados
-# Ejemplo:
-# llamadas123_marzo2025.csv
-# llamadas123_junio2025.csv
-FILE_PATTERN = r"^llamadas123_.*\d{4}\.csv$"
+FILE_PATTERN = r"^llamadas123_.*\d{4}.*\.csv$"
 
-
-# Columna principal de fecha
 DATE_COLUMN = "FECHA_INICIO_DESPLAZAMIENTO_MOVIL"
 
+LOCALITY_ID_COLUMN = "CODIGO_LOCALIDAD"
+LOCALITY_NAME_COLUMN = "LOCALIDAD"
 
-# Separador CSV
 CSV_SEPARATOR = ";"
 
-
-# Archivo final
 OUTPUT_FILE = OUTPUT_DIR / "llamadas123_consolidado_limpio.csv"
 
 
 
 # ============================================================
-# LECTURA DE ARCHIVOS
+# DETECCIÓN Y LECTURA ROBUSTA DE ENCODING
+# ============================================================
+
+def leer_csv(path):
+
+    encodings = [
+        "utf-8-sig",
+        "utf-8",
+        "cp1252",
+        "latin1",
+        "ISO-8859-1",
+        "macroman"
+    ]
+
+
+    ultimo_error = None
+
+
+    for encoding in encodings:
+
+        try:
+
+            df = pd.read_csv(
+                path,
+                sep=CSV_SEPARATOR,
+                encoding=encoding,
+                dtype=str,
+                on_bad_lines="warn"
+            )
+
+
+            print(
+                f"✓ {path.name} leído con {encoding}"
+            )
+
+
+            return df
+
+
+        except Exception as error:
+
+            ultimo_error = error
+
+
+    raise Exception(
+        f"No se pudo leer {path.name}: {ultimo_error}"
+    )
+
+
+
+# ============================================================
+# BUSQUEDA ARCHIVOS
 # ============================================================
 
 def encontrar_archivos():
@@ -44,62 +90,20 @@ def encontrar_archivos():
 
 
     archivos = [
-
         archivo
-
         for archivo in BASE_DIR.iterdir()
-
         if archivo.is_file()
         and regex.match(archivo.name)
-
     ]
 
 
     if not archivos:
-
         raise Exception(
-            "No se encontraron archivos compatibles"
+            "No existen archivos compatibles"
         )
 
 
     return sorted(archivos)
-
-
-
-def leer_csv(path):
-
-    codificaciones = [
-
-        "utf-8-sig",
-        "cp1252",
-        "latin1"
-
-    ]
-
-
-    for encoding in codificaciones:
-
-        try:
-
-            return pd.read_csv(
-
-                path,
-
-                sep=CSV_SEPARATOR,
-
-                encoding=encoding
-
-            )
-
-
-        except UnicodeDecodeError:
-
-            continue
-
-
-    raise Exception(
-        f"No fue posible leer {path.name}"
-    )
 
 
 
@@ -109,31 +113,31 @@ def leer_csv(path):
 
 def validar_columnas(df, archivo):
 
-    if DATE_COLUMN not in df.columns:
+    requeridas = {
+        DATE_COLUMN,
+        LOCALITY_ID_COLUMN,
+        LOCALITY_NAME_COLUMN
+    }
+
+
+    faltantes = requeridas - set(df.columns)
+
+
+    if faltantes:
 
         raise Exception(
             f"""
-            El archivo {archivo.name}
+            Archivo:
+            {archivo.name}
 
-            no contiene la columna requerida:
-
-            {DATE_COLUMN}
+            Columnas faltantes:
+            {faltantes}
             """
         )
 
 
 
 def validar_estructura(dataframes):
-
-    """
-    dataframes tiene esta estructura:
-
-    [
-        ("archivo.csv", dataframe),
-        ("archivo2.csv", dataframe)
-    ]
-
-    """
 
     columnas_base = set(
         dataframes[0][1].columns
@@ -142,15 +146,9 @@ def validar_estructura(dataframes):
 
     for nombre, df in dataframes:
 
-
         diferencia = (
-
-            columnas_base
-
-            ^
-
+            columnas_base ^
             set(df.columns)
-
         )
 
 
@@ -158,12 +156,12 @@ def validar_estructura(dataframes):
 
             raise Exception(
                 f"""
-                Diferencias encontradas en:
+                Diferencia estructural:
 
+                Archivo:
                 {nombre}
 
-                Columnas diferentes:
-
+                Columnas:
                 {diferencia}
                 """
             )
@@ -171,17 +169,23 @@ def validar_estructura(dataframes):
 
 
 # ============================================================
-# NORMALIZACIÓN
+# LIMPIEZA TEXTO
 # ============================================================
 
-def limpiar_caracteres(valor):
+def limpiar_texto(valor):
 
     if pd.isna(valor):
-
-        return valor
+        return pd.NA
 
 
     valor = str(valor)
+
+
+    # elimina caracteres invisibles
+    valor = unicodedata.normalize(
+        "NFKC",
+        valor
+    )
 
 
     reemplazos = {
@@ -190,9 +194,9 @@ def limpiar_caracteres(valor):
         "¥": "Ñ",
         "Ã±": "ñ",
         "Ã‘": "Ñ",
+        "â€“": "-",
         "–": "-",
         "—": "-"
-
     }
 
 
@@ -204,26 +208,7 @@ def limpiar_caracteres(valor):
         )
 
 
-    return valor
-
-
-
-def normalizar_texto(valor):
-
-    if pd.isna(valor):
-
-        return valor
-
-
-    return (
-
-        str(valor)
-
-        .strip()
-
-        .upper()
-
-    )
+    return valor.strip()
 
 
 
@@ -232,16 +217,12 @@ def normalizar_columnas(df):
     df.columns = (
 
         df.columns
-
         .str.strip()
-
         .str.upper()
-
         .str.replace(
             " ",
             "_"
         )
-
     )
 
 
@@ -252,66 +233,44 @@ def normalizar_columnas(df):
 def normalizar_dataset(df):
 
 
-    # Normalizar nombres columnas
-
     df = normalizar_columnas(df)
 
 
-
-    # Normalizar campos texto
-
     columnas_texto = (
-
         df.select_dtypes(
             include="object"
         )
         .columns
-
     )
 
 
     for columna in columnas_texto:
 
-
         df[columna] = (
 
             df[columna]
-
-            .apply(limpiar_caracteres)
-
-            .apply(normalizar_texto)
-
+            .apply(limpiar_texto)
+            .str.upper()
         )
 
 
-
-    # Convertir vacíos a nulos
+    # Vacíos como null
 
     df = df.replace(
-
         r"^\s*$",
-
         pd.NA,
-
         regex=True
-
     )
 
 
+    # eliminar duplicados
 
-    # Eliminar duplicados
-
-    registros_inicio = len(df)
-
+    inicial = len(df)
 
     df = df.drop_duplicates()
 
-
-    registros_fin = len(df)
-
-
     print(
-        f"Duplicados eliminados: {registros_inicio - registros_fin}"
+        f"Duplicados eliminados: {inicial-len(df)}"
     )
 
 
@@ -323,52 +282,43 @@ def normalizar_dataset(df):
 # VARIABLES TEMPORALES
 # ============================================================
 
-def agregar_fecha_variables(df):
+def agregar_variables_fecha(df):
 
 
     df[DATE_COLUMN] = pd.to_datetime(
 
         df[DATE_COLUMN],
 
-        errors="coerce"
+        errors="coerce",
 
+        dayfirst=True
     )
 
 
-    fechas_invalidas = (
+    invalidas = (
 
         df[DATE_COLUMN]
-
         .isna()
-
         .sum()
-
     )
 
 
-    if fechas_invalidas:
+    if invalidas:
 
         print(
-            f"Fechas inválidas encontradas: {fechas_invalidas}"
+            f"Fechas inválidas: {invalidas}"
         )
 
 
-
     df["MES"] = (
-
         df[DATE_COLUMN]
-
         .dt.month
-
     )
 
 
     df["AÑO"] = (
-
         df[DATE_COLUMN]
-
         .dt.year
-
     )
 
 
@@ -377,7 +327,7 @@ def agregar_fecha_variables(df):
 
 
 # ============================================================
-# PROCESO ETL
+# ETL
 # ============================================================
 
 def ejecutar_etl():
@@ -397,13 +347,7 @@ def ejecutar_etl():
     dataframes = []
 
 
-
     for archivo in archivos:
-
-
-        print(
-            f"Leyendo: {archivo.name}"
-        )
 
 
         df = leer_csv(
@@ -417,41 +361,29 @@ def ejecutar_etl():
         )
 
 
-        # Trazabilidad
+        # trazabilidad
 
         df["ARCHIVO_ORIGEN"] = archivo.name
 
 
-
         dataframes.append(
-
             (
                 archivo.name,
                 df
             )
-
         )
 
-
-
-    # Validar que todos tengan misma estructura
 
     validar_estructura(
         dataframes
     )
 
 
-
-    # Consolidar
-
     consolidado = pd.concat(
 
         [
-
             df
-
             for _, df in dataframes
-
         ],
 
         ignore_index=True
@@ -459,40 +391,34 @@ def ejecutar_etl():
     )
 
 
-
     print(
         f"Registros iniciales: {len(consolidado)}"
     )
 
 
-
-    # Normalización
-
     consolidado = normalizar_dataset(
-
         consolidado
-
     )
 
 
-
-    # Variables fecha
-
-    consolidado = agregar_fecha_variables(
-
+    consolidado = agregar_variables_fecha(
         consolidado
-
     )
 
 
+    # asegurar localidad como referencia directa
 
-    # Exportar
+    consolidado[LOCALITY_ID_COLUMN] = (
+        consolidado[LOCALITY_ID_COLUMN]
+        .astype("Int64")
+    )
+
 
     consolidado.to_csv(
 
         OUTPUT_FILE,
 
-        sep=CSV_SEPARATOR,
+        sep=";",
 
         encoding="utf-8-sig",
 
@@ -501,13 +427,10 @@ def ejecutar_etl():
     )
 
 
-
     print(
         """
         =========================
-
         ETL FINALIZADO
-
         =========================
         """
     )
@@ -523,10 +446,6 @@ def ejecutar_etl():
     )
 
 
-
-# ============================================================
-# MAIN
-# ============================================================
 
 if __name__ == "__main__":
 
