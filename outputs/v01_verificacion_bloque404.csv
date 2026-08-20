@@ -1,0 +1,5 @@
+﻿bloque,nombre,n_no_afronto,n_afronto,n_nulos,violan_exclusividad,huecos,marcas_totales,marcas_por_persona,TAC_sin_ponderar,aprueba
+K,Acoso sexual,10593,2489,0,19,0,3590,1.44,0.1903,False
+L,Violencia intrafamiliar,10914,2168,0,15,0,2871,1.32,0.1657,False
+M,Violencia contra la mujer,10625,2457,0,17,0,3217,1.31,0.1878,False
+N,Violencia contra NNA,11370,1712,0,16,0,2249,1.31,0.1309,False

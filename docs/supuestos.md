@@ -73,15 +73,42 @@ Todos los modelos individuales incluyen: `C303` (pobreza subjetiva), `H1` (estra
 **Advertencia obligatoria al citarlos:** que 17 de 24 hayan denunciado (71%) **no** estima la tasa de denuncia de Bogotá. Es sesgo de selección: quien admite violencia intrafamiliar ante un encuestador dentro de su vivienda es desproporcionadamente quien ya denunció.
 
 ## D-02 · Interpretación del bloque 404
-**Fecha:** 2026-08-20 · **Estado:**  **abierta — requiere V-01**
+**Fecha:** 2026-08-20 · **Estado:** **cerrada — confirmada por V-01 con observación**
 
 `Mx404_6` ("No afrontó la situación") marca "Sí" en 10.625 registros (81,2%). Si significara "presenció y no afrontó", ocho de cada diez bogotanos habrían presenciado violencia contra una mujer, lo cual es implausible.
 
 **Interpretación adoptada:** `_6 = 1` agrupa a quien no presenció con quien presenció y calló, **sin posibilidad de separarlos**. Solo `_6 = 0` es interpretable, como afrontamiento efectivo.
 
-**Soporte aritmético:** 13.082 − 10.625 = 2.457 registros con `_6 = 0`; las marcas en `_1` a `_5` suman 3.217, es decir varias ubicaciones por persona. Consistente.
+**Confirmación empírica (V-01, ejecutada 2026-08-20):**
 
-**Origen:** inferencia del equipo a partir de la regla de exclusividad del diccionario y de las frecuencias observadas. **No está confirmada contra el cuestionario original.** Ver V-01.
+| Chequeo | K | L | M | N | Veredicto |
+|---|---|---|---|---|---|
+| Frecuencias vs. diccionario | ✓ | ✓ | ✓ | ✓ | Coinciden al registro |
+| Cobertura (`_6 = 0` ⇒ algún lugar) | 0 | 0 | 0 | 0 | **Sin excepciones** |
+| Exclusividad (`_6 = 1` ⇒ ningún lugar) | 19 | 15 | 17 | 16 | 0,11%–0,15% de la muestra |
+| Marcas por persona | 1,44 | 1,32 | 1,31 | 1,31 | Respuesta múltiple confirmada |
+
+**El resultado decisivo es la cobertura: cero excepciones en los cuatro bloques.** Ningún registro tiene `_6 = 0` sin marcar al menos un lugar, lo que demuestra que `_6` y las marcas de lugar son complementarias por diseño: `_6 = 1 − 1[algún lugar]`.
+
+Las 15–19 violaciones de exclusividad no refutan la interpretación: si `_1..5` midieran "dónde presenció" con `_6` independiente, se esperarían 2.500–3.000 solapamientos sobre 10.625 marcas, no 17. La magnitud observada corresponde a inconsistencia de captura.
+
+**Conclusión:** D-02 se sostiene. La TAC se construye como está definida en D-03.
+
+**Hallazgo lateral aprovechable:** el acoso sexual se afronta en 1,44 espacios por persona frente a 1,32 de la violencia intrafamiliar. El acoso está más disperso territorialmente; la violencia intrafamiliar, más concentrada. Alimenta el gráfico 2 y la diferenciación de rutas de atención.
+
+## D-16 · Tratamiento de los registros que violan la exclusividad del bloque 404
+**Fecha:** 2026-08-20 · **Estado:** cerrada · **Depende de:** D-02, V-01
+
+67 registros en total (19 K · 15 L · 17 M · 16 N) presentan simultáneamente `_6 = 1` y al menos una marca de lugar.
+
+**Decisión:** se recodifican como **afrontamiento** (`afronto = 1`), privilegiando la marca de lugar sobre la casilla residual.
+
+**Justificación doble:**
+
+1. Una marca de lugar es información afirmativa y específica; `_6` es la opción residual. Ante contradicción, prevalece la más informativa.
+2. Es la opción **conservadora respecto a la propia hipótesis**: eleva la TAC en lugar de reducirla — en el bloque M, de 18,78% a 18,91%. Adoptar la codificación que debilita ligeramente el argumento propio es defendible en sustentación; la contraria no lo es.
+
+**Impacto:** ≤ 0,13 puntos porcentuales en cualquier indicador. Irrelevante para los resultados, pero se documenta y se menciona en la hoja de metodología del dashboard.
 
 ## D-03 · Eliminación del Índice de Silencio (ITS)
 **Fecha:** 2026-08-20 · **Estado:** cerrada · **Depende de:** D-02
@@ -188,7 +215,7 @@ Las tablas de hechos tienen granularidades distintas (localidad, localidad × tr
 
 | ID | Verificación | Fase | Criterio de aprobación | Estado | Resultado |
 |---|---|---|---|---|---|
-| **V-01** | Exclusividad del bloque 404: tabular `Mx404_6` contra el máximo de `Mx404_1..5` | 1.4 | **Cero** registros con `_6 = 1` y alguna marca en `_1..5`. Si aparece alguno, D-02 se revisa antes de seguir | rojo | *(pendiente)* |
+| **V-01** | Exclusividad del bloque 404: tabular `Mx404_6` contra el máximo de `Mx404_1..5` | 1.4 | **Cero** registros con `_6 = 1` y alguna marca en `_1..5`. Si aparece alguno, D-02 se revisa antes de seguir | **amarillo** | **Ejecutada 2026-08-20.** Frecuencias y cobertura ✓ (0 huecos en K/L/M/N). Exclusividad: 19·15·17·16 violaciones = 0,11–0,15%, atribuidas a captura. **D-02 se confirma**; los 67 registros se resuelven en D-16. Detalle en `outputs/v01_verificacion_bloque404.csv` |
 | **V-02** | Filtro maestro: `df[df.Ax401 == 2].Jx402.isna().all()` y conteo de nulos = 11.094 | 1.2 | Ambas verdaderas | rojo | *(pendiente)* |
 | **V-03** | Factores de expansión: suma de `fexp_calp_anu` contra población adulta proyectada de Bogotá | 1.7 | Diferencia ≤ 15%. Si no, revisar si el factor es bimestral y requiere promediarse | rojo | *(pendiente)* |
 | **V-04** | Peso del supuesto heteronormativo (D-09) | 2.5 | Reportar el %. Si > 25%, correr variante excluyendo esos casos | rojo | *(pendiente)* |
