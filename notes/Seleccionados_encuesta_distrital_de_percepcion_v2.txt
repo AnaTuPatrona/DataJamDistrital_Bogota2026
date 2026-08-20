@@ -1,10 +1,13 @@
 
-
 Fecha - Año y mes según el periodo de recolección de cada una de las encuestas
 SectorUPL - Sector UPL correspondiente a donde fue realizada la encuesta
 Localidad - Nombre de la localidad correspondiente a donde fue realizada la encuesta
+codigo_localidad - Código de la localidad (llave de cruce con geojson y registros administrativos)
 Unidad_de_Planeamiento_Local_UPL - Nombre de la UPL correspondiente a donde fue realizada la encuesta
 
+A3 - ¿Cuántas personas conforman su hogar?
+A4 - ¿Cuántas personas de su hogar tienen menos de 18 años?
+A5 - ¿Cuántas personas tienen 18 años cumplidos o más?
 A6x2 - Parentesco con el jefe del hogar
 A6x3 - Edad de la persona
 C1 - ¿Cuál es el nivel educativo más alto que usted ha alcanzado?
@@ -29,8 +32,9 @@ Jx201 - j. Cuidado de personas mayores o dependientes
 Ax202 - 202. ¿Cómo afecta la anterior distribución de tareas domésticas y de cuidado en el bienestar de su hogar?
 ind_distribuciontareas_202 - Indicador: impacto de la distribución de tareas domésticas y de cuidado en el bienestar familiar
 
-Jx402 - j. Violencia intrafamiliar (delito sufrido este año)
-Jx403 - j. Violencia intrafamiliar (delito sufrido año anterior)
+Ax401 - 401. ¿Durante este año, usted o algún miembro del hogar, ha sido víctima de algún delito en Bogotá? (filtro maestro de victimización)
+Jx402 - j. Violencia intrafamiliar (¿fue víctima de este delito?)
+Jx403 - j. Violencia intrafamiliar (¿denunció este delito? - solo aplica si Jx402 = Sí)
 
 Kx404_1 - k. Acoso sexual (silbidos, comentarios sexuales, etc.) - en su residencia u otra residencia
 Kx404_2 - k. Acoso sexual - en la cuadra, conjunto, barrio
