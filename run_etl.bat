@@ -24,7 +24,8 @@ echo ==============================
 echo Ejecutando pipeline...
 echo ==============================
 
-python scripts\0_normalizacion_limpieza.py
+cd scripts
+python 0_normalizacion_limpieza.py
 
 set EXIT_CODE=%ERRORLEVEL%
 
@@ -41,13 +42,14 @@ echo ==============================
 
 
 echo.
-echo Eliminando entorno virtual...
+echo. Ejecucion finalizada. Puede borrar el directorio ".venv" si desea eliminar el entorno virtual para liberar espacio en disco una vez haya terminado de usar el programa.
+@REM echo Eliminando entorno virtual...
 
-call deactivate
+@REM call deactivate
 
-cd /d "%~dp0"
+@REM cd /d "%~dp0"
 
-rmdir /s /q ".venv"
+@REM rmdir /s /q ".venv"
 
 
 echo.

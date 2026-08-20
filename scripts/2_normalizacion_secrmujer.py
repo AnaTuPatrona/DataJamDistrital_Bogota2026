@@ -16,30 +16,30 @@ warnings.filterwarnings("ignore")
 #IMPORTACIÓN GEOJSON
 
 #delitos sexuales
-delitossexuales_062025=gpd.read_file('..\data\delitossexuales_062025.geojson')
-delitossexuales_092025=gpd.read_file('..\data\delitossexuales_092025.geojson')
-delitossexuales_122025=gpd.read_file('..\data\delitossexuales_122025.geojson')
-delitossexuales_032026=gpd.read_file('..\data\delitossexuales032026.geojson')
+delitossexuales_062025=gpd.read_file('../data/delitossexuales_062025.geojson')
+delitossexuales_092025=gpd.read_file('../data/delitossexuales_092025.geojson')
+delitossexuales_122025=gpd.read_file('../data/delitossexuales_122025.geojson')
+delitossexuales_032026=gpd.read_file('../data/delitossexuales032026.geojson')
 
 #duplas
-duplas_032025=gpd.read_file('..\data\duplas_032025.geojson')
-duplas_062025=gpd.read_file('..\data\duplas_062025.geojson')
-duplas_092025=gpd.read_file('..\data\duplas_092025.geojson')
-duplas_122025=gpd.read_file('..\data\duplas122025.geojson')
-duplas_032026=gpd.read_file('..\data\duplas032026.geojson')
+duplas_032025=gpd.read_file('../data/duplas_032025.geojson')
+duplas_062025=gpd.read_file('../data/duplas_062025.geojson')
+duplas_092025=gpd.read_file('../data/duplas_092025.geojson')
+duplas_122025=gpd.read_file('../data/duplas122025.geojson')
+duplas_032026=gpd.read_file('../data/duplas032026.geojson')
 
 #linea púrpura
-lineapurpura_032025=gpd.read_file('..\data\lineapurpura_032025.geojson')
-lineapurpura_062025=gpd.read_file('..\data\lineapurpura_062025.geojson')
-lineapurpura_092025=gpd.read_file('..\data\lineapurpura_092025.geojson')
-lineapurpura_122025=gpd.read_file('..\data\lineapurpura122025.geojson')
-lineapurpura_032026=gpd.read_file('..\data\lineapurpura032026.geojson')
+lineapurpura_032025=gpd.read_file('../data/lineapurpura_032025.geojson')
+lineapurpura_062025=gpd.read_file('../data/lineapurpura_062025.geojson')
+lineapurpura_092025=gpd.read_file('../data/lineapurpura_092025.geojson')
+lineapurpura_122025=gpd.read_file('../data/lineapurpura122025.geojson')
+lineapurpura_032026=gpd.read_file('../data/lineapurpura032026.geojson')
 
 #riesgo feminicidio
-riesgofeminicidio_062025=gpd.read_file(Path(r'..\data\riesgofeminicidio_062025.geojson'))
-riesgofeminicidio_092025=gpd.read_file(Path(r'..\data\riesgofeminicidio_092025.geojson'))
-riesgofeminicidio_122025=gpd.read_file(Path(r'..\data\riesgofeminicidio_122025.geojson'))
-riesgofeminicidio_032026=gpd.read_file(Path(r'..\data\riesgofeminicidio032026.geojson'))
+riesgofeminicidio_062025=gpd.read_file(Path(r'../data/riesgofeminicidio_062025.geojson'))
+riesgofeminicidio_092025=gpd.read_file(Path(r'../data/riesgofeminicidio_092025.geojson'))
+riesgofeminicidio_122025=gpd.read_file(Path(r'../data/riesgofeminicidio_122025.geojson'))
+riesgofeminicidio_032026=gpd.read_file(Path(r'../data/riesgofeminicidio032026.geojson'))
 
 
 #NORMALIZAR columna de periodo (para que solo sea tipo datetime64[ms])
