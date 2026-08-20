@@ -6,3 +6,9 @@ chardet
 matplotlib
 nbconvert
 ipykernel
+statsmodels
+scipy
+samplics
+factor_analyzer
+pingouin
+unidecode
