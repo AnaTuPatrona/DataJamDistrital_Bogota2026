@@ -1,0 +1,21 @@
+﻿codigo_localidad,nombre_oficial,nombre_norm,en_encuesta,sector_upl,PobMujeres
+1,Usaquén,USAQUEN,True,Sector Norte,306618
+2,Chapinero,CHAPINERO,True,Sector Centro Ampliado,85856
+3,Santa Fe,SANTA FE,True,Sector Centro Ampliado,57223
+4,San Cristóbal,SAN CRISTOBAL,True,Sector Sur Oriente,207660
+5,Usme,USME,True,Sector Sur Oriente,207553
+6,Tunjuelito,TUNJUELITO,True,Sector Sur Oriente,91223
+7,Bosa,BOSA,True,Sector Sur Occidente,399575
+8,Kennedy,KENNEDY,True,Sector Sur Occidente,561526
+9,Fontibón,FONTIBON,True,Sector Occidente,206788
+10,Engativá,ENGATIVA,True,Sector Occidente,435534
+11,Suba,SUBA,True,Sector Noroccidente,650123
+12,Barrios Unidos,BARRIOS UNIDOS,True,Sector Centro Ampliado,73129
+13,Teusaquillo,TEUSAQUILLO,True,Sector Centro Ampliado,84932
+14,Los Mártires,LOS MARTIRES,True,Sector Centro Ampliado,45013
+15,Antonio Nariño,ANTONIO NARINO,True,Sector Centro Ampliado,42336
+16,Puente Aranda,PUENTE ARANDA,True,Sector Centro Ampliado,128277
+17,La Candelaria,LA CANDELARIA,True,Sector Centro Ampliado,8067
+18,Rafael Uribe Uribe,RAFAEL URIBE URIBE,True,Sector Sur Oriente,192900
+19,Ciudad Bolívar,CIUDAD BOLIVAR,True,Sector Sur Oriente,348592
+20,Sumapaz,SUMAPAZ,False,,1809

@@ -1,0 +1,9 @@
+{
+  "fuente_PobMujeres": "riesgofeminicidio.csv",
+  "corte_PobMujeres": "2026-03-31",
+  "n_localidades": 20,
+  "codificacion": "DANE estándar, verificada empíricamente contra columna Localidad de la encuesta (Paso 1.5)",
+  "localidad_no_encuestada": "Sumapaz (codigo_localidad=20)",
+  "fecha_generacion": "2026-08-20",
+  "notebook_origen": "01_preparacion.ipynb — Paso 1.5"
+}
