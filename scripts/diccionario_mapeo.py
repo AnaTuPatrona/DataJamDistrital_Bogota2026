@@ -1,16 +1,31 @@
 # -*- coding: utf-8 -*-
 """
 Diccionario de mapeo generado a partir de:
-  - 20260331_diccionario_base_ano_movil_2025.xlsx (preguntas y opciones oficiales)
-  - Seleccionados_encuesta_distrital_de_percepcion.txt (columnas seleccionadas)
-Traduce Encuesta_percepcion_limpia.csv a nombres de columna y etiquetas legibles.
+  - 20260331_diccionario_base_ano_movil_2025.xlsx (preguntas, opciones y reglas de validacion oficiales)
+  - base_ano_movil_2025.csv (dataset crudo, para verificar existencia real de columnas)
+
+Cambios respecto a la version anterior:
+  - Se agrego Ax401 (filtro maestro de victimizacion): permite diferenciar un NaN real
+    (no aplica porque nadie en el hogar fue victima de ningun delito) de un NaN por no respuesta.
+  - Se agregaron A3, A4, A5 (tamano del hogar, menores de 18, mayores de 18): denominador
+    natural para indices de cuidado y control de tamano del hogar.
+  - Cod_Locali se renombra a codigo_localidad (NO se elimina): es la llave de cruce contra
+    localidades_con_nombres.geojson (codigo_localidad) y llamadas123_consolidado_limpio.csv
+    (CODIGO_LOCALIDAD). Cruzar solo por nombre de texto (Localidad) es fragil por
+    inconsistencias de mayusculas/tildes.
+  - Jx402 / Jx403: Jx402 = fue victima del delito (Si/No); Jx403 = denuncio el delito (Si/No),
+    solo aplica a quienes respondieron Si en Jx402. NO representa "ano anterior".
 """
 
 RENAME_MAP = {
-    "Fecha": "Fecha",
-    "SectorUPL": "SectorUPL",
-    "Localidad": "Localidad",
-    "Unidad_de_Planeamiento_Local_UPL": "Unidad_de_Planeamiento_Local_UPL",
+    "Fecha": "Año y mes según el periodo de recolección de cada una de las encuestas.",
+    "SectorUPL": "Sector UPL correspondiente a donde fue realizada la encuesta.",
+    "Localidad": "Nombre de la localidad correspondiente a donde fue realizada la encuesta.",
+    "Unidad_de_Planeamiento_Local_UPL": "Nombre de la UPL correspondiente a donde fue realizada la encuesta.",
+    "codigo_localidad": "Código de la localidad correspondiente a donde fue realizada la encuesta.",
+    "A3": "3. ¿Cuántas personas conforman su hogar?",
+    "A4": "4. ¿Cuántas personas de su hogar tienen menos de 18 años?",
+    "A5": "5. ¿Cuántas  personas tienen 18 años cumplidos o más?",
     "A6x2": "2. Parentesco con el jefe del hogar",
     "A6x3": "Edad de la persona.",
     "C1": "C. ¿Cuál es el nivel educativo más alto que usted ha alcanzado?",
@@ -33,8 +48,9 @@ RENAME_MAP = {
     "Jx201": "j. Cuidado de personas mayores o dependientes",
     "Ax202": "202. ¿Cómo afecta la anterior distribución de tareas domésticas y de cuidado en el bienestar de su hogar? Por favor elija una de las frases que le voy a leer.",
     "ind_distribuciontareas_202": "Impacto de la distribución de tareas domésticas y de cuidado en el bienestar familiar.",
-    "Jx402": "j. Violencia intrafamiliar (delito sufrido - este año)",
-    "Jx403": "j. Violencia intrafamiliar (delito sufrido - año anterior)",
+    "Ax401": "401. ¿Durante este año, usted o algún miembro del hogar, ha sido víctima de algún delito en la ciudad de Bogotá?",
+    "Jx402": "j. Violencia intrafamiliar (¿fue víctima de este delito?)",
+    "Jx403": "j. Violencia intrafamiliar (¿denunció este delito?)",
     "Kx404_1": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En su residencia u otra residencia)",
     "Kx404_2": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En la cuadra, conjunto, barrio)",
     "Kx404_3": "k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En otro espacio público)",
@@ -261,6 +277,10 @@ VALUE_MAPS = {
         "2": "Impacto neutro",
         "3": "Impacto negativo"
     },
+    "Ax401": {
+        "1": "Sí",
+        "2": "No"
+    },
     "Jx402": {
         "1": "Sí",
         "2": "No"
@@ -460,6 +480,10 @@ TIPOS = {
     "SectorUPL": "texto_libre",
     "Localidad": "texto_libre",
     "Unidad_de_Planeamiento_Local_UPL": "texto_libre",
+    "codigo_localidad": "llave_codigo",
+    "A3": "continua",
+    "A4": "continua",
+    "A5": "continua",
     "A6x2": "categorica",
     "A6x3": "continua",
     "C1": "categorica",
@@ -482,6 +506,7 @@ TIPOS = {
     "Jx201": "categorica",
     "Ax202": "categorica",
     "ind_distribuciontareas_202": "categorica",
+    "Ax401": "categorica",
     "Jx402": "categorica",
     "Jx403": "categorica",
     "Kx404_1": "categorica",

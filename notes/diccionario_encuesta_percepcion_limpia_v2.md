@@ -1,12 +1,19 @@
-# Diccionario de datos — `Encuesta_percepcion_limpia.csv`
+# Diccionario de datos — `Encuesta_percepcion_limpia_v2.csv`
 
 Encuesta Distrital de Percepción y Cultura Ciudadana — Bogotá  
 Eje temático: **Violencia contra la mujer**
 
 - Total de registros (personas encuestadas): **13082**
-- Total de variables: **75**
+- Total de variables: **80**
 - Fuente del texto de preguntas y opciones: `20260331_diccionario_base_ano_movil_2025.xlsx` (hoja *Diccionario de datos*)
-- Fuente de los resultados/conteos: `Encuesta_percepcion_limpia.csv`
+- Fuente de los resultados/conteos: `Encuesta_percepcion_limpia_v2.csv`
+
+## Cambios respecto a la versión anterior (75 → 80 variables)
+
+- **`codigo_localidad`** (antes `Cod_Locali`): se conserva en vez de eliminarse. Es la llave numérica de cruce contra `localidades_con_nombres.geojson` (`codigo_localidad`) y `llamadas123_consolidado_limpio.csv` (`CODIGO_LOCALIDAD`). Cruzar solo por el nombre de texto (`Localidad`) es frágil por inconsistencias de mayúsculas/tildes entre fuentes.
+- **`A3`, `A4`, `A5`** (nuevas): tamaño del hogar, menores de 18 y mayores de 18 en el hogar. Se validó que `A3 = A4 + A5` en el 100% de los 13,082 registros. Sirven como denominador para índices de cuidado y como control de tamaño del hogar.
+- **`Ax401`** (nueva): filtro maestro de victimización — *"¿usted o algún miembro del hogar ha sido víctima de algún delito en Bogotá?"*. Se verificó que los 11,094 `NaN` en `Jx402` corresponden exactamente a las 11,094 personas con `Ax401 = 2` (No víctima). Con `Ax401` presente, un `NaN` en `Jx402` deja de ser ambiguo: significa "no aplica" (verdadero No), no falta de respuesta.
+- **`Jx402` / `Jx403` (corrección de etiqueta):** `Jx402` = ¿fue víctima de violencia intrafamiliar?; `Jx403` = de quienes respondieron Sí en Jx402, ¿denunció ese delito? La etiqueta anterior ("año anterior") era incorrecta y ya fue corregida — no se refiere a un periodo de tiempo distinto.
 
 ## Cómo buscar un resultado específico
 
@@ -14,11 +21,11 @@ Eje temático: **Violencia contra la mujer**
 2. Cada variable muestra:
    - **Pregunta**: el texto exacto tal como se hizo en la encuesta.
    - **Opciones de respuesta**: el código numérico y su etiqueta (ej. `1. Hombre`, `2. Mujer`).
-   - **Resultados**: cuántas personas (y qué porcentaje del total) respondieron cada opción, calculado directamente sobre `Encuesta_percepcion_limpia.csv`.
+   - **Resultados**: cuántas personas (y qué porcentaje del total) respondieron cada opción, calculado directamente sobre `Encuesta_percepcion_limpia_v2.csv`.
 3. Para replicar cualquier resultado en Python:
 ```python
 import pandas as pd
-df = pd.read_csv('Encuesta_percepcion_limpia.csv')
+df = pd.read_csv('Encuesta_percepcion_limpia_v2.csv')
 df['ID_DE_LA_VARIABLE'].value_counts(dropna=False, normalize=False)
 ```
 4. Para ver resultados en porcentaje directamente:
@@ -30,13 +37,20 @@ df['ID_DE_LA_VARIABLE'].value_counts(dropna=False, normalize=True) * 100
 df.groupby('Localidad')['ID_DE_LA_VARIABLE'].value_counts(normalize=True)
 df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numéricos continuos
 ```
+6. Para filtrar correctamente `Jx402` usando el filtro maestro `Ax401`:
+```python
+# Solo personas cuyo hogar SI fue víctima de algún delito
+df_con_delito = df[df['Ax401'] == 1]
+df_con_delito['Jx402'].value_counts(dropna=False)
+```
 
 ## Índice de secciones
 
 - [Geografía y tiempo](#geografia-y-tiempo)
+- [Composición del hogar](#composicion-del-hogar)
 - [Perfil sociodemográfico](#perfil-sociodemografico)
 - [Roles de género y distribución de tareas domésticas](#roles-de-genero-y-distribucion-de-tareas-domesticas)
-- [Violencia intrafamiliar (delito sufrido)](#violencia-intrafamiliar-delito-sufrido)
+- [Victimización: filtro maestro y violencia intrafamiliar](#victimizacion:-filtro-maestro-y-violencia-intrafamiliar)
 - [Acoso sexual, violencia intrafamiliar y contra la mujer (presenciados por lugar)](#acoso-sexual-violencia-intrafamiliar-y-contra-la-mujer-presenciados-por-lugar)
 - [Percepción de seguridad](#percepcion-de-seguridad)
 - [Inclusión, diversidad y confianza ciudadana](#inclusion-diversidad-y-confianza-ciudadana)
@@ -48,7 +62,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `Fecha`
 **Pregunta:** Año y mes según el periodo de recolección de cada una de las encuestas.
 
-**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base (no hay una lista de códigos predefinida en el diccionario original).
+**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base.
 
 **Opciones de respuesta (valores reales encontrados):**
   - 2025-01-01
@@ -81,7 +95,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `SectorUPL`
 **Pregunta:** Sector UPL correspondiente a donde fue realizada la encuesta.
 
-**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base (no hay una lista de códigos predefinida en el diccionario original).
+**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base.
 
 **Opciones de respuesta (valores reales encontrados):**
   - Sector Centro Ampliado
@@ -102,7 +116,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `Localidad`
 **Pregunta:** Nombre de la localidad correspondiente a donde fue realizada la encuesta.
 
-**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base (no hay una lista de códigos predefinida en el diccionario original).
+**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base.
 
 **Opciones de respuesta (valores reales encontrados):**
   - Antonio Nariño
@@ -146,10 +160,57 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
   - **Usaquén** → 834 respuestas (6.4%)
   - **Usme** → 744 respuestas (5.7%)
 
+### `codigo_localidad`
+**Pregunta:** Código de la localidad correspondiente a donde fue realizada la encuesta.
+
+**Tipo:** llave numérica de cruce (código de localidad). No se traduce a etiqueta de texto; úsala junto con `Localidad` para validar cruces con otras fuentes administrativas.
+
+**Valores reales encontrados:**
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+
+**Resultados (base limpia, n=13082):**
+  - **1** → 834 respuestas (6.4%)
+  - **2** → 296 respuestas (2.3%)
+  - **3** → 300 respuestas (2.3%)
+  - **4** → 732 respuestas (5.6%)
+  - **5** → 744 respuestas (5.7%)
+  - **6** → 308 respuestas (2.4%)
+  - **7** → 1250 respuestas (9.6%)
+  - **8** → 1737 respuestas (13.3%)
+  - **9** → 654 respuestas (5.0%)
+  - **10** → 1232 respuestas (9.4%)
+  - **11** → 1802 respuestas (13.8%)
+  - **12** → 270 respuestas (2.1%)
+  - **13** → 335 respuestas (2.6%)
+  - **14** → 239 respuestas (1.8%)
+  - **15** → 246 respuestas (1.9%)
+  - **16** → 378 respuestas (2.9%)
+  - **17** → 151 respuestas (1.2%)
+  - **18** → 716 respuestas (5.5%)
+  - **19** → 858 respuestas (6.6%)
+
 ### `Unidad_de_Planeamiento_Local_UPL`
 **Pregunta:** Nombre de la UPL correspondiente a donde fue realizada la encuesta.
 
-**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base (no hay una lista de códigos predefinida en el diccionario original).
+**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base.
 
 **Opciones de respuesta (valores reales encontrados):**
   - Arborizadora
@@ -215,6 +276,47 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
   - **Usaquén** → 408 respuestas (3.1%)
   - **Usme - Entrenubes** → 616 respuestas (4.7%)
 
+## Composición del hogar
+
+### `A3`
+**Pregunta:** 3. Para comenzar.  ¿Cuántas personas conforman su hogar?
+
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
+
+**Resultados (resumen estadístico):**
+  - n válidos: 13082
+  - Media: 2.57
+  - Mínimo: 1.00
+  - Máximo: 12.00
+  - Desviación estándar: 1.30
+  - Sin dato / NaN: 0
+
+### `A4`
+**Pregunta:** 4. ¿Cuántas personas de su hogar tienen menos de 18 años?
+
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
+
+**Resultados (resumen estadístico):**
+  - n válidos: 13082
+  - Media: 0.54
+  - Mínimo: 0.00
+  - Máximo: 7.00
+  - Desviación estándar: 0.83
+  - Sin dato / NaN: 0
+
+### `A5`
+**Pregunta:** 5.  ¿Cuántas  personas tienen 18 años cumplidos o más?
+
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
+
+**Resultados (resumen estadístico):**
+  - n válidos: 13082
+  - Media: 2.03
+  - Mínimo: 1.00
+  - Máximo: 9.00
+  - Desviación estándar: 1.00
+  - Sin dato / NaN: 0
+
 ## Perfil sociodemográfico
 
 ### `A6x2`
@@ -251,7 +353,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `A6x3`
 **Pregunta:** Edad de la persona.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 13082
@@ -317,7 +419,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `E1x1`
 **Pregunta:** ¿Otra cuál?
 
-**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base (no hay una lista de códigos predefinida en el diccionario original).
+**Tipo:** entrada libre / geográfica. Las opciones mostradas son los valores reales que existen en la base.
 
 **Opciones de respuesta (valores reales encontrados):**
   - Fuerte
@@ -676,12 +778,21 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
   - **2. Impacto neutro** → 1250 respuestas (9.6%)
   - **3. Impacto negativo** → 1013 respuestas (7.7%)
 
-## Violencia intrafamiliar (delito sufrido)
+## Victimización: filtro maestro y violencia intrafamiliar
+
+### `Ax401`
+**Pregunta:** 401. ¿Durante este año, usted o algún miembro del hogar, ha sido víctima de algún delito en la ciudad de Bogotá?
+
+**Opciones de respuesta:**
+  - 1. Sí
+  - 2. No
+
+**Resultados (base limpia, n=13082):**
+  - **1. Sí** → 1988 respuestas (15.2%)
+  - **2. No** → 11094 respuestas (84.8%)
 
 ### `Jx402`
 **Pregunta:** j. Violencia intrafamiliar (¿fue víctima de este delito?)
-
-> Nota: según la columna "Regla de validación" del diccionario oficial, esta pregunta solo se despliega si en `Ax401` la persona indicó que ella o algún miembro de su hogar fue víctima de algún delito.
 
 **Opciones de respuesta:**
   - 1. Sí
@@ -694,8 +805,6 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 
 ### `Jx403`
 **Pregunta:** j. Violencia intrafamiliar (¿denunció este delito?)
-
-> Nota: según la regla de validación oficial, esta pregunta solo se despliega para quienes respondieron "Sí" en `Jx402`. Por eso solo tiene 24 respuestas en total (17 Sí + 7 No), el mismo número de "Sí" registrados en Jx402.
 
 **Opciones de respuesta:**
   - 1. Sí
@@ -712,8 +821,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En su residencia u otra residencia)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12925 respuestas (98.8%)
@@ -723,8 +832,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En la cuadra, conjunto, barrio)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12356 respuestas (94.5%)
@@ -734,8 +843,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En otro espacio público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 11688 respuestas (89.3%)
@@ -745,8 +854,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En el transporte público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 11944 respuestas (91.3%)
@@ -756,8 +865,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (En el lugar de trabajo)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12907 respuestas (98.7%)
@@ -767,8 +876,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** k. Acoso sexual (Silbidos, comentarios sexuales, etc.) (No afrontó la situación)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 2489 respuestas (19.0%)
@@ -778,8 +887,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (En su residencia u otra residencia)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12792 respuestas (97.8%)
@@ -789,8 +898,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (En la cuadra, conjunto, barrio)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 11871 respuestas (90.7%)
@@ -800,8 +909,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (En otro espacio público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12078 respuestas (92.3%)
@@ -811,8 +920,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (En el transporte público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12824 respuestas (98.0%)
@@ -822,8 +931,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (En el lugar de trabajo)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12974 respuestas (99.2%)
@@ -833,8 +942,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** l. Presenció casos de violencia intrafamiliar (No afrontó la situación)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 2168 respuestas (16.6%)
@@ -844,8 +953,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (En su residencia u otra residencia)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12797 respuestas (97.8%)
@@ -855,8 +964,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (En la cuadra, conjunto, barrio)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 11943 respuestas (91.3%)
@@ -866,8 +975,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (En otro espacio público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 11843 respuestas (90.5%)
@@ -877,8 +986,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (En el transporte público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12677 respuestas (96.9%)
@@ -888,8 +997,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (En el lugar de trabajo)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12933 respuestas (98.9%)
@@ -899,8 +1008,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** m. Presenció casos de violencia contra la mujer (No afrontó la situación)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 2457 respuestas (18.8%)
@@ -910,8 +1019,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En su residencia u otra residencia)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12894 respuestas (98.6%)
@@ -921,8 +1030,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En la cuadra, conjunto, barrio)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12313 respuestas (94.1%)
@@ -932,8 +1041,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En otro espacio público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12205 respuestas (93.3%)
@@ -943,8 +1052,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En el transporte público)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12799 respuestas (97.8%)
@@ -954,8 +1063,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (En el lugar de trabajo)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 12950 respuestas (99.0%)
@@ -965,8 +1074,8 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 **Pregunta:** n. Presenció casos de violencia contra niños, niñas y adolescentes (NNA) (No afrontó la situación)
 
 **Opciones de respuesta:**
-  - 0.No
-  - 1.Si
+  - 0. No
+  - 1. Si
 
 **Resultados (base limpia, n=13082):**
   - **0. No** → 1712 respuestas (13.1%)
@@ -1015,7 +1124,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `IPS_dia`
 **Pregunta:** Percepción promedio de la seguridad al caminar de día por su barrio.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 12886
@@ -1028,7 +1137,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `IPS_noche`
 **Pregunta:** Percepción promedio de la seguridad al caminar de noche por su barrio.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 10255
@@ -1041,7 +1150,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `IPSJ_A`
 **Pregunta:** Percepción promedio sobre la rapidez de las autoridades ante incidentes de seguridad que ocurren en el barrio.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 12460
@@ -1054,7 +1163,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `IPSJ_C`
 **Pregunta:** Percepción promedio sobre la disponibilidad y facilidad de acceso a la información y los medios para denunciar delitos.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 11904
@@ -1067,7 +1176,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `IPSJ_E`
 **Pregunta:** Percepción promedio de la aplicación de justicia sobre quienes cometen delitos.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 12776
@@ -1101,7 +1210,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `ICG_D`
 **Pregunta:** Percepción promedio sobre el respeto de los ciudadanos hacia la inclusión y la diversidad.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 12928
@@ -1133,7 +1242,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `ICG_B`
 **Pregunta:** Confianza promedio en la ayuda que brindarían los vecinos ante cualquier problema o necesidad.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 12912
@@ -1272,7 +1381,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `ind_salud_101`
 **Pregunta:** Indicador de percepción del estado de salud
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 13082
@@ -1302,7 +1411,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `fexp_calp_anu`
 **Pregunta:** Factor de expansión calibrado bimestral para personas.
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 13082
@@ -1315,7 +1424,7 @@ df.groupby('Fecha')['ID_DE_LA_VARIABLE'].mean()   # útil para indicadores numé
 ### `fexp_calh_anu`
 **Pregunta:** Factor de expansión calibrado bimestral para hogares
 
-**Tipo:** variable numérica continua (indicador promedio, edad o factor de expansión). No tiene opciones categóricas fijas.
+**Tipo:** variable numérica continua. No tiene opciones categóricas fijas.
 
 **Resultados (resumen estadístico):**
   - n válidos: 13082
