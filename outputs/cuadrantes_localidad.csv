@@ -1,0 +1,20 @@
+﻿codigo_localidad,localidad,TAC_M,RC_real_cota_superior,ICG_B_promedio,cuadrante,etiqueta_cuadrante,lectura_politica,TAC_alta,cobertura_real_alta,ICG_B_bajo,opacidad_por_baja_confianza
+2,Chapinero,0.204289213961431,109.54205849228178,3.205048014945546,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,False,False
+3,Santa Fe,0.30108884861053137,90.84224334794656,2.9679456759928353,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+4,San Cristóbal,0.23593834771998287,130.14126656906453,2.9971754447103387,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+5,Usme,0.21610621820643533,132.0103616748486,3.0105111277664505,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+8,Kennedy,0.20891258593408862,116.79550069638337,3.0195701992345705,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+13,Teusaquillo,0.23887478310616678,115.26786926849334,3.507270900400371,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,False,False
+14,Los Mártires,0.31268943510657976,123.24504085820949,2.6950705537234323,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+16,Puente Aranda,0.2252787454989487,104.14400729516741,3.2251910133230983,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,False,False
+19,Ciudad Bolívar,0.28061435114849265,101.91751896485911,3.0057936565014143,I,Zona de demanda desatendida,Prioridad máxima de inversión,True,False,True,False
+18,Rafael Uribe Uribe,0.21974806714871906,135.88359822338256,3.1008218383739217,II,Zona de captura,El sistema está funcionando; sostener,True,True,True,False
+1,Usaquén,0.1348544056852073,167.69509513534626,3.19041942580257,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+6,Tunjuelito,0.16960953101884166,159.02133933130645,3.198117384406203,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+7,Bosa,0.1704108131529245,157.80429267469333,2.893650041732268,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,True,False
+9,Fontibón,0.10547597569377583,240.38156826210877,3.233346425674671,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+10,Engativá,0.13911852352071602,201.15814560896175,3.0937994463478757,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,True,False
+11,Suba,0.15783278925515662,153.74723148327337,3.136725039327879,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+12,Barrios Unidos,0.15143870235318754,184.35538133802282,3.319365479379053,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+15,Antonio Nariño,0.14588188833232663,227.85772362569628,3.169612675284694,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
+17,La Candelaria,0.2033269410661874,148.35183225338793,3.249956955487962,IV,Zona de sobre-oferta relativa,Candidata a reasignación de recursos,False,True,False,False
