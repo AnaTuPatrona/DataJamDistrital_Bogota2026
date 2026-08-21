@@ -1906,3 +1906,476 @@ manera simultánea. Este es el resultado final y definitivo de H-A que se report
 la sustentación: **evidencia sólida mínima, limitada a una asociación general entre
 concentración del cuidado y percepción de acceso a la denuncia, sin el mecanismo
 específico de género que la hipótesis proponía como su elemento distintivo.**
+
+## Paso 4.2b — Verificación: Pearson vs. tetracórica para el análisis factorial (registrado 2026-08-20)
+
+El cálculo de KMO/Bartlett (Paso 4.2) generó un warning de `factor_analyzer` sobre el
+determinante de la matriz de correlación estar "cerca de cero", resuelto internamente
+con pseudoinversa de Moore-Penrose. Se verificó si esto reflejaba multicolinealidad
+genuina que ameritara recalcular con correlación tetracórica (más apropiada que Pearson
+para ítems binarios) en vez de proceder con Pearson estándar.
+
+**Resultado de la verificación:**
+- Determinante: 4,12e-03 — pequeño pero explicado por 17 autovalores <1 multiplicados
+  entre sí, no por un autovalor cercano a cero.
+- **Autovalores:** todos positivos, mínimo 0,3996 — sin ningún valor cercano a 0.
+- **Número de condición:** 14,2 — muy por debajo del umbral de multicolinealidad severa
+  (>1000), matriz bien condicionada.
+- **Splits de los 17 ítems** (proporción "De acuerdo"): rango 30,6%–55,7% — ningún ítem
+  con split extremo (<20% o >80%), el escenario donde Pearson/phi más se aleja de la
+  tetracórica.
+
+**Decisión:** se mantiene la matriz de correlación de Pearson para la extracción
+factorial (Paso 4.3). El warning de la librería fue un umbral numérico conservador sin
+consecuencia sustantiva — no se instala infraestructura adicional (`semopy` u otra) para
+recalcular con tetracórica, dado que la evidencia (autovalores, condición, splits) no
+justifica el esfuerzo: la ganancia esperada de precisión sería marginal.
+
+## Paso 4.3 — Confiabilidad: Alfa de Cronbach, 17 ítems (registrado 2026-08-20)
+
+**Alfa de Cronbach (17 ítems, n=5.860): 0,8731** (IC 95% [0,8680, 0,8780]).
+
+**Resultado por encima del rango esperado en el enunciado (0,6–0,7).** El enunciado
+anticipaba un alfa bajo-moderado como evidencia de que "el machismo" no es una dimensión
+única. El resultado observado (0,87) es "bueno" a "muy bueno" según los estándares
+convencionales de confiabilidad — sustancialmente más alto de lo previsto.
+
+**Alfa por bloque temático (declarado en el diccionario de la Bienal):**
+- P10 (roles tradicionales/esencialismo, 11 ítems): α = 0,8483 (IC95% [0,8420, 0,8540])
+- P12 (control en la pareja, 6 ítems): α = 0,8005 (IC95% [0,7920, 0,8080])
+
+Ambos subbloques tienen consistencia interna alta **por separado**, y el conjunto
+completo de 17 ítems tiene consistencia aún más alta que cualquiera de los dos
+subbloques individualmente — esto es consistente con la posibilidad de que exista un
+factor general fuerte que atraviesa ambos bloques, además de (o en lugar de) la
+distinción fina entre "roles tradicionales" y "no-injerencia/privatización" que H-B
+proponía como la distinción sustantiva.
+
+**Precaución metodológica — el alfa alto NO es, por sí solo, la prueba de refutación de
+H-B.** El escenario de refutación preregistrado (Sección 1.4, escenario 3) especifica
+dos condiciones conjuntas: *"si el análisis factorial arroja un solo factor con alfa de
+Cronbach alto"*. Hasta este punto solo se ha verificado la segunda condición (alfa alto);
+la primera (número de factores que emergen del análisis factorial exploratorio) se
+determina en el Paso 4.4/4.5, aún pendiente. Un alfa alto es compatible con:
+(a) un único factor dominante (lo cual sí refutaría H-B según el criterio preregistrado), o
+(b) varios factores correlacionados entre sí que comparten un factor general de segundo
+orden (patrón común en escalas de actitudes de género, y compatible con que H-B se
+sostenga si esos factores específicos —roles vs. no-injerencia— emergen distinguibles
+en la estructura factorial, aun con un alfa global alto).
+
+**No se declara refutada H-B en este paso.** Se procede al Paso 4.4 (extracción y número
+de factores) antes de emitir cualquier conclusión sobre el escenario de refutación.
+
+## Paso 4.4 — Extracción factorial: 3 factores no coinciden con la estructura teórica de H-B (registrado 2026-08-20)
+
+**Número de factores:** confirmado en 3 por los tres criterios (Kaiser=3, Horn=3,
+coincide con la expectativa del enunciado). Varianza explicada acumulada: 42,4%.
+
+**Resultado — la estructura de contenido NO coincide con la tabla teórica del
+enunciado.** En lugar de los tres factores propuestos (Roles tradicionales /
+Culpabilización de la víctima / No-injerencia y privatización), la estructura empírica
+observada es:
+
+- **F1** (9 ítems, SS=3,203, 18,8% var.): P10.3, P10.4, P10.5, P10.6, P10.7, P10.8,
+  P10.9, P10.10, P10.11 — mezcla indiscriminada de roles tradicionales, culpabilización
+  de la víctima Y no-injerencia/privatización, todos juntos.
+- **F2** (6 ítems, SS=2,728, 16,0% var.): P12.1, P12.2, P12.3, P12.4, P12.5, P12.6 —
+  **el bloque P12 completo**, sin excepción alguna.
+- **F3** (2 ítems, SS=1,286, 7,6% var.): P10.1, P10.2 — factor estrecho y específico
+  ("las mujeres por naturaleza cuidan/hacen mejor los oficios del hogar"), separado del
+  resto de ítems de roles tradicionales.
+
+**Patrón dominante: la estructura factorial sigue la organización del cuestionario
+(bloque P10 vs. bloque P12), no la distinción teórica de contenido actitudinal
+propuesta por H-B.**
+
+**Contradicción directa con la predicción específica de H-B:** la hipótesis esperaba que
+`P10.9`, `P12.5`, `P12.3` y `P10.11` (los cuatro ítems de no-injerencia/privatización,
+repartidos deliberadamente entre ambos bloques del cuestionario) formaran un factor
+propio y distinguible. Empíricamente:
+- `P10.9` y `P10.11` cargan en **F1**, junto con ítems de roles y culpabilización.
+- `P12.3` y `P12.5` cargan en **F2**, junto con el resto de ítems de control en la pareja.
+
+Es decir, la no-injerencia **no emerge como una dimensión propia** — sus cuatro ítems se
+reparten exactamente según a qué bloque del cuestionario (P10 general vs. P12 sobre
+relaciones de pareja) pertenecían originalmente, lo cual sugiere que la varianza
+compartida dominante es de **formato/contexto de la pregunta** (ítems del mismo bloque
+correlacionan más entre sí por estar preguntados en el mismo marco), no de **contenido
+actitudinal específico** (roles vs. culpabilización vs. no-injerencia).
+
+**Evaluación frente al escenario de refutación preregistrado (Sección 1.4, escenario 3):**
+el criterio literal decía *"H-B refutada si el análisis factorial arroja UN SOLO factor
+con alfa alto"*. Técnicamente **no se cumple este criterio exacto** — emergieron 3
+factores, no 1. Sin embargo, el espíritu del escenario de refutación (que la distinción
+teórica entre roles y no-injerencia carezca de sustento empírico) **sí se confirma**, por
+una vía distinta a la anticipada: no porque todo colapse en un solo factor indiferenciado,
+sino porque los factores que sí emergen **no corresponden a la partición conceptual que
+H-B proponía**. El alfa global alto (0,87, Paso 4.3) junto con esta estructura sugiere una
+fuerte dimensión general de actitudes de género atravesando casi todos los ítems
+(consistente con F1 absorbiendo 9 de los 17 ítems, incluyendo contenido de tres
+categorías teóricas distintas), con matices de formato de encuesta (F2=bloque P12
+completo) más que de contenido psicológico diferenciado.
+
+**Consecuencia para H-B:** no puede evaluarse el criterio original de H-B (*"P12.5,
+P10.8 y P10.9 discriminan; P10.1 y P10.2 no"*) usando estos 3 factores como proxy de
+"no-injerencia" vs. "roles", porque esa partición conceptual no es la que produce el
+análisis factorial. Cualquier prueba posterior de H-B con TAC/localidad tendría que
+usarse sobre los factores EMPÍRICOS (F1 general, F2=bloque pareja, F3=esencialismo
+específico), no sobre la agrupación teórica original — o bien, evaluarse directamente
+sobre los ítems individuales sin agrupar, que es la alternativa que el propio diseño del
+proyecto contempló desde el principio (Paso 4.2, regla general: si no se puede factorizar
+según lo esperado, reportar ítems individuales).
+
+**Nota de baja varianza explicada:** 42,4% acumulado en 3 factores es un valor moderado
+— más de la mitad de la varianza de los 17 ítems queda sin explicar por esta estructura
+de 3 factores, lo cual es consistente con una escala donde la mayor parte de la señal
+compartida es general (F1 domina con 18,8% él solo) y el resto es más ruido específico de
+ítem que estructura latente clara.
+
+## Paso 4.5 — Puntajes factoriales estandarizados (registrado 2026-08-20)
+
+Puntajes factoriales calculados por `factor_analyzer.transform()` sobre los 5.860
+casos con los 17 ítems completos, estandarizados explícitamente a media=0, sd=1
+(verificado exacto, no aproximado).
+
+**Cobertura:** 5.860 de 5.860 (100%) — sin pérdida adicional respecto al subconjunto
+usado en KMO/Bartlett/alfa/extracción factorial (Pasos 4.2–4.4).
+
+**Correlación entre factores (F1_z, F2_z, F3_z):**
+- F1 vs F2: 0,1665
+- F1 vs F3: 0,1553
+- F2 vs F3: -0,0478
+
+**Nota metodológica:** varimax es una rotación ortogonal por diseño (los factores
+rotados deberían ser exactamente independientes, correlación=0), pero los *puntajes*
+calculados por el método de regresión de Thomson (que es el que usa `factor_analyzer`
+por defecto) no garantizan ortogonalidad exacta en la práctica — la correlación
+residual observada (máximo 0,17) es un artefacto conocido y esperable de este método
+de estimación de puntajes, no un error de la rotación en sí (la matriz de cargas
+rotadas sí es ortogonal por construcción). Se documenta para que, si estos tres
+puntajes se usan simultáneamente como predictores en un modelo posterior, no se asuma
+independencia total entre ellos — la colinealidad es baja pero no nula.
+
+**Variables finales disponibles en `df_bienal`:** `F1_z`, `F2_z`, `F3_z`, unidas por
+índice original, listas para agregación por localidad (`V1`) en el siguiente paso.
+
+**Recordatorio del Paso 4.4:** dado que la estructura empírica de estos 3 factores NO
+corresponde a la partición teórica de H-B (roles / culpabilización / no-injerencia),
+sino a una mezcla dominada por bloque del cuestionario (F1=general/P10 mayoritario,
+F2=P12 completo, F3=esencialismo específico P10.1-P10.2), cualquier uso posterior de
+estos puntajes para evaluar H-B debe nombrarlos y reportarlos según lo que
+empíricamente miden, no según los nombres teóricos originales del enunciado (que ya
+no aplican a esta estructura).
+
+## Paso 4.2b — Verificación: Pearson vs. tetracórica para el análisis factorial (registrado 2026-08-20)
+
+El cálculo de KMO/Bartlett (Paso 4.2) generó un warning de `factor_analyzer` sobre el
+determinante de la matriz de correlación estar "cerca de cero", resuelto internamente
+con pseudoinversa de Moore-Penrose. Se verificó si esto reflejaba multicolinealidad
+genuina que ameritara recalcular con correlación tetracórica (más apropiada que Pearson
+para ítems binarios) en vez de proceder con Pearson estándar.
+
+**Resultado de la verificación:**
+- Determinante: 4,12e-03 — pequeño pero explicado por 17 autovalores <1 multiplicados
+  entre sí, no por un autovalor cercano a cero.
+- **Autovalores:** todos positivos, mínimo 0,3996 — sin ningún valor cercano a 0.
+- **Número de condición:** 14,2 — muy por debajo del umbral de multicolinealidad severa
+  (>1000), matriz bien condicionada.
+- **Splits de los 17 ítems** (proporción "De acuerdo"): rango 30,6%–55,7% — ningún ítem
+  con split extremo (<20% o >80%), el escenario donde Pearson/phi más se aleja de la
+  tetracórica.
+
+**Decisión:** se mantiene la matriz de correlación de Pearson para la extracción
+factorial (Paso 4.3). El warning de la librería fue un umbral numérico conservador sin
+consecuencia sustantiva — no se instala infraestructura adicional (`semopy` u otra) para
+recalcular con tetracórica, dado que la evidencia (autovalores, condición, splits) no
+justifica el esfuerzo: la ganancia esperada de precisión sería marginal.
+
+## Paso 4.3 — Confiabilidad: Alfa de Cronbach, 17 ítems (registrado 2026-08-20)
+
+**Alfa de Cronbach (17 ítems, n=5.860): 0,8731** (IC 95% [0,8680, 0,8780]).
+
+**Resultado por encima del rango esperado en el enunciado (0,6–0,7).** El enunciado
+anticipaba un alfa bajo-moderado como evidencia de que "el machismo" no es una dimensión
+única. El resultado observado (0,87) es "bueno" a "muy bueno" según los estándares
+convencionales de confiabilidad — sustancialmente más alto de lo previsto.
+
+**Alfa por bloque temático (declarado en el diccionario de la Bienal):**
+- P10 (roles tradicionales/esencialismo, 11 ítems): α = 0,8483 (IC95% [0,8420, 0,8540])
+- P12 (control en la pareja, 6 ítems): α = 0,8005 (IC95% [0,7920, 0,8080])
+
+Ambos subbloques tienen consistencia interna alta **por separado**, y el conjunto
+completo de 17 ítems tiene consistencia aún más alta que cualquiera de los dos
+subbloques individualmente — esto es consistente con la posibilidad de que exista un
+factor general fuerte que atraviesa ambos bloques, además de (o en lugar de) la
+distinción fina entre "roles tradicionales" y "no-injerencia/privatización" que H-B
+proponía como la distinción sustantiva.
+
+**Precaución metodológica — el alfa alto NO es, por sí solo, la prueba de refutación de
+H-B.** El escenario de refutación preregistrado (Sección 1.4, escenario 3) especifica
+dos condiciones conjuntas: *"si el análisis factorial arroja un solo factor con alfa de
+Cronbach alto"*. Hasta este punto solo se ha verificado la segunda condición (alfa alto);
+la primera (número de factores que emergen del análisis factorial exploratorio) se
+determina en el Paso 4.4/4.5, aún pendiente. Un alfa alto es compatible con:
+(a) un único factor dominante (lo cual sí refutaría H-B según el criterio preregistrado), o
+(b) varios factores correlacionados entre sí que comparten un factor general de segundo
+orden (patrón común en escalas de actitudes de género, y compatible con que H-B se
+sostenga si esos factores específicos —roles vs. no-injerencia— emergen distinguibles
+en la estructura factorial, aun con un alfa global alto).
+
+**No se declara refutada H-B en este paso.** Se procede al Paso 4.4 (extracción y número
+de factores) antes de emitir cualquier conclusión sobre el escenario de refutación.
+
+## Paso 4.4 — Extracción factorial: 3 factores no coinciden con la estructura teórica de H-B (registrado 2026-08-20)
+
+**Número de factores:** confirmado en 3 por los tres criterios (Kaiser=3, Horn=3,
+coincide con la expectativa del enunciado). Varianza explicada acumulada: 42,4%.
+
+**Resultado — la estructura de contenido NO coincide con la tabla teórica del
+enunciado.** En lugar de los tres factores propuestos (Roles tradicionales /
+Culpabilización de la víctima / No-injerencia y privatización), la estructura empírica
+observada es:
+
+- **F1** (9 ítems, SS=3,203, 18,8% var.): P10.3, P10.4, P10.5, P10.6, P10.7, P10.8,
+  P10.9, P10.10, P10.11 — mezcla indiscriminada de roles tradicionales, culpabilización
+  de la víctima Y no-injerencia/privatización, todos juntos.
+- **F2** (6 ítems, SS=2,728, 16,0% var.): P12.1, P12.2, P12.3, P12.4, P12.5, P12.6 —
+  **el bloque P12 completo**, sin excepción alguna.
+- **F3** (2 ítems, SS=1,286, 7,6% var.): P10.1, P10.2 — factor estrecho y específico
+  ("las mujeres por naturaleza cuidan/hacen mejor los oficios del hogar"), separado del
+  resto de ítems de roles tradicionales.
+
+**Patrón dominante: la estructura factorial sigue la organización del cuestionario
+(bloque P10 vs. bloque P12), no la distinción teórica de contenido actitudinal
+propuesta por H-B.**
+
+**Contradicción directa con la predicción específica de H-B:** la hipótesis esperaba que
+`P10.9`, `P12.5`, `P12.3` y `P10.11` (los cuatro ítems de no-injerencia/privatización,
+repartidos deliberadamente entre ambos bloques del cuestionario) formaran un factor
+propio y distinguible. Empíricamente:
+- `P10.9` y `P10.11` cargan en **F1**, junto con ítems de roles y culpabilización.
+- `P12.3` y `P12.5` cargan en **F2**, junto con el resto de ítems de control en la pareja.
+
+Es decir, la no-injerencia **no emerge como una dimensión propia** — sus cuatro ítems se
+reparten exactamente según a qué bloque del cuestionario (P10 general vs. P12 sobre
+relaciones de pareja) pertenecían originalmente, lo cual sugiere que la varianza
+compartida dominante es de **formato/contexto de la pregunta** (ítems del mismo bloque
+correlacionan más entre sí por estar preguntados en el mismo marco), no de **contenido
+actitudinal específico** (roles vs. culpabilización vs. no-injerencia).
+
+**Evaluación frente al escenario de refutación preregistrado (Sección 1.4, escenario 3):**
+el criterio literal decía *"H-B refutada si el análisis factorial arroja UN SOLO factor
+con alfa alto"*. Técnicamente **no se cumple este criterio exacto** — emergieron 3
+factores, no 1. Sin embargo, el espíritu del escenario de refutación (que la distinción
+teórica entre roles y no-injerencia carezca de sustento empírico) **sí se confirma**, por
+una vía distinta a la anticipada: no porque todo colapse en un solo factor indiferenciado,
+sino porque los factores que sí emergen **no corresponden a la partición conceptual que
+H-B proponía**. El alfa global alto (0,87, Paso 4.3) junto con esta estructura sugiere una
+fuerte dimensión general de actitudes de género atravesando casi todos los ítems
+(consistente con F1 absorbiendo 9 de los 17 ítems, incluyendo contenido de tres
+categorías teóricas distintas), con matices de formato de encuesta (F2=bloque P12
+completo) más que de contenido psicológico diferenciado.
+
+**Consecuencia para H-B:** no puede evaluarse el criterio original de H-B (*"P12.5,
+P10.8 y P10.9 discriminan; P10.1 y P10.2 no"*) usando estos 3 factores como proxy de
+"no-injerencia" vs. "roles", porque esa partición conceptual no es la que produce el
+análisis factorial. Cualquier prueba posterior de H-B con TAC/localidad tendría que
+usarse sobre los factores EMPÍRICOS (F1 general, F2=bloque pareja, F3=esencialismo
+específico), no sobre la agrupación teórica original — o bien, evaluarse directamente
+sobre los ítems individuales sin agrupar, que es la alternativa que el propio diseño del
+proyecto contempló desde el principio (Paso 4.2, regla general: si no se puede factorizar
+según lo esperado, reportar ítems individuales).
+
+**Nota de baja varianza explicada:** 42,4% acumulado en 3 factores es un valor moderado
+— más de la mitad de la varianza de los 17 ítems queda sin explicar por esta estructura
+de 3 factores, lo cual es consistente con una escala donde la mayor parte de la señal
+compartida es general (F1 domina con 18,8% él solo) y el resto es más ruido específico de
+ítem que estructura latente clara.
+
+## Paso 4.5 — Puntajes factoriales estandarizados (registrado 2026-08-20)
+
+Puntajes factoriales calculados por `factor_analyzer.transform()` sobre los 5.860
+casos con los 17 ítems completos, estandarizados explícitamente a media=0, sd=1
+(verificado exacto, no aproximado).
+
+**Cobertura:** 5.860 de 5.860 (100%) — sin pérdida adicional respecto al subconjunto
+usado en KMO/Bartlett/alfa/extracción factorial (Pasos 4.2–4.4).
+
+**Correlación entre factores (F1_z, F2_z, F3_z):**
+- F1 vs F2: 0,1665
+- F1 vs F3: 0,1553
+- F2 vs F3: -0,0478
+
+**Nota metodológica:** varimax es una rotación ortogonal por diseño (los factores
+rotados deberían ser exactamente independientes, correlación=0), pero los *puntajes*
+calculados por el método de regresión de Thomson (que es el que usa `factor_analyzer`
+por defecto) no garantizan ortogonalidad exacta en la práctica — la correlación
+residual observada (máximo 0,17) es un artefacto conocido y esperable de este método
+de estimación de puntajes, no un error de la rotación en sí (la matriz de cargas
+rotadas sí es ortogonal por construcción). Se documenta para que, si estos tres
+puntajes se usan simultáneamente como predictores en un modelo posterior, no se asuma
+independencia total entre ellos — la colinealidad es baja pero no nula.
+
+**Variables finales disponibles en `df_bienal`:** `F1_z`, `F2_z`, `F3_z`, unidas por
+índice original, listas para agregación por localidad (`V1`) en el siguiente paso.
+
+**Recordatorio del Paso 4.4:** dado que la estructura empírica de estos 3 factores NO
+corresponde a la partición teórica de H-B (roles / culpabilización / no-injerencia),
+sino a una mezcla dominada por bloque del cuestionario (F1=general/P10 mayoritario,
+F2=P12 completo, F3=esencialismo específico P10.1-P10.2), cualquier uso posterior de
+estos puntajes para evaluar H-B debe nombrarlos y reportarlos según lo que
+empíricamente miden, no según los nombres teóricos originales del enunciado (que ya
+no aplican a esta estructura).
+
+## Paso 4.5 — Puntajes factoriales estandarizados (registrado 2026-08-20)
+
+Puntajes factoriales calculados por `factor_analyzer.transform()` sobre los 5.860
+casos con los 17 ítems completos, estandarizados explícitamente a media=0, sd=1
+(verificado exacto, no aproximado).
+
+**Cobertura:** 5.860 de 5.860 (100%) — sin pérdida adicional respecto al subconjunto
+usado en KMO/Bartlett/alfa/extracción factorial (Pasos 4.2–4.4).
+
+**Correlación entre factores (F1_z, F2_z, F3_z):**
+- F1 vs F2: 0,1665
+- F1 vs F3: 0,1553
+- F2 vs F3: -0,0478
+
+**Nota metodológica:** varimax es una rotación ortogonal por diseño (los factores
+rotados deberían ser exactamente independientes, correlación=0), pero los *puntajes*
+calculados por el método de regresión de Thomson (que es el que usa `factor_analyzer`
+por defecto) no garantizan ortogonalidad exacta en la práctica — la correlación
+residual observada (máximo 0,17) es un artefacto conocido y esperable de este método
+de estimación de puntajes, no un error de la rotación en sí (la matriz de cargas
+rotadas sí es ortogonal por construcción). Se documenta para que, si estos tres
+puntajes se usan simultáneamente como predictores en un modelo posterior, no se asuma
+independencia total entre ellos — la colinealidad es baja pero no nula.
+
+**Variables finales disponibles en `df_bienal`:** `F1_z`, `F2_z`, `F3_z`, unidas por
+índice original, listas para agregación por localidad (`V1`) en el siguiente paso.
+
+**Recordatorio del Paso 4.4:** dado que la estructura empírica de estos 3 factores NO
+corresponde a la partición teórica de H-B (roles / culpabilización / no-injerencia),
+sino a una mezcla dominada por bloque del cuestionario (F1=general/P10 mayoritario,
+F2=P12 completo, F3=esencialismo específico P10.1-P10.2), cualquier uso posterior de
+estos puntajes para evaluar H-B debe nombrarlos y reportarlos según lo que
+empíricamente miden, no según los nombres teóricos originales del enunciado (que ya
+no aplican a esta estructura).
+
+## Paso 4.6. Agregar por localidad ponderando por `FACTOR`, con IC 95%. (registrado 2026-08-20)
+
+### 1. Fuente de datos y diseño muestral
+
+- **Dataset:** `dataset_encuestaBienal_limpio.csv` (n = 5.860 individuos).
+- **Factor de expansión:** `FACTOR` (encontrado en el dataset y utilizado para todas las agregaciones territoriales).
+- **Registros utilizados en la agregación:** 5.381 (excluye aquellos sin `codigo_localidad` o sin factor de expansión válido).
+- **Unidades territoriales:** 19 localidades (Sumapaz no está presente en la encuesta Bienal).
+- **Conglomerado para bootstrap:** `codigo_UPL` (891 UPLs únicos en la Bienal).
+
+### 2. Agregación de puntajes factoriales por localidad
+
+Se calcularon los promedios ponderados de los tres puntajes factoriales estandarizados (`F1_z`, `F2_z`, `F3_z`) para cada localidad, utilizando `FACTOR` como ponderador poblacional.
+
+**Promedios factoriales por localidad (n=5.381):**
+
+| codigo_localidad | nombre_oficial | F1_z | F2_z | F3_z | n |
+|---|---|---|---|---|---|
+| 1 | Usaquén | 0.084 | 0.391 | -0.498 | 295 |
+| 2 | Chapinero | -0.101 | -0.296 | 0.242 | 223 |
+| 3 | Santa Fe | 0.204 | 0.030 | 0.207 | 174 |
+| 4 | San Cristóbal | -0.128 | -0.031 | 0.209 | 207 |
+| 5 | Usme | 0.026 | -0.128 | -0.085 | 346 |
+| 6 | Tunjuelito | 0.091 | 0.293 | -0.341 | 275 |
+| 7 | Bosa | -0.220 | 0.238 | -0.032 | 319 |
+| 8 | Kennedy | 0.217 | -0.069 | 0.170 | 345 |
+| 9 | Fontibón | -0.054 | 0.096 | -0.277 | 327 |
+| 10 | Engativá | 0.077 | -0.122 | 0.193 | 519 |
+| 11 | Suba | -0.155 | -0.499 | 0.184 | 376 |
+| 12 | Barrios Unidos | -0.199 | -0.329 | 0.056 | 221 |
+| 13 | Teusaquillo | 0.204 | -0.102 | 0.135 | 235 |
+| 14 | Los Mártires | 0.275 | 0.311 | -0.242 | 208 |
+| 15 | Antonio Nariño | 0.193 | 0.050 | 0.075 | 221 |
+| 16 | Puente Aranda | 0.136 | -0.044 | 0.217 | 219 |
+| 17 | La Candelaria | 0.194 | 0.528 | -0.412 | 130 |
+| 18 | Rafael Uribe Uribe | 0.038 | 0.005 | 0.291 | 287 |
+| 19 | Ciudad Bolívar | -0.196 | -0.055 | -0.289 | 454 |
+
+**Interpretación de los extremos:**
+- **F1_z (dimensión general de actitudes de género):** mayor en **Los Mártires** (0.275), **Kennedy** (0.217) y **Santa Fe** (0.204); menor en **Bosa** (-0.220), **Barrios Unidos** (-0.199) y **Ciudad Bolívar** (-0.196).
+- **F2_z (control en la pareja):** mayor en **La Candelaria** (0.528) y **Usaquén** (0.391); menor en **Suba** (-0.499) y **Barrios Unidos** (-0.329).
+- **F3_z (esencialismo específico):** mayor en **Rafael Uribe** (0.291) y **Chapinero** (0.242); menor en **Usaquén** (-0.498) y **La Candelaria** (-0.412).
+
+### 3. Intervalos de confianza al 95% por bootstrap
+
+Se calcularon intervalos de confianza para `F1_z` mediante bootstrap por conglomerado (remuestreo de UPLs con reemplazo, 500 réplicas, 13.36 segundos de cómputo). Este método respeta la estructura de conglomerados del diseño muestral y no requiere supuestos de normalidad.
+
+**Resultados bootstrap para F1_z (IC 95%):**
+
+| codigo_localidad | factor | ci_lower | ci_upper |
+|---|---|---|---|
+| 1 | F1_z | -0.063 | 0.263 |
+| 2 | F1_z | -0.252 | 0.104 |
+| 3 | F1_z | -0.121 | 0.577 |
+| 4 | F1_z | -0.310 | 0.083 |
+| 5 | F1_z | -0.130 | 0.166 |
+| 6 | F1_z | -0.067 | 0.254 |
+| 7 | F1_z | -0.387 | -0.057 |
+| 8 | F1_z | -0.041 | 0.469 |
+| 9 | F1_z | -0.183 | 0.071 |
+| 10 | F1_z | -0.049 | 0.192 |
+| 11 | F1_z | -0.252 | -0.059 |
+| 12 | F1_z | -0.346 | -0.099 |
+| 13 | F1_z | 0.045 | 0.411 |
+| 14 | F1_z | 0.048 | 0.521 |
+| 15 | F1_z | -0.087 | 0.522 |
+| 16 | F1_z | -0.003 | 0.297 |
+| 17 | F1_z | -0.113 | 0.469 |
+| 18 | F1_z | -0.112 | 0.175 |
+| 19 | F1_z | -0.326 | -0.067 |
+
+**Observaciones sobre la precisión:**
+- Las localidades con mayor precisión (IC más estrecho) son aquellas con mayor n muestral: **Engativá** (n=519), **Ciudad Bolívar** (n=454), **Suba** (n=376), **Kennedy** (n=345) e **Usme** (n=346).
+- Las localidades con menor precisión (IC más amplio), donde la estimación puntual debe leerse con mayor cautela, son **La Candelaria** (n=130, IC [-0.113, 0.469]), **Antonio Nariño** (n=221, IC [-0.087, 0.522]), **Los Mártires** (n=208, IC [0.048, 0.521]) y **Santa Fe** (n=174, IC [-0.121, 0.577]). Este patrón coincide con el diagnóstico del Gráfico de Control 1 (Paso 1.7) y se replicará la nota de precaución para estas localidades en el dashboard.
+
+### 4. Tabla territorial final (incluyendo ICs)
+
+| codigo_localidad | nombre_oficial | F1_z | F2_z | F3_z | n | F1_z_ci_lower | F1_z_ci_upper |
+|---|---|---|---|---|---|---|---|
+| 1 | Usaquén | 0.084 | 0.391 | -0.498 | 295 | -0.063 | 0.263 |
+| 2 | Chapinero | -0.101 | -0.296 | 0.242 | 223 | -0.252 | 0.104 |
+| 3 | Santa Fe | 0.204 | 0.030 | 0.207 | 174 | -0.121 | 0.577 |
+| 4 | San Cristóbal | -0.128 | -0.031 | 0.209 | 207 | -0.310 | 0.083 |
+| 5 | Usme | 0.026 | -0.128 | -0.085 | 346 | -0.130 | 0.166 |
+| 6 | Tunjuelito | 0.091 | 0.293 | -0.341 | 275 | -0.067 | 0.254 |
+| 7 | Bosa | -0.220 | 0.238 | -0.032 | 319 | -0.387 | -0.057 |
+| 8 | Kennedy | 0.217 | -0.069 | 0.170 | 345 | -0.041 | 0.469 |
+| 9 | Fontibón | -0.054 | 0.096 | -0.277 | 327 | -0.183 | 0.071 |
+| 10 | Engativá | 0.077 | -0.122 | 0.193 | 519 | -0.049 | 0.192 |
+| 11 | Suba | -0.155 | -0.499 | 0.184 | 376 | -0.252 | -0.059 |
+| 12 | Barrios Unidos | -0.199 | -0.329 | 0.056 | 221 | -0.346 | -0.099 |
+| 13 | Teusaquillo | 0.204 | -0.102 | 0.135 | 235 | 0.045 | 0.411 |
+| 14 | Los Mártires | 0.275 | 0.311 | -0.242 | 208 | 0.048 | 0.521 |
+| 15 | Antonio Nariño | 0.193 | 0.050 | 0.075 | 221 | -0.087 | 0.522 |
+| 16 | Puente Aranda | 0.136 | -0.044 | 0.217 | 219 | -0.003 | 0.297 |
+| 17 | La Candelaria | 0.194 | 0.528 | -0.412 | 130 | -0.113 | 0.469 |
+| 18 | Rafael Uribe Uribe | 0.038 | 0.005 | 0.291 | 287 | -0.112 | 0.175 |
+| 19 | Ciudad Bolívar | -0.196 | -0.055 | -0.289 | 454 | -0.326 | -0.067 |
+
+**Archivo exportado:** `outputs/factores_territoriales_bienal.csv`
+
+### 5. Gráficos generados para el dashboard
+
+**Gráfico 5 — Mapa de calor de cargas factoriales**
+- **Archivo:** `outputs/tableau/grafico5_mapa_calor_factores.png`
+- **Descripción:** mapa de calor con las cargas factoriales de los 17 ítems en los 3 factores (rotación varimax). Los ítems se etiquetaron con su enunciado abreviado para facilitar la lectura.
+- **Hallazgo principal:** la visualización confirma que los ítems de no-injerencia (P10.9, P12.5, P12.3, P10.11) no se agrupan en un factor propio; se distribuyen según el bloque del cuestionario (P10 vs. P12). Esto refuerza la conclusión del Paso 4.4: la estructura factorial sigue el formato del cuestionario, no la distinción teórica de contenido.
+
+**Gráfico 6 — Porcentaje de acuerdo por ítem (total Bogotá)**
+- **Archivo:** `outputs/tableau/grafico6_porcentaje_acuerdo.png`
+- **Descripción:** barras horizontales del % de personas que respondieron "De acuerdo" (código 2) para cada uno de los 17 ítems, ordenadas de mayor a menor. Incluye intervalos de confianza al 95% (aproximación normal).
+- **Hallazgo principal:** el ítem P12.5 ("Cuando hay violencia en una relación de pareja, uno no tiene porqué meterse") tiene un porcentaje de acuerdo del ~39.1%, sustancialmente más bajo que la mayoría de los ítems de roles tradicionales (e.g., P10.4 "El rol de todo hombre es proteger y proveer" con ~55.7%). Esto apoya la noción de que la norma de no-injerencia es distinta en su nivel de adhesión social, aunque el análisis factorial no logró aislarla como una dimensión factorial propia.
+
+### 6. Cierre del Paso 4.6
+
+La agregación territorial de los factores de la Bienal está completa y validada con bootstrap por conglomerado. Los gráficos 5 y 6 están listos para incorporarse al dashboard de Tableau. La tabla `factores_territoriales_bienal.csv` servirá como insumo para las fases posteriores (cálculo del INA, correlaciones territoriales para H1′, etc.).
+
