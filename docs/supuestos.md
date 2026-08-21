@@ -1733,3 +1733,131 @@ F2=P12 completo, F3=esencialismo específico P10.1-P10.2), cualquier uso posteri
 estos puntajes para evaluar H-B debe nombrarlos y reportarlos según lo que
 empíricamente miden, no según los nombres teóricos originales del enunciado (que ya
 no aplican a esta estructura).
+
+## Paso 5.1 — Indicadores poblacionales por localidad (2026-08-20)
+
+**Resultados**
+
+- Registros analizados: **13,082**.
+- Localidades con información de encuesta: **19**.
+- UPL presentes: **30**.
+- TAC_M ponderada para Bogotá: **18.8%**.
+- Mujeres adultas expandidas en las 19 localidades: **3,458,493**.
+- Volumen expandido mínimo de mujeres con violencia visible y afrontada: **694,602**.
+- Registros válidos para IBA: **11,361**.
+- Registros válidos para ICC: **13,022**.
+- Inconsistencias observadas entre Mx404_1..5 y Mx404_6: **17**.
+
+**Conclusión**
+
+Al menos **18.8%** de la población representada por la encuesta presenció y afrontó una situación de violencia contra una mujer. Este valor constituye una cota inferior de la violencia socialmente visible y afrontada y no una estimación de prevalencia total.
+
+## Paso 5.2 — Criterio de publicación (2026-08-20)
+
+**Resultados**
+
+- TAC_M: **19/19 localidades publicables**.
+- pct_carga_mujer: **19/19 localidades publicables**.
+- gad7_mod_sev: **11/19 localidades publicables**.
+- pobreza_subjetiva: **18/19 localidades publicables**.
+- IPSJ_C_promedio: **19/19 localidades publicables**.
+- ICG_B_promedio: **19/19 localidades publicables**.
+- IBA_promedio: **19/19 localidades publicables**.
+
+- Localidades no publicables para el denominador mínimo de demanda: **0**.
+
+**Conclusión**
+
+Las estimaciones territoriales se conservan únicamente cuando cumplen los umbrales de precisión definidos: tamaño efectivo mínimo de 30 observaciones y coeficiente de variación máximo de 30% para proporciones. Las localidades que no cumplen estos criterios no deben presentarse como estimaciones territoriales válidas.
+
+## Paso 5.3 — Oferta institucional (2026-08-20)
+
+**Resultados**
+
+- Cortes comunes analizados: **2025-06, 2025-09, 2025-12, 2026-03**.
+- Atenciones acumuladas de Línea Púrpura: **90,288**.
+- Atenciones acumuladas de Duplas: **7,023**.
+- Oferta institucional total: **97,311 atenciones**.
+- Localidades con mayor oferta acumulada:
+- Kennedy: **14,101 atenciones**.
+- Suba: **13,687 atenciones**.
+- Engativá: **10,574 atenciones**.
+
+**Conclusión**
+
+La oferta institucional se concentra de forma desigual entre localidades. La comparación territorial se realiza únicamente sobre los cuatro cortes comunes entre las fuentes, evitando inflar la cobertura con periodos sin comparador administrativo equivalente.
+
+## Paso 5.4 — Registro administrativo de riesgo (2026-08-20)
+
+**Resultados**
+
+- Casos administrativos acumulados en los cuatro cortes comunes: **6,708**.
+- Población femenina oficial utilizada como denominador: **4,134,734**.
+- Localidades con mayor tasa administrativa:
+- La Candelaria: **942.1 casos por 100.000 mujeres** (76 casos acumulados).
+- Ciudad Bolívar: **327.6 casos por 100.000 mujeres** (1,142 casos acumulados).
+- San Cristóbal: **301.0 casos por 100.000 mujeres** (625 casos acumulados).
+
+**Conclusión**
+
+La tasa administrativa permite normalizar territorialmente los casos registrados por población femenina. Este indicador representa demanda capturada por el sistema y no debe interpretarse como prevalencia total de violencia.
+
+## Paso 5.5 — Razones de cobertura (2026-08-20)
+
+**Resultados**
+
+- Mayor RC_admin: **Teusaquillo**, con **26.93 atenciones por caso administrativo**.
+- Menor RC_admin: **La Candelaria**, con **4.63 atenciones por caso administrativo**.
+- Mayor cobertura frente a necesidad mínima observable: **Fontibón**, con **240.38 atenciones por cada 1.000 mujeres del volumen mínimo estimado**.
+- Menor cobertura frente a necesidad mínima observable: **Santa Fe**, con **90.84 atenciones por cada 1.000 mujeres del volumen mínimo estimado**.
+- Mujeres adultas expandidas en las 19 localidades: **3,458,493**.
+- Población femenina oficial en las mismas localidades: **4,132,925**.
+- Diferencia relativa entre ambos universos poblacionales: **-16.3%**.
+
+**Conclusión**
+
+RC_admin expresa cobertura frente a los casos capturados por el sistema. La segunda razón usa un denominador poblacional independiente, pero debe interpretarse como una **cota superior de cobertura**, porque la TAC solo identifica violencia visible y afrontada y no toda la necesidad real existente.
+
+## Paso 5.6 — Divergencia de rankings (2026-08-20)
+
+**Resultados**
+
+- Localidades con cambio de al menos cuatro posiciones: **13 de 19**.
+
+Localidades que aparecen mejor cubiertas bajo el denominador administrativo que bajo el denominador poblacional mínimo:
+
+- Chapinero: pasa de posición **2** a **16** (Δ = **+14**).
+- Teusaquillo: pasa de posición **1** a **15** (Δ = **+14**).
+- Puente Aranda: pasa de posición **9** a **17** (Δ = **+8**).
+- Kennedy: pasa de posición **8** a **14** (Δ = **+6**).
+- Santa Fe: pasa de posición **15** a **19** (Δ = **+4**).
+- Suba: pasa de posición **4** a **8** (Δ = **+4**).
+
+Localidades que mejoran su posición al utilizar el denominador poblacional mínimo:
+
+- La Candelaria: pasa de posición **19** a **9** (Δ = **-10**).
+- Antonio Nariño: pasa de posición **10** a **2** (Δ = **-8**).
+- Tunjuelito: pasa de posición **12** a **6** (Δ = **-6**).
+- Fontibón: pasa de posición **6** a **1** (Δ = **-5**).
+- San Cristóbal: pasa de posición **17** a **12** (Δ = **-5**).
+- Bosa: pasa de posición **11** a **7** (Δ = **-4**).
+- Rafael Uribe Uribe: pasa de posición **14** a **10** (Δ = **-4**).
+
+**Conclusión**
+
+La magnitud de `delta_rank` permite identificar qué localidades cambian sustancialmente de posición cuando la cobertura deja de evaluarse exclusivamente contra los casos que el propio sistema registró.
+
+## Paso 5.7 — Prueba estadística de H1′ (2026-08-20)
+
+**Resultados**
+
+- Concordancia entre `rank_admin` y `rank_real`: **ρ = 0.267**, IC95% **[-0.219, 0.679]**, p = **0.2698**.
+- Asociación entre `IPSJ_C` promedio y `delta_rank`: **ρ = 0.180**, IC95% **[-0.384, 0.635]**, p = **0.4601**; signo **contrario a la expectativa**.
+- Asociación entre `ICG_B` promedio y `delta_rank`: **ρ = 0.053**, IC95% **[-0.464, 0.541]**, p = **0.8301**; signo **contrario a la expectativa**.
+- Asociación entre tasa administrativa y cobertura frente a necesidad mínima: **ρ = -0.286**, IC95% **[-0.690, 0.200]**, p = **0.2353**; signo **negativo**.
+- Réplicas bootstrap utilizadas por prueba: hasta **2.000**.
+- Resultado frente al criterio predefinido de refutación: H1′ queda **no refutada por el criterio de alta concordancia**.
+
+**Conclusión**
+
+La evidencia territorial permite evaluar si el orden de cobertura derivado del registro administrativo coincide con el orden obtenido al utilizar un denominador poblacional independiente. La conclusión sobre H1′ se determina a partir de la concordancia de rankings y de la dirección de las asociaciones con acceso percibido a medios de denuncia, confianza vecinal y riesgo administrativo.
