@@ -85,7 +85,7 @@ flowchart TD
 
 ## Proceso ETL
 
-Los procesos de transformación se encuentran organizados dentro de la carpeta `/scripts`. Cada script o notebook tiene una responsabilidad específica dentro del procesamiento de los datasets.
+Los procesos de transformación y análisis se encuentran organizados dentro de la carpeta `/scripts`. Los scripts Python realizan las tareas correspondientes al proceso ETL, mientras que los notebooks ubicados en `scripts/notebooks/` consumen los datasets generados en /outputs y desarrollan la etapa de análisis estadístico.
 
 La mayoría de los procesos implementan:
 
@@ -99,26 +99,62 @@ La mayoría de los procesos implementan:
 
 Para el tratamiento de información tabular se utiliza principalmente la librería **Pandas**, mientras que para información espacial se utiliza **GeoPandas**, permitiendo la generación y manejo de capas geográficas utilizadas posteriormente en análisis territoriales.
 
-## Organización del pipeline ETL
+## Organización del pipeline de procesamiento y análisis
 
-Los procesos se ejecutan de manera secuencial siguiendo una estructura numerada:
+El proyecto se encuentra organizado como un flujo secuencial compuesto por dos etapas principales: una primera etapa de **Extracción, Transformación y Carga (ETL)** y una segunda etapa de **análisis estadístico**.
+
+La primera etapa procesa las fuentes originales y genera los datasets normalizados almacenados en `/outputs`. Posteriormente, los notebooks de análisis utilizan estos productos como insumo para realizar los procedimientos estadísticos definidos en la metodología del proyecto.
+
+El flujo general es:
 
 ```mermaid
-flowchart TD
-    A["0_normalizacion_limpieza.py"] --> B["1_create_geojson_localidades.py"]
-    B --> C["2_normalizacion_secrmujer.py"]
-    C --> D["2_normalizacion_vintrfamiliar.py"]
-    D --> E["3_limpieza encuesta distrital de percepcion.ipynb"]
-    E --> F["4_generacion_diccionario_preguntas_EcBienal.py"]
-    F --> G["4_limpieza_dataset_ebcuesta_bienal.py"]
-    G --> H["5_normalizacion_llamadas123.py"]
-    H --> I["6_analisis_datos.ipynb"]
-
-    J["/data<br/>Datos crudos"] --> A
-    I --> K["/outputs<br/>Datasets procesados"]
+flowchart LR
+    A["/data<br/>Datos crudos"] --> B["/scripts<br/>Procesos ETL"]
+    B --> C["/outputs<br/>Datasets procesados"]
+    C --> D["/scripts/notebooks<br/>Análisis estadístico"]
+    D --> E["Resultados<br/>estadísticos y analíticos"]
 ```
 
-Cada etapa genera productos transformados almacenados en la carpeta `/outputs`.
+Los procesos de la primera etapa mantienen una numeración que permite identificar su orden lógico de ejecución. La segunda etapa se encuentra organizada mediante notebooks especializados según el procedimiento analítico realizado.
+
+## Procesos ETL
+
+Los scripts Python ubicados en  `/scripts ` realizan las tareas de limpieza, transformación, normalización, estructuración y validación de las diferentes fuentes de datos.
+
+Entre estos procesos se encuentran:
+
+* 0_normalizacion_limpieza.py
+* 1_create_geojson_localidades.py
+* 2_normalizacion_secrmujer.py
+* 2_normalizacion_vintrfamiliar.py
+* 3_limpieza encuesta distrital de percepcion.ipynb
+* 4_generacion_diccionario_preguntas_EcBienal.py
+* 4_limpieza_dataset_ebcuesta_bienal.py
+* 5_normalizacion_llamadas123.py
+
+Los resultados de esta etapa son almacenados en `/outputs` y constituyen la entrada de los notebooks estadísticos.
+
+## Análisis estadístico
+
+Los notebooks de análisis se encuentran organizados en:
+
+* scripts/
+    * notebooks/
+        * 01_preparacion.ipynb
+        * 02_indices.ipynb
+        * 03_modelos.ipynb
+        * 04_agregacion_localidad.ipynb
+        * 05_exportacion_tableau.ipynb
+
+Estos notebooks utilizan los datasets generados por la etapa ETL para desarrollar progresivamente el procesamiento analítico:
+
+- preparación de los datos para el análisis.
+- construcción de los índices definidos en la metodología.
+- ejecución de los modelos estadísticos.
+- agregación de indicadores a nivel territorial.
+- preparación de los resultados para su posterior visualización.
+
+De esta manera, se mantiene una separación entre la preparación de los datos y el análisis estadístico, permitiendo que los resultados analíticos sean reproducibles a partir de los datasets normalizados generados por el ETL.
 
 ## Productos generados
 
@@ -236,12 +272,14 @@ flowchart LR
 
     subgraph PROCESAMIENTO["PROCESAMIENTO"]
         SCRIPTS["scripts/<br/>ETL en Python"]
+        NOTEBOOKS["scripts/notebooks/<br/>Análisis estadístico"]
         REQ["requirements.txt<br/>Dependencias"]
         BAT["run_etl.bat<br/>Orquestación"]
     end
 
     subgraph PRODUCTOS["SALIDA"]
         OUTPUTS["outputs/<br/>Datasets procesados"]
+        RESULTS["Resultados<br/>estadísticos y analíticos"]
     end
 
     subgraph DOCUMENTACION["DOCUMENTACIÓN Y SOPORTE"]
@@ -253,6 +291,8 @@ flowchart LR
     BAT --> SCRIPTS
     REQ -.-> SCRIPTS
     SCRIPTS --> OUTPUTS
+    OUTPUTS --> NOTEBOOKS
+    NOTEBOOKS --> RESULTS
 
     DOCS -. documentación .-> SCRIPTS
     NOTES -. referencia .-> SCRIPTS
