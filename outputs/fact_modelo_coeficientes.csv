@@ -1,0 +1,11 @@
+﻿modelo,variable,etiqueta_legible,odds_ratio,or_ic_inf,or_ic_sup,efecto_marginal,p_valor,p_valor_bh,significativo,n_obs,n_clusters,pseudo_r2
+M1,HHI,Concentración de tareas de cuidado,,,,,4.271886465232957e-05,0.0006835018344372,True,11850,30,0.0356
+M1,ICC_mujer,Concentración del cuidado en mujeres,,,,,0.0004055826756172,0.0032446614049382,True,11850,30,0.0356
+M1,ICC_mujer_x_mujer,Interacción: cuidado concentrado y mujer,,,,,0.0172380543778348,0.0919362900151191,False,11850,30,0.0356
+M2,HHI,Concentración de tareas de cuidado,0.7525266187007755,1.7378829817911732,2.786147157934616,-0.0401608289180542,0.0710298823875849,0.2272956236402716,False,13022,30,0.075
+M2,ICC_mujer,Concentración del cuidado en mujeres,1.0172985024879144,1.916407127876463,4.908857983186874,0.0024225676120216,0.9400872067645616,0.9434027532912724,False,13022,30,0.075
+M2,ICC_mujer_x_mujer,Interacción: cuidado concentrado y mujer,1.2006298611129669,2.00521898960068,7.939676056447072,0.0258275438850294,0.5112884995276694,0.6817179993702259,False,13022,30,0.075
+M3,HHI,Concentración de tareas de cuidado,,,,,0.2497867263005552,0.4995734526011104,False,12854,30,0.0357
+M3,ICC_mujer,Concentración del cuidado en mujeres,,,,,0.5696748206406286,0.701138240788466,False,12854,30,0.0357
+M3,ICC_mujer_x_mujer,Interacción: cuidado concentrado y mujer,,,,,0.4635303859608829,0.6817179993702259,False,12854,30,0.0357
+M3,TAC_M_localidad,TAC_M de la localidad,,,,,0.0362049221481159,0.1448196885924639,False,12854,30,0.0357

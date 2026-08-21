@@ -2436,3 +2436,196 @@ La tabla `outputs/capa_normativa_localidad.csv` conserva los puntajes, el cuadra
 - Gráfico 8: slope chart de `rank_admin` a `rank_real`, resaltando localidades con `|delta_rank| >= 4`. Exportado a `outputs/tableau/grafico8_slope_rankings.png`.
 - Gráfico 9: barras horizontales de INA. Exportado a `outputs/tableau/grafico9_ina_componentes_ic.png`.
 - El gráfico 9 propaga únicamente los IC disponibles de `TAC_M` e `IBA`; `RC_real` no tiene IC territorial en la tabla actual, por lo que su contribución se mantiene fija. No debe interpretarse como IC completo del INA.
+
+## T2 — fact_indicadores_localidad.csv (2026-08-20)
+
+Tabla ancha con **20 filas**, una por localidad; Sumapaz se conserva con `en_encuesta=False`.
+
+- Percepción: indicadores ponderados desde `outputs/encuesta_percepcion_legible.csv`.
+- Oferta y riesgo: periodos comunes entre Línea Púrpura, Duplas y riesgo de feminicidio.
+- Bienal: `factor_roles = F1_z`, `factor_culpabilizacion = F3_z` y `factor_noinjerencia = F2_z`; son etiquetas interpretativas de factores empíricos y no equivalen a factores puros.
+- `RC_real` conserva la cota de cobertura calculada en Fase 5.
+- `publicable` exige al menos 30 observaciones y CV de TAC_M no superior a 30%.
+- CSV exportado a `outputs/fact_indicadores_localidad.csv`.
+
+## T3 — fact_series_trimestral.csv (2026-08-20)
+
+Tabla en formato largo con **460 filas** y cinco indicadores: `LineaPurpura`, `Duplas`, `DuplasPublico`, `RiesgoFeminicidio` y `DelitosSexuales`.
+
+- `valor` conserva el conteo original de cada fuente.
+- `tasa_100k` usa `PobMujeres` de Riesgo de Feminicidio; si no existe un corte exacto, usa el último denominador disponible para la localidad.
+- Distribución por indicador:
+- DelitosSexuales: **80 filas**.
+- Duplas: **100 filas**.
+- DuplasPublico: **100 filas**.
+- LineaPurpura: **100 filas**.
+- RiesgoFeminicidio: **80 filas**.
+- CSV exportado a `outputs/fact_series_trimestral.csv`.
+
+El formato largo permite construir un único gráfico temporal con filtro por `indicador`, en lugar de cinco hojas separadas.
+
+## T4 — fact_encuesta_desagregada.csv (2026-08-20)
+
+Tabla larga de desagregación interseccional con **376 filas**.
+
+- Dimensiones: `sexo`, `estrato`, `rango_edad`, `carga_cuidado` y `gad7`.
+- `valor` es una proporción ponderada por `fexp_calp_anu`.
+- `ic_inf` e `ic_sup` son IC aproximados al 95% mediante el tamaño efectivo local.
+- `poblacion_expandida` es la suma del factor de expansión dentro de cada categoría.
+- Distribución por dimensión:
+- carga_cuidado: **57 filas**.
+- estrato: **123 filas**.
+- gad7: **75 filas**.
+- rango_edad: **76 filas**.
+- sexo: **45 filas**.
+- CSV exportado a `outputs/fact_encuesta_desagregada.csv`.
+
+Esta tabla larga alimenta los filtros interseccionales del dashboard sin duplicar una hoja por dimensión.
+
+## T5 — fact_bienal_items.csv (2026-08-20)
+
+Tabla larga de la Encuesta Bienal con **340 filas**, 17 ítems y 19 localidades.
+
+- `pct_acuerdo` es la proporción ponderada de respuestas codificadas como `2 = De acuerdo`.
+- `ic_inf` e `ic_sup` son IC aproximados al 95% con tamaño efectivo por localidad e ítem.
+- `n_muestral` es el número de respuestas válidas del ítem.
+- `factor_asignado` usa la asignación conceptual documentada en Fase 4; la solución factorial empírica mostró que algunos ítems se mezclan entre factores.
+- CSV exportado a `outputs/fact_bienal_items.csv`.
+
+La tabla queda en formato largo para filtrar por localidad, ítem o factor en el dashboard.
+
+## T6 — fact_modelo_coeficientes.csv (2026-08-20)
+
+Tabla de coeficientes con **10 filas** para M1, M2 y M3.
+
+- Se conservaron únicamente los modelos solicitados: `M1`, `M2` y `M3`.
+- Modelos excluidos del CSV fuente: **['M4-K', 'M4-L']**.
+- `p_valor_bh` usa el ajuste BH global disponible en los resultados de Fase 3.
+- `significativo` corresponde a `significativo_bh_global`.
+- `odds_ratio` e IC de OR se reportan únicamente para M2, que es el modelo logístico; en M1 y M3 no aplican.
+- `n_obs`: M1=11.850, M2=13.022 y M3=12.854; `n_clusters`=30 (`codigo_UPL`).
+- `pseudo_r2`: M1 conserva R²=0,0356 y M2 pseudo-R² de McFadden=0,0750; M3 queda `NA` porque no está persistido en el CSV fuente.
+- CSV exportado a `outputs/fact_modelo_coeficientes.csv`.
+
+## T7 — fact_llamadas123_agregado.csv (2026-08-20)
+
+Tabla agregada de llamadas 123 con **43951 combinaciones** y **48291 incidentes únicos**.
+
+- Se deduplicó por `NUMERO_INCIDENTE` antes de agregar.
+- `tiempo_respuesta_mediana` usa diferencias válidas entre recepción y desplazamiento, restringidas a 0–24 horas; los tiempos faltantes o inválidos quedan fuera de la mediana.
+- `pct_recepcion_nula` conserva la proporción de incidentes sin recepción válida.
+- `grupo_incidente` agrupa tipos en `MALTRATO`, `VIOSEXUAL`, `SUICIDIO`, `SALUD_MENTAL`, `CLINICO` y `OTROS`.
+- CSV exportado a `outputs/fact_llamadas123_agregado.csv`.
+
+## T2 — fact_indicadores_localidad.csv (2026-08-20)
+
+Tabla ancha con **20 filas**, una por localidad; Sumapaz se conserva con `en_encuesta=False`.
+
+- Percepción: indicadores ponderados desde `outputs/encuesta_percepcion_legible.csv`.
+- Oferta y riesgo: periodos comunes entre Línea Púrpura, Duplas y riesgo de feminicidio.
+- Bienal: `factor_roles = F1_z`, `factor_culpabilizacion = F3_z` y `factor_noinjerencia = F2_z`; son etiquetas interpretativas de factores empíricos y no equivalen a factores puros.
+- `RC_real` conserva la cota de cobertura calculada en Fase 5.
+- `publicable` exige al menos 30 observaciones y CV de TAC_M no superior a 30%.
+- CSV exportado a `outputs/fact_indicadores_localidad.csv`.
+
+## T3 — fact_series_trimestral.csv (2026-08-20)
+
+Tabla en formato largo con **460 filas** y cinco indicadores: `LineaPurpura`, `Duplas`, `DuplasPublico`, `RiesgoFeminicidio` y `DelitosSexuales`.
+
+- `valor` conserva el conteo original de cada fuente.
+- `tasa_100k` usa `PobMujeres` de Riesgo de Feminicidio; si no existe un corte exacto, usa el último denominador disponible para la localidad.
+- Distribución por indicador:
+- DelitosSexuales: **80 filas**.
+- Duplas: **100 filas**.
+- DuplasPublico: **100 filas**.
+- LineaPurpura: **100 filas**.
+- RiesgoFeminicidio: **80 filas**.
+- CSV exportado a `outputs/fact_series_trimestral.csv`.
+
+El formato largo permite construir un único gráfico temporal con filtro por `indicador`, en lugar de cinco hojas separadas.
+
+## T4 — fact_encuesta_desagregada.csv (2026-08-20)
+
+Tabla larga de desagregación interseccional con **376 filas**.
+
+- Dimensiones: `sexo`, `estrato`, `rango_edad`, `carga_cuidado` y `gad7`.
+- `valor` es una proporción ponderada por `fexp_calp_anu`.
+- `ic_inf` e `ic_sup` son IC aproximados al 95% mediante el tamaño efectivo local.
+- `poblacion_expandida` es la suma del factor de expansión dentro de cada categoría.
+- Distribución por dimensión:
+- carga_cuidado: **57 filas**.
+- estrato: **123 filas**.
+- gad7: **75 filas**.
+- rango_edad: **76 filas**.
+- sexo: **45 filas**.
+- CSV exportado a `outputs/fact_encuesta_desagregada.csv`.
+
+Esta tabla larga alimenta los filtros interseccionales del dashboard sin duplicar una hoja por dimensión.
+
+## T5 — fact_bienal_items.csv (2026-08-20)
+
+Tabla larga de la Encuesta Bienal con **340 filas**, 17 ítems y 19 localidades.
+
+- `pct_acuerdo` es la proporción ponderada de respuestas codificadas como `2 = De acuerdo`.
+- `ic_inf` e `ic_sup` son IC aproximados al 95% con tamaño efectivo por localidad e ítem.
+- `n_muestral` es el número de respuestas válidas del ítem.
+- `factor_asignado` usa la asignación conceptual documentada en Fase 4; la solución factorial empírica mostró que algunos ítems se mezclan entre factores.
+- CSV exportado a `outputs/fact_bienal_items.csv`.
+
+La tabla queda en formato largo para filtrar por localidad, ítem o factor en el dashboard.
+
+## T6 — fact_modelo_coeficientes.csv (2026-08-20)
+
+Tabla de coeficientes con **10 filas** para M1, M2 y M3.
+
+- Se conservaron únicamente los modelos solicitados: `M1`, `M2` y `M3`.
+- Modelos excluidos del CSV fuente: **['M4-K', 'M4-L']**.
+- `p_valor_bh` usa el ajuste BH global disponible en los resultados de Fase 3.
+- `significativo` corresponde a `significativo_bh_global`.
+- `odds_ratio` e IC de OR se reportan únicamente para M2, que es el modelo logístico; en M1 y M3 no aplican.
+- `n_obs`: M1=11.850, M2=13.022 y M3=12.854; `n_clusters`=30 (`codigo_UPL`).
+- `pseudo_r2`: M1 conserva R²=0,0356 y M2 pseudo-R² de McFadden=0,0750; M3 queda `NA` porque no está persistido en el CSV fuente.
+- CSV exportado a `outputs/fact_modelo_coeficientes.csv`.
+
+## Corrección T6 — Metadatos de M3
+
+La revisión de `03_modelos.ipynb` confirma que M3 (`ICG_B`) es un modelo lineal WLS con R² = **0,0357**, n = **12.854** y 30 conglomerados `codigo_UPL`. T6 actualiza `pseudo_r2` a **0,0357**; no corresponde dejarlo como `NA`.
+
+## T7 — fact_llamadas123_agregado.csv (2026-08-20)
+
+Tabla agregada de llamadas 123 con **43951 combinaciones** y **48291 incidentes únicos**.
+
+- Se deduplicó por `NUMERO_INCIDENTE` antes de agregar.
+- `tiempo_respuesta_mediana` usa diferencias válidas entre recepción y desplazamiento, restringidas a 0–24 horas; los tiempos faltantes o inválidos quedan fuera de la mediana.
+- `pct_recepcion_nula` conserva la proporción de incidentes sin recepción válida.
+- `grupo_incidente` agrupa tipos en `MALTRATO`, `VIOSEXUAL`, `SUICIDIO`, `SALUD_MENTAL`, `CLINICO` y `OTROS`.
+- CSV exportado a `outputs/fact_llamadas123_agregado.csv`.
+
+## T8 — localidades_bogota.geojson (2026-08-20)
+
+Capa geográfica con **20 localidades**, reproyectada a **EPSG:4326**.
+
+- Propiedades conservadas: `codigo_localidad` y `nombre_localidad`.
+- Geometría simplificada con `tolerance=0.0001` y `preserve_topology=True`.
+- Archivo exportado a `outputs/localidades_bogota.geojson`.
+- Se verificó la presencia de los códigos 1–20 y un CRS final EPSG:4326.
+
+## T9 — dim_glosario.csv (2026-08-20)
+
+Glosario metodológico con **16 términos**, definiciones, fórmulas, fuentes y advertencias de interpretación.
+
+- CSV exportado a `outputs/dim_glosario.csv`.
+- La dimensión alimenta tooltips y la hoja metodológica del dashboard.
+- Las advertencias distinguen indicadores descriptivos, índices relativos, cotas de cobertura y medidas afectadas por subregistro.
+
+## T10 — dim_parametros_ina.csv y verificación final (2026-08-20)
+
+Se precalcularon **4 escenarios INA** y **76 filas** para activar rankings instantáneos en el dashboard.
+
+- Escenarios: `equilibrado, prioriza_violencia_visible, prioriza_barrera_denuncia, prioriza_deficit_cobertura`.
+- Todas las tablas factuales verificadas usan códigos presentes en `dim_localidad`.
+- Las proporciones están dentro de [0, 1].
+- Los límites inferiores de IC no superan los superiores.
+- Los totales de T3 cuadran con las fuentes originales.
+- Las salidas CSV se leen con UTF-8 y conservan tildes.
+- CSV exportado a `outputs/dim_parametros_ina.csv`.

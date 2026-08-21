@@ -1,21 +1,21 @@
-﻿codigo_localidad,nombre_localidad,sector_upl,pob_mujeres,pob_total_expandida
-1,Usaquén,Sector Norte,306618,
-2,Chapinero,Sector Centro Ampliado,85856,
-3,Santa Fe,Sector Centro Ampliado,57223,
-4,San Cristóbal,Sector Sur Oriente,207660,
-5,Usme,Sector Sur Oriente,207553,
-6,Tunjuelito,Sector Sur Oriente,91223,
-7,Bosa,Sector Sur Occidente,399575,
-8,Kennedy,Sector Sur Occidente,561526,
-9,Fontibón,Sector Occidente,206788,
-10,Engativá,Sector Occidente,435534,
-11,Suba,Sector Noroccidente,650123,
-12,Barrios Unidos,Sector Centro Ampliado,73129,
-13,Teusaquillo,Sector Centro Ampliado,84932,
-14,Los Mártires,Sector Centro Ampliado,45013,
-15,Antonio Nariño,Sector Centro Ampliado,42336,
-16,Puente Aranda,Sector Centro Ampliado,128277,
-17,La Candelaria,Sector Centro Ampliado,8067,
-18,Rafael Uribe Uribe,Sector Sur Oriente,192900,
-19,Ciudad Bolívar,Sector Sur Oriente,348592,
-20,Sumapaz,,1809,
+﻿codigo_localidad,nombre_localidad,sector_upl,pob_mujeres,pob_total_expandida,en_encuesta
+1,Usaquén,Sector Norte,306618,,True
+2,Chapinero,Sector Centro Ampliado,85856,,True
+3,Santa Fe,Sector Centro Ampliado,57223,,True
+4,San Cristóbal,Sector Sur Oriente,207660,,True
+5,Usme,Sector Sur Oriente,207553,,True
+6,Tunjuelito,Sector Sur Oriente,91223,,True
+7,Bosa,Sector Sur Occidente,399575,,True
+8,Kennedy,Sector Sur Occidente,561526,,True
+9,Fontibón,Sector Occidente,206788,,True
+10,Engativá,Sector Occidente,435534,,True
+11,Suba,Sector Noroccidente,650123,,True
+12,Barrios Unidos,Sector Centro Ampliado,73129,,True
+13,Teusaquillo,Sector Centro Ampliado,84932,,True
+14,Los Mártires,Sector Centro Ampliado,45013,,True
+15,Antonio Nariño,Sector Centro Ampliado,42336,,True
+16,Puente Aranda,Sector Centro Ampliado,128277,,True
+17,La Candelaria,Sector Centro Ampliado,8067,,True
+18,Rafael Uribe Uribe,Sector Sur Oriente,192900,,True
+19,Ciudad Bolívar,Sector Sur Oriente,348592,,True
+20,Sumapaz,,1809,,False
