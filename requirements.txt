@@ -12,3 +12,4 @@ samplics
 factor_analyzer
 pingouin
 unidecode
+tqdm
