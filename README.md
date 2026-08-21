@@ -103,7 +103,7 @@ Para el tratamiento de información tabular se utiliza principalmente la librer�
 
 El proyecto se encuentra organizado como un flujo secuencial compuesto por dos etapas principales: una primera etapa de **Extracción, Transformación y Carga (ETL)** y una segunda etapa de **análisis estadístico**.
 
-La primera etapa procesa las fuentes originales y genera los datasets normalizados almacenados en `/outputs`. Posteriormente, los notebooks de análisis utilizan estos productos como insumo para realizar los procedimientos estadísticos definidos en la metodología del proyecto.
+La primera etapa procesa las fuentes originales y genera los datasets normalizados almacenados en `/outputs`. Posteriormente, los notebooks de análisis utilizan estos productos como insumo para realizar los procedimientos estadísticos definidos en la metodología del proyecto cuyos resultados pueden observarse en el archivo `supuestos.md` ubicado en el directorio `/docs`.
 
 El flujo general es:
 
@@ -112,7 +112,7 @@ flowchart LR
     A["/data<br/>Datos crudos"] --> B["/scripts<br/>Procesos ETL"]
     B --> C["/outputs<br/>Datasets procesados"]
     C --> D["/scripts/notebooks<br/>Análisis estadístico"]
-    D --> E["Resultados<br/>estadísticos y analíticos"]
+    D --> E["/docs<br>Resultados<br/>estadísticos y analíticos"]
 ```
 
 Los procesos de la primera etapa mantienen una numeración que permite identificar su orden lógico de ejecución. La segunda etapa se encuentra organizada mediante notebooks especializados según el procedimiento analítico realizado.
@@ -155,7 +155,7 @@ Estos notebooks utilizan los datasets generados por la etapa ETL para desarrolla
 - agregación de indicadores a nivel territorial.
 - preparación de los resultados para su posterior visualización.
 
-De esta manera, se mantiene una separación entre la preparación de los datos y el análisis estadístico, permitiendo que los resultados analíticos sean reproducibles a partir de los datasets normalizados generados por el ETL.
+De esta manera, se mantiene una separación entre la preparación de los datos y el análisis estadístico, permitiendo que los resultados analíticos sean reproducibles a partir de los datasets normalizados generados por el ETL. Las conclusiones y propuestas generadas en los notebooks se encuentran consignadas en el archivo ubicado en el directorio `docs/supuestos.md`
 
 ## Productos generados
 
