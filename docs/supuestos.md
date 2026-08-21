@@ -1861,3 +1861,164 @@ La magnitud de `delta_rank` permite identificar qué localidades cambian sustanc
 **Conclusión**
 
 La evidencia territorial permite evaluar si el orden de cobertura derivado del registro administrativo coincide con el orden obtenido al utilizar un denominador poblacional independiente. La conclusión sobre H1′ se determina a partir de la concordancia de rankings y de la dirección de las asociaciones con acceso percibido a medios de denuncia, confianza vecinal y riesgo administrativo.
+## Fase 6 — Módulo complementario de llamadas 123 (registrado 2026-08-20)
+
+Fuente: `outputs/llamadas123_consolidado_limpio.csv`. Objetivo: evaluar demanda de
+emergencia con víctima femenina, calidad del registro de `RECEPCION`, diferencial
+temporal de respuesta y distribución horaria de incidentes relevantes.
+
+### Auditoría estructural
+
+- Filas del consolidado: **52,717**
+- Incidentes únicos (`NUMERO_INCIDENTE`): **48,469**
+- Filas adicionales asociadas a incidentes repetidos: **4,248**
+- 5 archivos de origen (marzo/junio/septiembre/diciembre 2025, marzo 2026), sin conflictos
+  de `CODIGO_LOCALIDAD`, `TIPO_CODIGO`, `PRIORIDAD_FINAL` ni `ARCHIVO_ORIGEN` dentro de un
+  mismo `NUMERO_INCIDENTE` (verificado por assert).
+
+### Paso 6.1 — Auditoría de codificación
+
+Se detectó daño de codificación (caracteres de sustitución) en texto libre:
+
+| Columna | Filas con reemplazo | % |
+|---|---|---|
+| LOCALIDAD | 4,390 | 8.3% |
+| UNIDAD | 6,785 | 12.9% |
+| TIPO_INCIDENTE | 2,709 | 5.1% |
+
+
+**9,310 filas (17.7%)** tienen al menos un
+carácter dañado en `LOCALIDAD`, `UNIDAD` o `TIPO_INCIDENTE`. Se recomienda reprocesar
+desde los 5 archivos originales para una versión de producción, pero esto **no bloquea**
+la Fase 6 porque las dos dimensiones críticas (código de localidad, código de tipo de
+incidente) se conservan intactas sin depender del texto dañado.
+
+### Normalización de localidad por código
+
+`CODIGO_LOCALIDAD` verificado en rango [1,20] sin excepciones. Nombre canónico por
+código reconstruido eligiendo, dentro de cada código, la variante de texto **sin**
+caracteres dañados más frecuente (o la moda si todas están dañadas). 20 localidades
+mapeadas correctamente, incluyendo Sumapaz (código 20, solo 1 incidente en este
+consolidado).
+
+### Corrección de fechas (Paso previo a 6.2)
+
+Se detectó y corrigió un patrón sistemático de intercambio día/mes en
+`FECHA_INICIO_DESPLAZAMIENTO_MOVIL` para los 4 archivos de 2025 (no aplica al archivo de
+marzo 2026, que no presenta el mismo patrón de daño). **15,946 fechas
+corregidas.** Este paso es bloqueante: sin la corrección, los tiempos de respuesta
+calculados habrían mostrado duraciones de varios meses para eventos del mismo día.
+
+### Paso 6.2 — Tiempo entre desplazamiento y recepción (nivel fila)
+
+Tras la corrección de fechas, prácticamente todas las diferencias temporales son
+coherentes: solo **1 tiempo negativo** y **1 tiempo mayor a 24
+horas** quedan fuera de rango, sobre 26,213 filas válidas.
+
+### Consolidación a nivel de incidente
+
+- Incidentes únicos construidos: **48,469**
+- Incidentes con al menos una víctima femenina: **14,958**
+- Incidentes sin `RECEPCION` válida: **23,310
+  (48.1%)**
+
+### Paso 6.3 — Faltantes de RECEPCION por localidad
+
+| Localidad | n_incidentes | n_recepcion_nula | % nula |
+|---|---|---|---|
+| SUMAPAZ | 1 | 1 | 100.0% |
+| CHAPINERO | 1,311 | 769 | 58.7% |
+| TEUSAQUILLO | 1,660 | 877 | 52.8% |
+| BARRIOS UNIDOS | 1,337 | 706 | 52.8% |
+| SUBA | 4,869 | 2,492 | 51.2% |
+| USAQUÉN | 2,072 | 1,058 | 51.1% |
+| ENGATIVÁ | 5,126 | 2,610 | 50.9% |
+| SANTA FE | 1,476 | 745 | 50.5% |
+| PUENTE ARANDA | 2,938 | 1,480 | 50.4% |
+| LA CANDELARIA | 353 | 176 | 49.9% |
+| FONTIBÓN | 2,330 | 1,147 | 49.2% |
+| LOS MÁRTIRES | 1,667 | 792 | 47.5% |
+| RAFAEL URIBE URIBE | 2,343 | 1,105 | 47.2% |
+| USME | 1,880 | 875 | 46.5% |
+| TUNJUELITO | 1,128 | 511 | 45.3% |
+| CIUDAD BOLÍVAR | 3,676 | 1,657 | 45.1% |
+| BOSA | 3,803 | 1,708 | 44.9% |
+| ANTONIO NARIÑO | 938 | 418 | 44.6% |
+| KENNEDY | 6,817 | 2,990 | 43.9% |
+| SAN CRISTÓBAL | 2,566 | 1,122 | 43.7% |
+
+
+Chi-cuadrado = **247.20**, p-valor = **3.022e-42**, V de Cramér = **0.072**.
+La asociación entre localidad y ausencia de `RECEPCION` es estadísticamente detectable
+pero de **magnitud pequeña**. Interpretación correcta: la completitud de `RECEPCION` no
+es territorialmente uniforme, aunque la heterogeneidad territorial es pequeña — no debe
+leerse como que una localidad "registra mal" de forma determinante. Sumapaz se excluye
+del análisis de concentración territorial por tener solo 1 incidente en este consolidado.
+
+### Paso 6.4 — Incidentes con víctima femenina (filtro objetivo)
+
+| Grupo | n_incidentes | n_tiempo_valido | % recepción nula | Mediana (min) |
+|---|---|---|---|---|
+| HERIDO | 2,886 | 2,608 | 9.6% | 128.8 |
+| SUICIDIO | 1,498 | 1,387 | 7.4% | 226.0 |
+| TRASTORNO_MENTAL | 1,383 | 1,293 | 6.5% | 239.6 |
+| INTOX | 121 | 90 | 25.6% | 187.9 |
+| MALTRATO | 113 | 104 | 8.0% | 205.6 |
+
+
+**Total objetivo: 6,001 incidentes.** RECEPCION nula en este
+subconjunto: **519
+(8.6%)**, muy por debajo del 48,1%
+del conjunto completo — la completitud mejora sustancialmente al restringir a estos tipos
+de incidente.
+
+**Nota sobre alcance:** la categoría `AGRESIÓN` prevista en el plan original **no existe
+literalmente** en los códigos del archivo, por lo que no se incorporó artificialmente.
+Se identificaron además **314 incidentes VIOSEXUAL con víctima femenina**,
+conservados como dato complementario, sin mezclarlos con el filtro principal.
+
+### Paso 6.5 — MALTRATO vs. incidentes clínicos comparables
+
+Comparación pareada por estrato común (localidad × prioridad × franja horaria):
+
+- MALTRATO con comparador válido: **103** de 104 con tiempo válido
+- Clínicos dentro del soporte común: **2,914**
+- Estratos comunes: **65**
+- Mediana MALTRATO: **205.9 min** · Mediana clínicos: **190.2 min**
+- Diferencia de medianas: **15.7 min**
+- Mann-Whitney U = **177743.0**, p = **0.001448**, Delta de Cliff = **0.184**
+
+La diferencia es estadísticamente detectable pero el tamaño de efecto es **pequeño**
+(Delta de Cliff ≈ 0,18). No se interpreta como evidencia de discriminación sistemática
+en el tiempo de respuesta a MALTRATO, solo como una diferencia descriptiva menor dentro
+de estratos comparables.
+
+### Paso 6.6 — Matriz hora × día de la semana
+
+Sobre el filtro femenino principal (6,001 incidentes):
+
+- Celda de mayor demanda: **Martes, 10:00–10:59** (92 incidentes)
+- Día de mayor volumen total: **Martes** (997 incidentes)
+- Hora de mayor volumen agregado: **09:00** (448 incidentes)
+- Por franja: Mañana 2,317 ·
+  Tarde 2,017 ·
+  Noche 1,150 ·
+  Madrugada 517
+
+**Advertencia de interpretación:** estos conteos reflejan demanda **registrada** en el
+sistema 123, no prevalencia poblacional. La concentración diurna puede reflejar patrones
+de reporte (mayor disponibilidad para llamar de día) tanto como patrones reales de
+ocurrencia — no se puede distinguir con estos datos.
+
+---
+
+**Conclusiones consolidadas de la Fase 6:**
+1. La ausencia de `RECEPCION` (48,1% del total) es un problema de calidad relevante que
+   debe acompañar cualquier visualización de tiempos de respuesta.
+2. El subconjunto femenino de interés (6.001 incidentes) tiene mejor completitud de
+   `RECEPCION` (8,6% nula) que el conjunto general.
+3. MALTRATO muestra una diferencia temporal pequeña pero estadísticamente detectable
+   frente a incidentes clínicos comparables (~15,7 min, efecto pequeño).
+4. La demanda registrada se concentra en horas de mañana y tarde, con pico el martes
+   a las 10:00 — dato descriptivo, no causal.
+
