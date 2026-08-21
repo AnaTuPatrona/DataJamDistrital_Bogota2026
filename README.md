@@ -145,6 +145,7 @@ Los notebooks de análisis se encuentran organizados en:
         * 03_modelos.ipynb
         * 04_agregacion_localidad.ipynb
         * 05_exportacion_tableau.ipynb
+        * 07_refactor_supuestos.ipynb
 
 Estos notebooks utilizan los datasets generados por la etapa ETL para desarrollar progresivamente el procesamiento analítico:
 
@@ -279,11 +280,10 @@ flowchart LR
 
     subgraph PRODUCTOS["SALIDA"]
         OUTPUTS["outputs/<br/>Datasets procesados"]
-        RESULTS["Resultados<br/>estadísticos y analíticos"]
+        RESULTS["docs/<br>Resultados<br/>estadísticos y analíticos"]
     end
 
     subgraph DOCUMENTACION["DOCUMENTACIÓN Y SOPORTE"]
-        DOCS["docs/<br/>Documentación"]
         NOTES["notes/<br/>Referencias y auxiliares"]
     end
 
@@ -294,7 +294,7 @@ flowchart LR
     OUTPUTS --> NOTEBOOKS
     NOTEBOOKS --> RESULTS
 
-    DOCS -. documentación .-> SCRIPTS
+
     NOTES -. referencia .-> SCRIPTS
 ```
 
