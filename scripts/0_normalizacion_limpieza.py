@@ -38,8 +38,20 @@ def ejecutar_scripts_de_carpeta(directorio=None, detener_en_error=False, incluir
 
     # --- Notebooks ---
     notebooks = []
+
     if incluir_notebooks:
+        # Notebooks directamente dentro de scripts/
         notebooks = sorted(directorio.glob("*.ipynb"))
+
+        # Notebooks dentro de scripts/notebooks/
+        carpeta_notebooks = directorio / "notebooks"
+        
+        if carpeta_notebooks.exists() and carpeta_notebooks.is_dir():
+            notebooks_subcarpeta = sorted(
+                carpeta_notebooks.glob("*.ipynb")
+            )
+
+            notebooks.extend(notebooks_subcarpeta)
 
     total = len(scripts) + len(notebooks)
     if total == 0:
