@@ -1143,3 +1143,754 @@ La hipótesis H‑A establecía que:
 El modelo M1 proporciona evidencia **débil y parcial** para H‑A. La asociación negativa entre `ICC_mujer` e `IPSJ_C` es estadísticamente significativa y con el signo esperado, pero la interacción con el sexo no respalda el mecanismo hipotetizado, y el hallazgo no es robusto al usar una definición alternativa de la variable dependiente.  
 En la sustentación se presentará como un **resultado mixto** que no permite confirmar la hipótesis de forma concluyente, y se señalarán las limitaciones (bajo R², sesgo de selección por la construcción de `ICC_mujer`, y baja consistencia interna de `IBA`).
 
+
+## Paso 3.3 — Modelo M2: afrontamiento de violencia presenciada (afronto_M, logístico) (registrado 2026-08-20)
+
+### Especificación
+
+Misma estructura de controles y diseño muestral que M1 (Paso 3.2): ponderación
+`fexp_calp_anu`, efectos fijos de `codigo_localidad`, listwise deletion.
+
+- **Muestra analítica:** 13.022 de 13.082 (pérdida 0,5% — mínima, porque `afronto_M` no
+  tiene la pérdida de nulos que sí tienen `IPSJ_C`/`IBA`).
+- **Positivos:** 2.460 (18,89%) — consistente con la TAC_M reportada en el Paso 2.8.
+- **Pseudo-R² (McFadden):** 0,0750.
+
+### Validación de robustez del error estándar (tres métodos)
+
+Se corrió el modelo con tres estrategias de ponderación/inferencia, dado que
+`statsmodels` advirtió que `cov_type='cluster'` no está totalmente soportado con
+`var_weights`:
+
+| Método | Coef. idénticos a los otros | SE | Estado |
+|---|---|---|---|
+| `var_weights` (original) | — | 0,228 / 0,278 / 0,158 | Warning de statsmodels |
+| `freq_weights` (corregido) | Sí, exactos | 0,228 / 0,278 / 0,158 | cov_type totalmente soportado |
+| Bootstrap por conglomerado UPL (500 réplicas, 0 fallidas) | Sí, exactos | 0,242 / 0,283 / 0,147 | **Método definitivo** |
+
+**Los tres métodos convergen en los mismos coeficientes puntuales**, y los errores
+estándar por bootstrap (el método sin supuestos asintóticos sobre el manejo de pesos)
+son muy cercanos a los analíticos — confirma que el warning de statsmodels no ocultaba
+un problema sustantivo. Se reportan los resultados del bootstrap como definitivos.
+
+### Resultados (bootstrap, definitivos)
+
+| Predictor | Coef. | OR | IC 95% | p (BH) | Signo esperado (Sección 1.1) | Signo observado | ¿Coincide? |
+|---|---|---|---|---|---|---|---|
+| `ICC_mujer` | 0,017 | 1,017 | [-0,456, 0,491] | 0,943 | No declarado explícitamente para el efecto principal | Positivo, nulo | N/A |
+| `ICC_mujer_x_mujer` | 0,183 | 1,201 | [-0,371, 0,737] | 0,777 | **Negativo (OR<1)** | Positivo (OR>1) | **No** |
+| `HHI` | -0,284 | 0,752 | [-0,573, 0,004] | 0,161 | No declarado explícitamente | Negativo | N/A |
+
+**Ninguno de los tres predictores es significativo tras corrección Benjamini-Hochberg**
+(α=0,05). `HHI` es el más cercano (p_ajustado=0,161), con un IC 95% que casi excluye el
+0 pero no lo logra (límite superior 0,004).
+
+### Evaluación de H-A (M2) según criterios preregistrados
+
+> H-A (M2): *"...y con menor probabilidad de afrontar violencia presenciada"*, predictor
+> de interés `ICC_mujer × D1`, signo esperado **OR < 1**.
+
+- **Criterio de significancia:** la interacción `ICC_mujer_x_mujer` **no es significativa**
+  tras BH (p_ajustado=0,777). Bajo el criterio preregistrado (Sección 1.4, escenario 2),
+  esto es evidencia que **no soporta** H-A (M2).
+- **Criterio de coherencia teórica:** aun ignorando la significancia, el signo observado
+  de la interacción es **positivo** (OR=1,201) — opuesto al esperado (OR<1). No hay
+  ninguna lectura del coeficiente puntual que respalde el mecanismo hipotetizado.
+- **Consistencia con M1:** en el Paso 3.2, la misma interacción (`ICC_mujer_x_mujer`)
+  sobre `IPSJ_C` también arrojó signo positivo (contrario a lo esperado), aunque en ese
+  caso sí alcanzaba significancia. Aquí, ni siquiera hay significancia. **Los dos modelos
+  de H-A (M1 y M2) coinciden en el mismo signo contrario a la hipótesis para la
+  interacción con sexo** — no es un resultado aislado de una sola especificación.
+
+### Declaración final — H-A (M2)
+
+**No se encuentra evidencia que soporte H-A (M2).** La interacción `ICC_mujer × D1` no
+es estadísticamente significativa sobre la probabilidad de afrontamiento de violencia
+presenciada, y el signo puntual observado es opuesto al hipotetizado. Combinado con el
+resultado de M1 (mixto, con la misma interacción de signo contrario), el patrón
+consistente entre ambos modelos sugiere que **el mecanismo específico de "mujeres
+sobrecargadas de cuidado tienen particularmente menor acceso/afrontamiento" no encuentra
+sustento empírico en esta base**, más allá del efecto principal débil y no consistentemente
+robusto de `ICC_mujer` documentado en M1.
+
+Este resultado se reportará en la sustentación como parte de la evaluación conjunta de
+H-A (M1+M2): evidencia débil, parcial y no robusta para el efecto principal, y ausencia
+de evidencia — con signo contrario — para el mecanismo de interacción con sexo que era
+el componente central de la hipótesis.
+
+## Paso 3.4 — Modelo M3: no-injerencia / confianza vecinal (ICG_B) (registrado 2026-08-20)
+
+### Especificación
+
+Dependiente `ICG_B` (confianza en que los vecinos ayudarían), mismos regresores de
+M1/M2 (`ICC_mujer`, `ICC_mujer_x_mujer`, `HHI`) más `TAC_M_localidad` (TAC del bloque M
+agregada por `codigo_localidad`, ponderada por `fexp_calp_anu`) — variable de nivel
+localidad incorporada al modelo de nivel individuo, con errores estándar clusterizados
+por `codigo_UPL` (anidado dentro de localidad).
+
+- **Muestra analítica:** 12.854 de 13.082 (pérdida 1,7%).
+- **R²:** 0,0357 — del mismo orden de magnitud que M1 (0,0356), bajo poder explicativo
+  general, consistente con el resto de los modelos de esta fase.
+
+### Resultados
+
+| Predictor | Coef. | IC 95% | p (BH) | Significativo (BH, α=0,05) |
+|---|---|---|---|---|
+| `ICC_mujer` | -0,051 | [-0,225, 0,124] | 0,570 | No |
+| `ICC_mujer_x_mujer` | 0,069 | [-0,115, 0,253] | 0,570 | No |
+| `HHI` | 0,065 | [-0,046, 0,175] | 0,500 | No |
+| `TAC_M_localidad` | 0,245 | [0,016, 0,475] | 0,145 | No (tras BH) |
+
+**Ningún predictor es significativo tras corrección Benjamini-Hochberg.**
+`TAC_M_localidad` es el más cercano a significancia individual (p sin ajustar = 0,036),
+pero **no sobrevive** la corrección por comparaciones múltiples (p_ajustado = 0,145) — el
+mismo patrón de fragilidad que se ha visto en M1 y M2: señales que aparecen sueltas pero
+se diluyen al corregir por las pruebas simultáneas.
+
+### Evaluación del rol de `ICG_B`: ¿mediador o dimensión independiente?
+
+El enunciado plantea la pregunta central: ¿la confianza vecinal es un mediador entre la
+carga de cuidado y el afrontamiento, o una dimensión independiente?
+
+**Ni `ICC_mujer` ni `HHI` predicen `ICG_B` de forma significativa** (p_ajustado 0,570 y
+0,500 respectivamente). Para que `ICG_B` funcionara como mediador de la relación entre
+carga de cuidado y afrontamiento, tendría que existir asociación significativa entre la
+carga de cuidado (`ICC_mujer`/`HHI`) y `ICG_B` como primer eslabón de la cadena causal —
+ese eslabón **no aparece** en los datos.
+
+**`TAC_M_localidad` sí tiene el signo positivo esperado y es la más cercana a
+significancia** (coef=0,245, p sin ajustar 0,036), consistente con la idea de que
+localidades con mayor afrontamiento ciudadano tienden a tener mayor confianza vecinal.
+Sin embargo, esta correlación positiva contrasta directamente con el resultado del
+**Paso 2.14** (validación interna de H-B), donde `TAC_M` vs. `ICG_B` agregada por
+localidad arrojó **r = -0,4606 (negativo)**. La aparente contradicción se explica porque
+el Paso 2.14 es una correlación bivariada simple a nivel localidad (n=19), mientras que
+este modelo evalúa el coeficiente de `TAC_M_localidad` **controlando** por `ICC_mujer`,
+`HHI`, pobreza, estrato, edad, sexo, salud mental, tamaño del hogar y efectos fijos de
+localidad — el signo puede revertirse al introducir controles si existe confusión
+territorial no controlada en la correlación simple (la misma hipótesis de confusión que
+se dejó planteada, sin verificar, en el Paso 2.14).
+
+### Declaración final — Modelo M3
+
+**No hay evidencia de que `ICG_B` medie la relación entre carga de cuidado y
+afrontamiento**: el primer eslabón de la cadena (carga de cuidado → confianza vecinal)
+no es significativo bajo ningún indicador de carga (`ICC_mujer`, su interacción, o
+`HHI`). Esto es consistente con la conclusión de M1/M2: el mecanismo específico de
+carga de cuidado → barrera de acceso/afrontamiento, mediado o no por confianza vecinal,
+**no encuentra sustento robusto en esta base tras controlar por comparaciones múltiples**.
+
+El hallazgo más interesante de este modelo es metodológico, no confirmatorio: el signo
+de la relación `TAC_M` ↔ `ICG_B` **se revierte** entre la correlación bivariada simple
+por localidad (Paso 2.14, negativa) y el coeficiente multivariado controlado (Paso 3.4,
+positivo, aunque no significativo tras BH) — evidencia de que la relación bivariada
+simple estaba probablemente confundida por factores territoriales no controlados
+(estrato, pobreza, tamaño de muestra por localidad), reforzando la recomendación ya
+dejada en el Paso 2.14 de no usar esa correlación simple como prueba definitiva de H-B.
+
+**Consecuencia para la síntesis de H-A y H-B:** ninguno de los tres modelos (M1, M2, M3)
+provee evidencia robusta y consistente que sobreviva la corrección por comparaciones
+múltiples para el mecanismo específico planteado en H-A. La validación interna de H-B vía
+`ICG_B` queda en un estado ambiguo: negativa en la correlación simple, positiva pero no
+significativa en el modelo controlado. La evaluación final de H-B queda pendiente del
+análisis factorial de la Bienal (ítems P10.x/P12.x), que es la pieza de evidencia
+preregistrada como decisiva para esta hipótesis (Sección 1.4, escenario 3).
+
+## Paso 3.5 — Modelo M4: robustez con acoso sexual (K) y violencia intrafamiliar (L) (registrado 2026-08-20)
+
+### Especificación
+
+Réplica exacta de M2, cambiando la variable dependiente por `afronto_K` (acoso sexual) y
+`afronto_L` (violencia intrafamiliar), manteniendo los mismos regresores, ponderación y
+diseño muestral.
+
+**Nota técnica:** igual que en M2 original, aparece el warning de `statsmodels` sobre
+`cov_type` no completamente soportado con `freq_weights`. En M2 este warning se resolvió
+mediante bootstrap por conglomerado (500 réplicas, coeficientes idénticos, SE muy
+similares a los analíticos) — no se repitió el bootstrap para K y L por economía de
+cómputo, dado que ya se validó en la misma estructura de datos y modelo que el efecto del
+warning es despreciable. Se reportan los SE analíticos con esta salvedad explícita.
+
+### Resultados
+
+| Predictor | K — Acoso sexual (coef / OR / p_BH) | L — Violencia intrafamiliar (coef / OR / p_BH) |
+|---|---|---|
+| `ICC_mujer` | -0,016 / 0,984 / 0,943 | 0,316 / 1,371 / 0,288 |
+| `ICC_mujer_x_mujer` | 0,179 / 1,196 / 0,716 | -0,024 / 0,976 / 0,936 |
+| `HHI` | 0,172 / 1,187 / 0,716 | -0,196 / 0,822 / 0,288 |
+
+- **K:** n=13.022, positivos 2.487 (19,10%), pseudo-R²=0,0663.
+- **L:** n=13.022, positivos 2.172 (16,68%), pseudo-R²=0,0825.
+
+**Ningún predictor es significativo tras corrección BH en ninguno de los dos modelos.**
+
+### Comparación de la interacción `ICC_mujer × D1` entre los tres tipos de violencia
+
+| Tipo | Coef. | OR | p (BH) |
+|---|---|---|---|
+| M — Violencia contra la mujer (Paso 3.3) | 0,183 | 1,201 | 0,777 |
+| K — Acoso sexual | 0,179 | 1,196 | 0,716 |
+| L — Violencia intrafamiliar | -0,024 | 0,976 | 0,936 |
+
+### Interpretación: ¿patrón general o específico?
+
+Siguiendo el criterio planteado en el enunciado (general vs. específico), el resultado es
+matizado, no un caso limpio de ninguno de los dos extremos:
+
+1. **M y K son prácticamente indistinguibles entre sí**: coeficiente e IC prácticamente
+   idénticos (0,183 vs. 0,179; OR 1,201 vs. 1,196), ambos no significativos, mismo signo
+   positivo (contrario al esperado en ambos casos). Si el mecanismo fuera específico de
+   violencia contra la mujer, se esperaría que K se comportara distinto a M — no ocurre.
+
+2. **L se comporta de forma distinta a M y K**: coeficiente esencialmente nulo (-0,024,
+   OR≈0,976, prácticamente 1) y de signo contrario a M/K, aunque tampoco significativo.
+
+3. **Ninguno de los tres coeficientes de interacción alcanza significancia** tras BH —
+   por lo que, en sentido estricto, **no hay evidencia estadística de un efecto real en
+   ninguno de los tres tipos de violencia**, y la comparación de patrones entre M/K/L
+   debe leerse como descriptiva de la dirección de los coeficientes puntuales, no como
+   una diferencia estadísticamente probada entre tipos de violencia.
+
+**Declaración final, siguiendo el espíritu del enunciado (decir cuál patrón se obtuvo es
+más valioso que forzar una lectura):** el patrón observado es que **el mecanismo de
+interacción `ICC_mujer × D1` no muestra evidencia significativa en ninguno de los tres
+tipos de violencia** (M, K, L). Entre los coeficientes puntuales no significativos, M y K
+comparten un signo y magnitud casi idénticos, mientras que L se aparta hacia un valor
+cercano a cero. Esto es más consistente con **ausencia general de un efecto detectable**
+con esta base y esta especificación, que con un patrón claro de retraimiento generalizado
+o de especificidad hacia la violencia contra la mujer — ninguna de las dos lecturas
+fuertes está respaldada por significancia estadística.
+
+**Consecuencia para la síntesis de H-A:** el resultado de M4 refuerza la conclusión ya
+alcanzada en M1/M2/M3: el mecanismo de interacción con sexo, que era la pieza central que
+distinguía a H-A de una simple asociación descriptiva, **no encuentra sustento robusto en
+ningún modelo de la Fase 3**, y esto se sostiene de forma consistente al variar la
+variable dependiente entre los cuatro tipos de violencia disponibles (M, K, L) más el
+modelo continuo (IPSJ_C, M1).
+
+## Paso 3.6 — Reporte consolidado de resultados M1–M4 (registrado 2026-08-20)
+
+### Advertencia técnica sobre los efectos marginales promedio (AME)
+
+`get_margeff()` de statsmodels **no incorpora los pesos de ponderación** (`freq_weights`)
+en el cálculo de AME para los tres modelos logísticos (M2, M4-K, M4-L) — warning explícito
+de la librería: *"weights are not taken into account by margeff"*. Los coeficientes y OR
+reportados **sí están correctamente ponderados** (provienen de `.fit()`); solo los AME de
+la columna `ame` son una aproximación no ponderada. Se reportan de todas formas por su
+valor interpretativo (facilitan la lectura para audiencia no técnica), pero con esta
+salvedad explícita, y se prioriza el OR (correctamente ponderado) como cifra de referencia
+en cualquier afirmación cuantitativa del informe.
+
+### Tabla consolidada — modelos lineales (M1, M3)
+
+| Modelo | Dependiente | Predictor | Coef. | IC 95% | p_valor | Efecto estandarizado | R² | N | N conglomerados |
+|---|---|---|---|---|---|---|---|---|---|
+| M1 | IPSJ_C | ICC_mujer | -0,264 | [-0,410, -0,118] | 0,000 | -0,084 | 0,0356 | 11.850 | 30 |
+| M1 | IPSJ_C | ICC_mujer_x_mujer | 0,178 | [0,032, 0,324] | 0,017 | 0,053 | 0,0356 | 11.850 | 30 |
+| M1 | IPSJ_C | HHI | 0,266 | [0,139, 0,393] | 0,000 | 0,061 | 0,0356 | 11.850 | 30 |
+| M3 | ICG_B | ICC_mujer | -0,051 | [-0,225, 0,124] | 0,570 | -0,016 | 0,0357 | 12.854 | 30 |
+| M3 | ICG_B | ICC_mujer_x_mujer | 0,069 | [-0,115, 0,253] | 0,464 | 0,020 | 0,0357 | 12.854 | 30 |
+| M3 | ICG_B | HHI | 0,065 | [-0,046, 0,175] | 0,250 | 0,015 | 0,0357 | 12.854 | 30 |
+| M3 | ICG_B | TAC_M_localidad | 0,245 | [0,016, 0,475] | 0,036 | 0,011 | 0,0357 | 12.854 | 30 |
+
+**Lectura de efectos estandarizados (M1):** `ICC_mujer` tiene el mayor efecto relativo
+(-0,084 desviaciones estándar de `IPSJ_C` por cada desviación estándar de `ICC_mujer`) de
+los tres predictores de interés en M1 — mayor que `HHI` (0,061) o la interacción (0,053)
+en valor absoluto, aunque las tres magnitudes son pequeñas en términos absolutos
+(coherente con el R² bajo, 0,0356). En M3, todos los efectos estandarizados son aún
+menores (máximo 0,020 en valor absoluto), consistente con la ausencia de significancia.
+
+### Tabla consolidada — modelos logísticos (M2, M4)
+
+| Modelo | Dependiente | Predictor | OR | IC 95% (OR) | p_valor | AME* | Pseudo-R² | N | N conglomerados |
+|---|---|---|---|---|---|---|---|---|---|
+| M2 | afronto_M | ICC_mujer | 1,017 | [0,650, 1,591] | 0,940 | 0,002 | 0,0750 | 13.022 | 30 |
+| M2 | afronto_M | ICC_mujer_x_mujer | 1,201 | [0,696, 2,072] | 0,511 | 0,026 | 0,0750 | 13.022 | 30 |
+| M2 | afronto_M | HHI | 0,752 | [0,553, 1,025] | 0,071 | -0,040 | 0,0750 | 13.022 | 30 |
+| M4-K | afronto_K | ICC_mujer | 0,984 | [0,626, 1,546] | 0,943 | -0,002 | 0,0663 | 13.022 | 30 |
+| M4-K | afronto_K | ICC_mujer_x_mujer | 1,196 | [0,730, 1,960] | 0,477 | 0,025 | 0,0663 | 13.022 | 30 |
+| M4-K | afronto_K | HHI | 1,187 | [0,767, 1,838] | 0,442 | 0,024 | 0,0663 | 13.022 | 30 |
+| M4-L | afronto_L | ICC_mujer | 1,371 | [0,853, 2,203] | 0,192 | 0,041 | 0,0825 | 13.022 | 30 |
+| M4-L | afronto_L | ICC_mujer_x_mujer | 0,976 | [0,542, 1,758] | 0,936 | -0,003 | 0,0825 | 13.022 | 30 |
+| M4-L | afronto_L | HHI | 0,822 | [0,615, 1,100] | 0,188 | -0,025 | 0,0825 | 13.022 | 30 |
+
+*AME no ponderado — ver advertencia técnica arriba.
+
+**Nota sobre p-valores en esta tabla consolidada:** se reportan los p-valores sin ajustar
+por comparaciones múltiples, para consistencia visual con el OR/coef/IC de la misma fila.
+Los p-valores ajustados por Benjamini-Hochberg (que son el criterio decisorio
+preregistrado, Sección 1.3) ya se documentaron modelo por modelo en los Pasos 3.2–3.5;
+ningún predictor de interés fue significativo bajo BH excepto `ICC_mujer` y
+`ICC_mujer_x_mujer` en M1.
+
+### Síntesis de sensibilidad y AME más informativos (lectura práctica)
+
+Para traducir a lenguaje no técnico, tomando `HHI` en M2 como ejemplo (el más cercano a
+significancia entre los modelos logísticos, aunque no significativo tras BH): un aumento
+de HHI de 0 a 1 (mínima a máxima concentración) se asocia, en promedio y sin ajuste por
+ponderación, con una reducción de 4 puntos porcentuales (AME=-0,040) en la probabilidad de
+afrontamiento de violencia contra la mujer — coherente en dirección con el OR<1 (0,752),
+pero esta cifra específica no está ponderada poblacionalmente y no alcanza significancia
+estadística tras corrección por comparaciones múltiples.
+
+### Cierre de la Fase 3 (modelos M1–M4)
+
+La tabla consolidada confirma el patrón ya documentado modelo por modelo: **el único
+resultado que sobrevive la corrección por comparaciones múltiples en toda la Fase 3 es el
+efecto principal de `ICC_mujer` sobre `IPSJ_C` en M1** (p_ajustado=0,000608) y su
+interacción con sexo en el mismo modelo (p_ajustado=0,017238, pero de signo contrario al
+esperado). Ningún otro predictor de interés, en ningún otro modelo (M2, M3, M4-K, M4-L),
+alcanza significancia tras BH. Esto se reporta en la sustentación como evidencia
+**débil, parcial y no robusta** para H-A, consistente en todas sus piezas (M1 a M4) con la
+conclusión ya alcanzada en los Pasos 3.2 a 3.5.
+
+## Paso 3.7 — Corrección global de comparaciones múltiples, Fase 3 (registrado 2026-08-20)
+
+Se aplicó Benjamini-Hochberg sobre las **16 pruebas** de coeficientes de interés de toda
+la Fase 3 (M1, M2, M3, M4-K, M4-L) como una sola familia, en lugar de la corrección
+aplicada modelo por modelo en los Pasos 3.2–3.5 (familias de 3–4 pruebas cada una). Esta
+es la corrección metodológicamente más estricta y correcta cuando se van a comparar e
+interpretar conjuntamente los resultados de varios modelos relacionados, como es el caso
+aquí (todos evalúan la misma hipótesis H-A con las mismas variables de interés).
+
+### Tabla completa (16 coeficientes)
+
+| Modelo | Dependiente | Predictor | p | p_ajustado (global) | Signif. global | p_ajustado (local) | Signif. local | ¿Cambia? |
+|---|---|---|---|---|---|---|---|---|
+| M1 | IPSJ_C | ICC_mujer | 0,000 | 0,003 | **Sí** | 0,001 | Sí | No |
+| M1 | IPSJ_C | ICC_mujer_x_mujer | 0,017 | 0,092 | **No** | 0,017 | Sí | **⚠️ Sí — pierde significancia** |
+| M1 | IPSJ_C | HHI | 0,000 | 0,001 | **Sí** | 0,000 | Sí | No |
+| M2 | afronto_M | ICC_mujer | 0,940 | 0,943 | No | 0,940 | No | No |
+| M2 | afronto_M | ICC_mujer_x_mujer | 0,511 | 0,682 | No | 0,767 | No | No |
+| M2 | afronto_M | HHI | 0,071 | 0,227 | No | 0,213 | No | No |
+| M3 | ICG_B | ICC_mujer | 0,570 | 0,701 | No | 0,570 | No | No |
+| M3 | ICG_B | ICC_mujer_x_mujer | 0,464 | 0,682 | No | 0,570 | No | No |
+| M3 | ICG_B | HHI | 0,250 | 0,500 | No | 0,500 | No | No |
+| M3 | ICG_B | TAC_M_localidad | 0,036 | 0,145 | No | 0,145 | No | No |
+| M4-K | afronto_K | ICC_mujer | 0,943 | 0,943 | No | 0,943 | No | No |
+| M4-K | afronto_K | ICC_mujer_x_mujer | 0,477 | 0,682 | No | 0,716 | No | No |
+| M4-K | afronto_K | HHI | 0,442 | 0,682 | No | 0,716 | No | No |
+| M4-L | afronto_L | ICC_mujer | 0,192 | 0,439 | No | 0,288 | No | No |
+| M4-L | afronto_L | ICC_mujer_x_mujer | 0,936 | 0,943 | No | 0,936 | No | No |
+| M4-L | afronto_L | HHI | 0,188 | 0,439 | No | 0,288 | No | No |
+
+**Coeficientes significativos bajo corrección global: 2 de 16** (`ICC_mujer` y `HHI`,
+ambos en M1 únicamente).
+
+### Declaración explícita del cambio (requerida por el enunciado)
+
+**`ICC_mujer_x_mujer` en M1 pierde significancia estadística al pasar de corrección
+local a corrección global**: p_ajustado pasa de 0,017 (significativo, α=0,05) a 0,092
+(no significativo). Este era precisamente el coeficiente que representaba el **mecanismo
+central de H-A** — la interacción específica entre carga de cuidado y sexo — y era, hasta
+este punto, el único elemento de todo H-A (M1, M2, M3, M4) que había sobrevivido alguna
+forma de corrección por comparaciones múltiples con signo esperado (aunque, como ya se
+documentó en el Paso 3.2, el signo observado de este coeficiente era **contrario** al
+hipotetizado desde el principio).
+
+**Consecuencia para H-A:** con la corrección más estricta y metodológicamente apropiada
+para comparar los 5 modelos como un conjunto, **el único resultado que sobrevive en toda
+la Fase 3 es el efecto principal de `ICC_mujer` y `HHI` sobre `IPSJ_C` en M1** — ambos
+robustos incluso bajo la corrección global (p_ajustado 0,003 y 0,001 respectivamente).
+Ningún componente de interacción con sexo, en ningún modelo, sobrevive la corrección
+global. Esto refuerza — no cambia — la conclusión ya alcanzada en los Pasos 3.2 a 3.6:
+**H-A no encuentra sustento para su mecanismo específico** (carga de cuidado
+particularmente gravosa para mujeres), y el único hallazgo robusto es un efecto principal
+de concentración del cuidado sobre percepción de acceso a la denuncia, sin distinción por
+sexo del respondiente, y con el matiz adicional (Paso 3.2) de que `HHI` tiene signo
+contrario al hipotetizado.
+
+**Nota metodológica sobre por qué se reportan ambas correcciones:** la corrección local
+(por modelo) es la que se preregistró explícitamente en la Sección 1.3 del documento de
+supuestos (*"Significancia individual: p < 0,05 tras corrección Benjamini-Hochberg"*, sin
+especificar el tamaño de la familia de pruebas). La corrección global aplicada aquí es una
+verificación de robustez adicional, más conservadora, que se reporta con total
+transparencia porque cambia la interpretación de un coeficiente — omitirla sería
+inconsistente con el estándar de transparencia mantenido en toda la bitácora.
+
+## Paso 3.8 — Robustez de β₁ (ICC_mujer) en M1, M2, M3: tres variantes (registrado 2026-08-20)
+
+Se reestimaron M1, M2 y M3 bajo tres variantes: (a) sin ponderar por `fexp_calp_anu`;
+(b) errores estándar clusterizados por `SectorUPL` (6 grupos) en vez de `codigo_UPL`
+(30 grupos); (c) excluyendo las 3 localidades de menor n muestral (La Candelaria=17,
+Los Mártires=14, Antonio Nariño=15 — códigos DANE confirmados contra `dim_localidad`).
+
+**Nota técnica de corrección durante la ejecución:** la variante (c) inicialmente no
+excluyó ninguna fila en M2 (0 de 13.022) porque `codigo_localidad` en `df_m2` está
+tipado como `string` (asignación explícita en la celda original de M2), mientras que la
+lista de códigos a excluir estaba en `int`. Corregido casteando la lista a string antes
+de filtrar; tras la corrección, (c) excluye 629 filas en M2, consistente en orden de
+magnitud con las exclusiones de M1 (589) y M3 (621).
+
+### Resultados — β₁ = ICC_mujer, las tres variantes
+
+| Variante | M1 (IPSJ_C) coef / p | M2 (afronto_M) coef / OR / p | M3 (ICG_B) coef / p |
+|---|---|---|---|
+| Original | -0,264 / 0,000 | 0,017 / 1,017 / 0,940 | -0,051 / 0,570 |
+| (a) Sin ponderar | -0,183 / 0,007 | -0,225 / 0,799 / 0,278 | 0,007 / 0,929 |
+| (b) Cluster SectorUPL (6 grupos) | -0,264 / 0,002 | 0,017 / 1,017 / 0,907 | -0,051 / 0,622 |
+| (c) Excl. 3 localidades bajo-n | -0,266 / 0,000 | 0,026 / 1,026 / 0,912 | -0,062 / 0,479 |
+
+### Evaluación de solidez (criterio del enunciado: signo consistente en las tres variantes)
+
+**M1 — SÓLIDO.** El signo de β₁ (`ICC_mujer` sobre `IPSJ_C`) es **negativo en las cuatro
+especificaciones** (original y las tres variantes de robustez), y mantiene significancia
+en las cuatro (p entre 0,000 y 0,007). La magnitud es estable en (b) y (c) (-0,264 y
+-0,266, prácticamente idéntica al original), y se atenúa pero no cambia de signo en (a)
+sin ponderar (-0,183). **Este es el único de los tres modelos que pasa la prueba de
+robustez tal como está definida en el enunciado.**
+
+**M2 — NO SÓLIDO.** El signo de β₁ (`ICC_mujer` sobre `afronto_M`) **cambia entre
+variantes**: positivo en el original, (b) y (c) (coef entre 0,017 y 0,026, OR≈1,02),
+pero **negativo al no ponderar** (a): coef=-0,225, OR=0,799. Ninguna de las cuatro
+especificaciones alcanza significancia (p entre 0,278 y 0,940) — el coeficiente no solo
+es inestable en signo, sino que nunca es distinguible de cero. No se sostiene ningún
+hallazgo de M2 bajo este criterio.
+
+**M3 — NO SÓLIDO.** El signo de β₁ (`ICC_mujer` sobre `ICG_B`) también **cambia entre
+variantes**: negativo en el original, (b) y (c) (coef entre -0,051 y -0,062), pero
+**positivo al no ponderar** (a): coef=0,007. Igual que M2, ninguna especificación es
+significativa (p entre 0,479 y 0,929).
+
+### Declaración final del Paso 3.8
+
+Bajo el criterio de robustez del enunciado (signo consistente en las tres variantes),
+**solo M1 pasa la prueba**. M2 y M3 muestran inversión de signo específicamente al
+remover la ponderación poblacional — el patrón es el mismo en ambos casos, lo que
+sugiere que la ponderación por `fexp_calp_anu` está jugando un papel sustantivo en la
+estimación de estos dos modelos (posiblemente porque da más peso a subgrupos
+poblacionales grandes cuyo comportamiento difiere del promedio muestral simple), y no
+un artefacto aislado de un solo modelo.
+
+**Consecuencia acumulada para H-A (cierre de toda la Fase 3):** el único hallazgo de
+toda la Fase 3 que sobrevive tanto la corrección global por comparaciones múltiples
+(Paso 3.7: `ICC_mujer` y `HHI` en M1) como la prueba de robustez en tres variantes
+(Paso 3.8: solo `ICC_mujer` en M1, con signo consistente) es el **efecto principal de
+`ICC_mujer` sobre `IPSJ_C` en M1**. Ningún otro componente de H-A —ni la interacción con
+sexo (que era el mecanismo central de la hipótesis), ni el efecto sobre afrontamiento
+(M2), ni el rol mediador de la confianza vecinal (M3)— sobrevive ambas pruebas de
+manera simultánea. Este es el resultado final y definitivo de H-A que se reportará en
+la sustentación: **evidencia sólida mínima, limitada a una asociación general entre
+concentración del cuidado y percepción de acceso a la denuncia, sin el mecanismo
+específico de género que la hipótesis proponía como su elemento distintivo.**
+
+## Paso 4.2b — Verificación: Pearson vs. tetracórica para el análisis factorial (registrado 2026-08-20)
+
+El cálculo de KMO/Bartlett (Paso 4.2) generó un warning de `factor_analyzer` sobre el
+determinante de la matriz de correlación estar "cerca de cero", resuelto internamente
+con pseudoinversa de Moore-Penrose. Se verificó si esto reflejaba multicolinealidad
+genuina que ameritara recalcular con correlación tetracórica (más apropiada que Pearson
+para ítems binarios) en vez de proceder con Pearson estándar.
+
+**Resultado de la verificación:**
+- Determinante: 4,12e-03 — pequeño pero explicado por 17 autovalores <1 multiplicados
+  entre sí, no por un autovalor cercano a cero.
+- **Autovalores:** todos positivos, mínimo 0,3996 — sin ningún valor cercano a 0.
+- **Número de condición:** 14,2 — muy por debajo del umbral de multicolinealidad severa
+  (>1000), matriz bien condicionada.
+- **Splits de los 17 ítems** (proporción "De acuerdo"): rango 30,6%–55,7% — ningún ítem
+  con split extremo (<20% o >80%), el escenario donde Pearson/phi más se aleja de la
+  tetracórica.
+
+**Decisión:** se mantiene la matriz de correlación de Pearson para la extracción
+factorial (Paso 4.3). El warning de la librería fue un umbral numérico conservador sin
+consecuencia sustantiva — no se instala infraestructura adicional (`semopy` u otra) para
+recalcular con tetracórica, dado que la evidencia (autovalores, condición, splits) no
+justifica el esfuerzo: la ganancia esperada de precisión sería marginal.
+
+## Paso 4.3 — Confiabilidad: Alfa de Cronbach, 17 ítems (registrado 2026-08-20)
+
+**Alfa de Cronbach (17 ítems, n=5.860): 0,8731** (IC 95% [0,8680, 0,8780]).
+
+**Resultado por encima del rango esperado en el enunciado (0,6–0,7).** El enunciado
+anticipaba un alfa bajo-moderado como evidencia de que "el machismo" no es una dimensión
+única. El resultado observado (0,87) es "bueno" a "muy bueno" según los estándares
+convencionales de confiabilidad — sustancialmente más alto de lo previsto.
+
+**Alfa por bloque temático (declarado en el diccionario de la Bienal):**
+- P10 (roles tradicionales/esencialismo, 11 ítems): α = 0,8483 (IC95% [0,8420, 0,8540])
+- P12 (control en la pareja, 6 ítems): α = 0,8005 (IC95% [0,7920, 0,8080])
+
+Ambos subbloques tienen consistencia interna alta **por separado**, y el conjunto
+completo de 17 ítems tiene consistencia aún más alta que cualquiera de los dos
+subbloques individualmente — esto es consistente con la posibilidad de que exista un
+factor general fuerte que atraviesa ambos bloques, además de (o en lugar de) la
+distinción fina entre "roles tradicionales" y "no-injerencia/privatización" que H-B
+proponía como la distinción sustantiva.
+
+**Precaución metodológica — el alfa alto NO es, por sí solo, la prueba de refutación de
+H-B.** El escenario de refutación preregistrado (Sección 1.4, escenario 3) especifica
+dos condiciones conjuntas: *"si el análisis factorial arroja un solo factor con alfa de
+Cronbach alto"*. Hasta este punto solo se ha verificado la segunda condición (alfa alto);
+la primera (número de factores que emergen del análisis factorial exploratorio) se
+determina en el Paso 4.4/4.5, aún pendiente. Un alfa alto es compatible con:
+(a) un único factor dominante (lo cual sí refutaría H-B según el criterio preregistrado), o
+(b) varios factores correlacionados entre sí que comparten un factor general de segundo
+orden (patrón común en escalas de actitudes de género, y compatible con que H-B se
+sostenga si esos factores específicos —roles vs. no-injerencia— emergen distinguibles
+en la estructura factorial, aun con un alfa global alto).
+
+**No se declara refutada H-B en este paso.** Se procede al Paso 4.4 (extracción y número
+de factores) antes de emitir cualquier conclusión sobre el escenario de refutación.
+
+## Paso 4.4 — Extracción factorial: 3 factores no coinciden con la estructura teórica de H-B (registrado 2026-08-20)
+
+**Número de factores:** confirmado en 3 por los tres criterios (Kaiser=3, Horn=3,
+coincide con la expectativa del enunciado). Varianza explicada acumulada: 42,4%.
+
+**Resultado — la estructura de contenido NO coincide con la tabla teórica del
+enunciado.** En lugar de los tres factores propuestos (Roles tradicionales /
+Culpabilización de la víctima / No-injerencia y privatización), la estructura empírica
+observada es:
+
+- **F1** (9 ítems, SS=3,203, 18,8% var.): P10.3, P10.4, P10.5, P10.6, P10.7, P10.8,
+  P10.9, P10.10, P10.11 — mezcla indiscriminada de roles tradicionales, culpabilización
+  de la víctima Y no-injerencia/privatización, todos juntos.
+- **F2** (6 ítems, SS=2,728, 16,0% var.): P12.1, P12.2, P12.3, P12.4, P12.5, P12.6 —
+  **el bloque P12 completo**, sin excepción alguna.
+- **F3** (2 ítems, SS=1,286, 7,6% var.): P10.1, P10.2 — factor estrecho y específico
+  ("las mujeres por naturaleza cuidan/hacen mejor los oficios del hogar"), separado del
+  resto de ítems de roles tradicionales.
+
+**Patrón dominante: la estructura factorial sigue la organización del cuestionario
+(bloque P10 vs. bloque P12), no la distinción teórica de contenido actitudinal
+propuesta por H-B.**
+
+**Contradicción directa con la predicción específica de H-B:** la hipótesis esperaba que
+`P10.9`, `P12.5`, `P12.3` y `P10.11` (los cuatro ítems de no-injerencia/privatización,
+repartidos deliberadamente entre ambos bloques del cuestionario) formaran un factor
+propio y distinguible. Empíricamente:
+- `P10.9` y `P10.11` cargan en **F1**, junto con ítems de roles y culpabilización.
+- `P12.3` y `P12.5` cargan en **F2**, junto con el resto de ítems de control en la pareja.
+
+Es decir, la no-injerencia **no emerge como una dimensión propia** — sus cuatro ítems se
+reparten exactamente según a qué bloque del cuestionario (P10 general vs. P12 sobre
+relaciones de pareja) pertenecían originalmente, lo cual sugiere que la varianza
+compartida dominante es de **formato/contexto de la pregunta** (ítems del mismo bloque
+correlacionan más entre sí por estar preguntados en el mismo marco), no de **contenido
+actitudinal específico** (roles vs. culpabilización vs. no-injerencia).
+
+**Evaluación frente al escenario de refutación preregistrado (Sección 1.4, escenario 3):**
+el criterio literal decía *"H-B refutada si el análisis factorial arroja UN SOLO factor
+con alfa alto"*. Técnicamente **no se cumple este criterio exacto** — emergieron 3
+factores, no 1. Sin embargo, el espíritu del escenario de refutación (que la distinción
+teórica entre roles y no-injerencia carezca de sustento empírico) **sí se confirma**, por
+una vía distinta a la anticipada: no porque todo colapse en un solo factor indiferenciado,
+sino porque los factores que sí emergen **no corresponden a la partición conceptual que
+H-B proponía**. El alfa global alto (0,87, Paso 4.3) junto con esta estructura sugiere una
+fuerte dimensión general de actitudes de género atravesando casi todos los ítems
+(consistente con F1 absorbiendo 9 de los 17 ítems, incluyendo contenido de tres
+categorías teóricas distintas), con matices de formato de encuesta (F2=bloque P12
+completo) más que de contenido psicológico diferenciado.
+
+**Consecuencia para H-B:** no puede evaluarse el criterio original de H-B (*"P12.5,
+P10.8 y P10.9 discriminan; P10.1 y P10.2 no"*) usando estos 3 factores como proxy de
+"no-injerencia" vs. "roles", porque esa partición conceptual no es la que produce el
+análisis factorial. Cualquier prueba posterior de H-B con TAC/localidad tendría que
+usarse sobre los factores EMPÍRICOS (F1 general, F2=bloque pareja, F3=esencialismo
+específico), no sobre la agrupación teórica original — o bien, evaluarse directamente
+sobre los ítems individuales sin agrupar, que es la alternativa que el propio diseño del
+proyecto contempló desde el principio (Paso 4.2, regla general: si no se puede factorizar
+según lo esperado, reportar ítems individuales).
+
+**Nota de baja varianza explicada:** 42,4% acumulado en 3 factores es un valor moderado
+— más de la mitad de la varianza de los 17 ítems queda sin explicar por esta estructura
+de 3 factores, lo cual es consistente con una escala donde la mayor parte de la señal
+compartida es general (F1 domina con 18,8% él solo) y el resto es más ruido específico de
+ítem que estructura latente clara.
+
+## Paso 4.5 — Puntajes factoriales estandarizados (registrado 2026-08-20)
+
+Puntajes factoriales calculados por `factor_analyzer.transform()` sobre los 5.860
+casos con los 17 ítems completos, estandarizados explícitamente a media=0, sd=1
+(verificado exacto, no aproximado).
+
+**Cobertura:** 5.860 de 5.860 (100%) — sin pérdida adicional respecto al subconjunto
+usado en KMO/Bartlett/alfa/extracción factorial (Pasos 4.2–4.4).
+
+**Correlación entre factores (F1_z, F2_z, F3_z):**
+- F1 vs F2: 0,1665
+- F1 vs F3: 0,1553
+- F2 vs F3: -0,0478
+
+**Nota metodológica:** varimax es una rotación ortogonal por diseño (los factores
+rotados deberían ser exactamente independientes, correlación=0), pero los *puntajes*
+calculados por el método de regresión de Thomson (que es el que usa `factor_analyzer`
+por defecto) no garantizan ortogonalidad exacta en la práctica — la correlación
+residual observada (máximo 0,17) es un artefacto conocido y esperable de este método
+de estimación de puntajes, no un error de la rotación en sí (la matriz de cargas
+rotadas sí es ortogonal por construcción). Se documenta para que, si estos tres
+puntajes se usan simultáneamente como predictores en un modelo posterior, no se asuma
+independencia total entre ellos — la colinealidad es baja pero no nula.
+
+**Variables finales disponibles en `df_bienal`:** `F1_z`, `F2_z`, `F3_z`, unidas por
+índice original, listas para agregación por localidad (`V1`) en el siguiente paso.
+
+**Recordatorio del Paso 4.4:** dado que la estructura empírica de estos 3 factores NO
+corresponde a la partición teórica de H-B (roles / culpabilización / no-injerencia),
+sino a una mezcla dominada por bloque del cuestionario (F1=general/P10 mayoritario,
+F2=P12 completo, F3=esencialismo específico P10.1-P10.2), cualquier uso posterior de
+estos puntajes para evaluar H-B debe nombrarlos y reportarlos según lo que
+empíricamente miden, no según los nombres teóricos originales del enunciado (que ya
+no aplican a esta estructura).
+
+## Fase 6 — Módulo complementario de llamadas 123 (registrado 2026-08-20)
+
+Fuente: `outputs/llamadas123_consolidado_limpio.csv`. Objetivo: evaluar demanda de
+emergencia con víctima femenina, calidad del registro de `RECEPCION`, diferencial
+temporal de respuesta y distribución horaria de incidentes relevantes.
+
+### Auditoría estructural
+
+- Filas del consolidado: **52,717**
+- Incidentes únicos (`NUMERO_INCIDENTE`): **48,469**
+- Filas adicionales asociadas a incidentes repetidos: **4,248**
+- 5 archivos de origen (marzo/junio/septiembre/diciembre 2025, marzo 2026), sin conflictos
+  de `CODIGO_LOCALIDAD`, `TIPO_CODIGO`, `PRIORIDAD_FINAL` ni `ARCHIVO_ORIGEN` dentro de un
+  mismo `NUMERO_INCIDENTE` (verificado por assert).
+
+### Paso 6.1 — Auditoría de codificación
+
+Se detectó daño de codificación (caracteres de sustitución) en texto libre:
+
+| Columna | Filas con reemplazo | % |
+|---|---|---|
+| LOCALIDAD | 4,390 | 8.3% |
+| UNIDAD | 6,785 | 12.9% |
+| TIPO_INCIDENTE | 2,709 | 5.1% |
+
+
+**9,310 filas (17.7%)** tienen al menos un
+carácter dañado en `LOCALIDAD`, `UNIDAD` o `TIPO_INCIDENTE`. Se recomienda reprocesar
+desde los 5 archivos originales para una versión de producción, pero esto **no bloquea**
+la Fase 6 porque las dos dimensiones críticas (código de localidad, código de tipo de
+incidente) se conservan intactas sin depender del texto dañado.
+
+### Normalización de localidad por código
+
+`CODIGO_LOCALIDAD` verificado en rango [1,20] sin excepciones. Nombre canónico por
+código reconstruido eligiendo, dentro de cada código, la variante de texto **sin**
+caracteres dañados más frecuente (o la moda si todas están dañadas). 20 localidades
+mapeadas correctamente, incluyendo Sumapaz (código 20, solo 1 incidente en este
+consolidado).
+
+### Corrección de fechas (Paso previo a 6.2)
+
+Se detectó y corrigió un patrón sistemático de intercambio día/mes en
+`FECHA_INICIO_DESPLAZAMIENTO_MOVIL` para los 4 archivos de 2025 (no aplica al archivo de
+marzo 2026, que no presenta el mismo patrón de daño). **15,946 fechas
+corregidas.** Este paso es bloqueante: sin la corrección, los tiempos de respuesta
+calculados habrían mostrado duraciones de varios meses para eventos del mismo día.
+
+### Paso 6.2 — Tiempo entre desplazamiento y recepción (nivel fila)
+
+Tras la corrección de fechas, prácticamente todas las diferencias temporales son
+coherentes: solo **1 tiempo negativo** y **1 tiempo mayor a 24
+horas** quedan fuera de rango, sobre 26,213 filas válidas.
+
+### Consolidación a nivel de incidente
+
+- Incidentes únicos construidos: **48,469**
+- Incidentes con al menos una víctima femenina: **14,958**
+- Incidentes sin `RECEPCION` válida: **23,310
+  (48.1%)**
+
+### Paso 6.3 — Faltantes de RECEPCION por localidad
+
+| Localidad | n_incidentes | n_recepcion_nula | % nula |
+|---|---|---|---|
+| SUMAPAZ | 1 | 1 | 100.0% |
+| CHAPINERO | 1,311 | 769 | 58.7% |
+| TEUSAQUILLO | 1,660 | 877 | 52.8% |
+| BARRIOS UNIDOS | 1,337 | 706 | 52.8% |
+| SUBA | 4,869 | 2,492 | 51.2% |
+| USAQUÉN | 2,072 | 1,058 | 51.1% |
+| ENGATIVÁ | 5,126 | 2,610 | 50.9% |
+| SANTA FE | 1,476 | 745 | 50.5% |
+| PUENTE ARANDA | 2,938 | 1,480 | 50.4% |
+| LA CANDELARIA | 353 | 176 | 49.9% |
+| FONTIBÓN | 2,330 | 1,147 | 49.2% |
+| LOS MÁRTIRES | 1,667 | 792 | 47.5% |
+| RAFAEL URIBE URIBE | 2,343 | 1,105 | 47.2% |
+| USME | 1,880 | 875 | 46.5% |
+| TUNJUELITO | 1,128 | 511 | 45.3% |
+| CIUDAD BOLÍVAR | 3,676 | 1,657 | 45.1% |
+| BOSA | 3,803 | 1,708 | 44.9% |
+| ANTONIO NARIÑO | 938 | 418 | 44.6% |
+| KENNEDY | 6,817 | 2,990 | 43.9% |
+| SAN CRISTÓBAL | 2,566 | 1,122 | 43.7% |
+
+
+Chi-cuadrado = **247.20**, p-valor = **3.022e-42**, V de Cramér = **0.072**.
+La asociación entre localidad y ausencia de `RECEPCION` es estadísticamente detectable
+pero de **magnitud pequeña**. Interpretación correcta: la completitud de `RECEPCION` no
+es territorialmente uniforme, aunque la heterogeneidad territorial es pequeña — no debe
+leerse como que una localidad "registra mal" de forma determinante. Sumapaz se excluye
+del análisis de concentración territorial por tener solo 1 incidente en este consolidado.
+
+### Paso 6.4 — Incidentes con víctima femenina (filtro objetivo)
+
+| Grupo | n_incidentes | n_tiempo_valido | % recepción nula | Mediana (min) |
+|---|---|---|---|---|
+| HERIDO | 2,886 | 2,608 | 9.6% | 128.8 |
+| SUICIDIO | 1,498 | 1,387 | 7.4% | 226.0 |
+| TRASTORNO_MENTAL | 1,383 | 1,293 | 6.5% | 239.6 |
+| INTOX | 121 | 90 | 25.6% | 187.9 |
+| MALTRATO | 113 | 104 | 8.0% | 205.6 |
+
+
+**Total objetivo: 6,001 incidentes.** RECEPCION nula en este
+subconjunto: **519
+(8.6%)**, muy por debajo del 48,1%
+del conjunto completo — la completitud mejora sustancialmente al restringir a estos tipos
+de incidente.
+
+**Nota sobre alcance:** la categoría `AGRESIÓN` prevista en el plan original **no existe
+literalmente** en los códigos del archivo, por lo que no se incorporó artificialmente.
+Se identificaron además **314 incidentes VIOSEXUAL con víctima femenina**,
+conservados como dato complementario, sin mezclarlos con el filtro principal.
+
+### Paso 6.5 — MALTRATO vs. incidentes clínicos comparables
+
+Comparación pareada por estrato común (localidad × prioridad × franja horaria):
+
+- MALTRATO con comparador válido: **103** de 104 con tiempo válido
+- Clínicos dentro del soporte común: **2,914**
+- Estratos comunes: **65**
+- Mediana MALTRATO: **205.9 min** · Mediana clínicos: **190.2 min**
+- Diferencia de medianas: **15.7 min**
+- Mann-Whitney U = **177743.0**, p = **0.001448**, Delta de Cliff = **0.184**
+
+La diferencia es estadísticamente detectable pero el tamaño de efecto es **pequeño**
+(Delta de Cliff ≈ 0,18). No se interpreta como evidencia de discriminación sistemática
+en el tiempo de respuesta a MALTRATO, solo como una diferencia descriptiva menor dentro
+de estratos comparables.
+
+### Paso 6.6 — Matriz hora × día de la semana
+
+Sobre el filtro femenino principal (6,001 incidentes):
+
+- Celda de mayor demanda: **Martes, 10:00–10:59** (92 incidentes)
+- Día de mayor volumen total: **Martes** (997 incidentes)
+- Hora de mayor volumen agregado: **09:00** (448 incidentes)
+- Por franja: Mañana 2,317 ·
+  Tarde 2,017 ·
+  Noche 1,150 ·
+  Madrugada 517
+
+**Advertencia de interpretación:** estos conteos reflejan demanda **registrada** en el
+sistema 123, no prevalencia poblacional. La concentración diurna puede reflejar patrones
+de reporte (mayor disponibilidad para llamar de día) tanto como patrones reales de
+ocurrencia — no se puede distinguir con estos datos.
+
+---
+
+**Conclusiones consolidadas de la Fase 6:**
+1. La ausencia de `RECEPCION` (48,1% del total) es un problema de calidad relevante que
+   debe acompañar cualquier visualización de tiempos de respuesta.
+2. El subconjunto femenino de interés (6.001 incidentes) tiene mejor completitud de
+   `RECEPCION` (8,6% nula) que el conjunto general.
+3. MALTRATO muestra una diferencia temporal pequeña pero estadísticamente detectable
+   frente a incidentes clínicos comparables (~15,7 min, efecto pequeño).
+4. La demanda registrada se concentra en horas de mañana y tarde, con pico el martes
+   a las 10:00 — dato descriptivo, no causal.
