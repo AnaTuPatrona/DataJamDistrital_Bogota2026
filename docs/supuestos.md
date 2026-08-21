@@ -2629,3 +2629,20 @@ Se precalcularon **4 escenarios INA** y **76 filas** para activar rankings insta
 - Los totales de T3 cuadran con las fuentes originales.
 - Las salidas CSV se leen con UTF-8 y conservan tildes.
 - CSV exportado a `outputs/dim_parametros_ina.csv`.
+
+## Inventario final de archivos de Fase 7
+
+| Archivo | Ruta | Descripción breve |
+|---|---|---|
+| `dim_localidad.csv` | `outputs/dim_localidad.csv` | T1: dimensión territorial y bandera `en_encuesta`. |
+| `fact_indicadores_localidad.csv` | `outputs/fact_indicadores_localidad.csv` | T2: indicadores territoriales, cobertura, INA y factores Bienales. |
+| `fact_series_trimestral.csv` | `outputs/fact_series_trimestral.csv` | T3: series administrativas en formato largo. |
+| `fact_encuesta_desagregada.csv` | `outputs/fact_encuesta_desagregada.csv` | T4: desagregaciones interseccionales de percepción. |
+| `fact_bienal_items.csv` | `outputs/fact_bienal_items.csv` | T5: acuerdo por ítem de la Encuesta Bienal. |
+| `fact_modelo_coeficientes.csv` | `outputs/fact_modelo_coeficientes.csv` | T6: resultados de modelos M1–M3. |
+| `fact_llamadas123_agregado.csv` | `outputs/fact_llamadas123_agregado.csv` | T7: llamadas 123 agregadas. |
+| `localidades_bogota.geojson` | `outputs/localidades_bogota.geojson` | T8: límites territoriales en EPSG:4326. |
+| `dim_glosario.csv` | `outputs/dim_glosario.csv` | T9: definiciones, fórmulas y advertencias metodológicas. |
+| `dim_parametros_ina.csv` | `outputs/dim_parametros_ina.csv` | T10: escenarios y rankings precalculados del INA. |
+
+Todos los archivos se exportan con codificación UTF-8 con BOM cuando corresponde, para conservar correctamente las tildes.

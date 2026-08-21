@@ -1,14 +1,14 @@
-# ⚠️ DATOS SINTÉTICOS — NO USAR EN LA ENTREGA
+# Datos reales de la Fase 7
 
-Los nueve CSV de esta carpeta son **inventados**. Existen solo para maquetar el tablero de Tableau mientras el análisis real está en curso.
+Los nueve CSV de esta carpeta fueron sincronizados desde `outputs/` y corresponden a las tablas reales exportadas por `scripts/notebooks/07_exportacion.ipynb`.
 
-**Ninguna cifra de aquí es un resultado.** Antes de entregar, repunte todas las fuentes del libro a `outputs/tableau/` y verifique que las tarjetas coincidan con el notebook (V-12 en `docs/supuestos.md`).
+Las cifras sí son resultados del análisis. Para el tablero, use estas tablas como fuentes de datos y el GeoJSON real `outputs/localidades_bogota.geojson`.
 
 ---
 
 ## Contenido
 
-Todos los archivos tienen **3 registros**, encabezado aparte. Los nombres de columna son exactamente los del esquema T1–T10 del plan analítico, de modo que al cambiar la fuente a los datos reales el libro no debería romperse.
+Los archivos contienen las filas territoriales y analíticas completas generadas por la Fase 7. La documentación metodológica está en `docs/supuestos.md`.
 
 | Archivo | Corresponde a |
 |---|---|
@@ -34,39 +34,15 @@ El geojson no se replica: use `outputs/localidades_con_nombres.geojson`, que ya 
 
 Ciudad Bolívar y La Candelaria tienen Δ de signo opuesto, así que el gráfico de pendiente muestra cruce.
 
-## Qué hacer cuando el esqueleto ya funcione
-
-Con 3 registros por archivo hay cuatro cosas que **no** se pueden probar todavía. Cuando el tablero ya tenga forma, extienda a mano:
-
-**1 · Localidad sin encuesta.** Pegue esta fila al final de `dim_localidad.csv`:
-
-```
-20,Sumapaz,No aplica,1788,0,0
-```
-
-y esta en `fact_indicadores_localidad.csv`:
-
-```
-20,,,,,,,,,,,,,,,,,,,38,2125.3,3,167.8,12.67,,7,,,,,,,0,,0
-```
-
-Es el caso que más rompe tableros: debe verse en el mapa con patrón o gris y tooltip explicativo, **nunca como cero**.
-
-**2 · Series temporales.** `fact_series_trimestral.csv` trae una sola combinación (Ciudad Bolívar, Línea Púrpura, 3 cortes). Duplique las filas cambiando `codigo_localidad` e `indicador` para probar los pequeños múltiplos y el filtro de indicador.
-
-**3 · Escenarios del INA.** `dim_parametros_ina.csv` solo tiene *Equilibrado*. Al seleccionar otro escenario en el parámetro, las hojas quedarán vacías — eso es esperado y conviene verlo, porque revela cómo se comporta el tablero sin datos. Para probar el cambio de ranking, duplique el bloque con los otros tres nombres de escenario, alterando `INA_escenario` y `rank_escenario`.
-
-**4 · Mapa de calor normativo.** `fact_bienal_items.csv` tiene un ítem por factor en una sola localidad. Para que el patrón territorial se vea, replique los tres ítems en las localidades 11 y 17.
-
 ## Diferencia con el esquema del plan
 
-`fact_modelo_coeficientes.csv` incluye tres columnas que el plan no contemplaba: `tipo` (*lineal* / *logistico*), `variable_dependiente`, y `coeficiente` con sus intervalos, además de `odds_ratio`.
+`fact_modelo_coeficientes.csv` separa los modelos M1–M3 y deja vacíos los campos de odds ratio cuando no aplican.
 
-El motivo: M1 y M3 son modelos lineales sobre `IPSJ_C` e `ICG_B`, donde el *odds ratio* no aplica y viene vacío. El *forest plot* debe separar por `tipo` en paneles distintos y usar línea de referencia en **0** para los lineales y en **1** para los logísticos. Las tres filas incluidas cubren los tres casos: lineal significativo, lineal no significativo tras Benjamini-Hochberg, y logístico significativo.
+M1 y M3 son modelos lineales, mientras M2 es logístico. Por tanto, el odds ratio solo aplica a M2; los gráficos deben usar referencia 0 para efectos lineales y referencia 1 para OR.
 
 ## Notas técnicas
 
-- Codificación **UTF-8 sin BOM**. Si Tableau muestra mal las tildes, reabra y guarde como *UTF-8 con BOM*.
+- Codificación **UTF-8 con BOM** en las exportaciones de la Fase 7 para conservar las tildes.
 - Separador coma en todos los archivos. Ojo: `outputs/llamadas123_consolidado_limpio.csv` usa punto y coma.
 - Decimales con punto.
 - `publicable`, `en_encuesta` y `significativo` son enteros 0/1: conviértalos a dimensión en Tableau o los sumará.
