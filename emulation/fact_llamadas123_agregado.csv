@@ -1,0 +1,4 @@
+codigo_localidad,anio,mes,hora,dia_semana,genero,grupo_incidente,prioridad,n_incidentes,tiempo_respuesta_mediana,pct_recepcion_nula
+19,2025,12,22,Sábado,FEMENINO,MALTRATO,CRITICA,21,204.8,0.438
+19,2025,12,22,Sábado,FEMENINO,CLINICO,CRITICA,38,96.2,0.187
+11,2025,12,22,Sábado,FEMENINO,MALTRATO,CRITICA,26,151.2,0.231

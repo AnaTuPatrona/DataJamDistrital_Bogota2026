@@ -1,0 +1,4 @@
+modelo,tipo,variable_dependiente,variable,etiqueta_legible,coeficiente,coef_ic_inf,coef_ic_sup,odds_ratio,or_ic_inf,or_ic_sup,efecto_marginal,p_valor,p_valor_bh,significativo,n_obs,n_clusters,pseudo_r2
+M1,lineal,IPSJ_C,ICC_mujer,Concentración del cuidado en una mujer,-0.284,-0.401,-0.167,,,,-0.284,0.0002,0.0011,1,11904,2847,0.118
+M1,lineal,IPSJ_C,H1_estrato3,Estrato 3 (ref. estrato 1),0.061,-0.038,0.160,,,,0.061,0.2264,0.3018,0,11904,2847,0.118
+M2,logistico,afronto_M,ICC_mujer,Concentración del cuidado en una mujer,-0.312,-0.487,-0.137,0.732,0.615,0.872,-0.041,0.0005,0.0023,1,13082,2903,0.074

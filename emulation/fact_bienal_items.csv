@@ -1,0 +1,4 @@
+codigo_localidad,item_codigo,enunciado,factor_asignado,pct_acuerdo,ic_inf,ic_sup,n_muestral
+19,P10.1,Las mujeres por naturaleza cuidan mejor a los(as) niños(as) que los hombres,Roles tradicionales,0.5871,0.5412,0.6330,412
+19,P10.8,La mujer que se deja maltratar por su pareja es porque le gusta que la maltraten,Culpabilización de la víctima,0.2148,0.1767,0.2529,412
+19,P12.5,"Cuando hay violencia en una relación de pareja, uno no tiene porqué meterse",No-injerencia,0.4127,0.3671,0.4583,412
