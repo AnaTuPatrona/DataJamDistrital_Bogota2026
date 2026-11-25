@@ -1,18 +1,20 @@
 # Hallazgos del Tableau y plan de recreación en ArcGIS StoryMaps
 
 **Proyecto:** DataJam Distrital Bogotá 2026 — violencia contra las mujeres  
-**Fecha de esta revisión:** 23 de noviembre de 2026  
+**Fecha de esta revisión:** 24 de noviembre de 2026  
 **Evento:** 3 de diciembre de 2026  
 **Duración prevista:** aproximadamente 10 minutos  
-**Estado:** datos y siete recursos verificados; borrador con portada, apertura y cuatro escenas de Sidecar, incluidos ranking, dispersión y mapa interactivo. Ana Laura terminó manualmente las vistas del mapa según el filtro. Pendientes: prueba de gráfico vinculado, cierre, créditos y revisión final.
+**Estado:** borrador de StoryMaps guardado con las tareas **11.9–11.12 finalizadas**. Los nueve puntos de problema público, metodología y resultados tienen contenido explícito. Se aplicaron únicamente ajustes de texto en apartados existentes; se conservaron los créditos, la estructura, los gráficos y las cinco vistas del mapa configuradas por Ana Laura. La presentación utiliza enero–marzo de 2026 por decisión aceptada expresamente por ella. Continúan pendientes el cierre de revisión, el ensayo de diez minutos y el acceso para la audiencia, recogidos en la tarea 12.
 
 **Actualización de trabajo:** las secciones 2–7 describen el Tableau original y el diagnóstico inicial. La **sección 14** registra la verificación posterior y la versión que se utilizará para recrearlo. En esa versión, el cambio de al menos cuatro puestos corresponde a **12 de 19 localidades**, no a 13; la referencia administrativa es **enero–marzo de 2026** y la encuesta sigue siendo la de **2025**.
+
+**Lectura del estado vigente:** la lista de la sección 13 y la evaluación de la sección 15 recogen el estado actual. Los avances fechados de la sección 14 conservan la historia del trabajo; una tarea que allí aparezca pendiente puede haberse cerrado después. La primera revisión del 24 de noviembre fue de lectura. Después, por instrucción expresa de Ana Laura, se ejecutaron los ajustes puntuales 11.9–11.12; el registro de ejecución y sus evidencias están en 15.1.
 
 ## 1. Encargo y decisiones de alcance
 
 La referencia visual definitiva es **`C:/Users/Ana_L/Downloads/visual_presentación.twbx`**, junto con las dos capturas adjuntas. No se tomaron como referencia las versiones de Tableau ni las imágenes antiguas guardadas dentro del proyecto.
 
-La presentación debe centrarse en **las fuentes de datos, la pregunta del proyecto y los hallazgos**, evitando explicar código, modelos o procedimientos estadísticos al público. Se mantendrán **tonos violetas**, de acuerdo con la preferencia de Ana Laura y su relación con la identidad de la Secretaría Distrital de la Mujer.
+La presentación debe cubrir **problema público, metodología y resultados**, con énfasis en la pregunta, su relevancia, las fuentes, un paso a paso sencillo, técnicas y herramientas, calidad de datos, aplicación al sector público y recomendaciones. Este alcance fue precisado por Ana Laura el 24 de noviembre. Se evitarán detalles de código y explicaciones estadísticas extensas; nombrar herramientas y explicar controles de calidad sí forma parte del encargo. Se mantendrán **tonos violetas**, de acuerdo con su preferencia y su relación con la identidad de la Secretaría Distrital de la Mujer. Los refuerzos deben integrarse en los apartados existentes, sin rehacer la presentación.
 
 Ana Laura confirmó que **no han realizado cambios desde la DataJam**. Por tanto, la presentación no debe afirmar que desde entonces se incorporaron datos, se validaron resultados con entidades o se ampliaron las funcionalidades. La adaptación a StoryMaps será una nueva forma de comunicar el trabajo existente. Los próximos pasos deben presentarse como propuestas, no como actividades ya ejecutadas.
 
@@ -401,9 +403,9 @@ Existen archivos gráficos intermedios con otros nombres dentro de `recursos`. P
 | Interpretación temporal de los cortes | Resuelta para la ventana elegida; evidencia y excepción de diciembre de Duplas en sección 14. |
 | Cifras de cobertura y prioridad | Recalculadas y verificadas; falta cotejarlas después del montaje en la cuenta. |
 | Tarjeta y mapa de cuidado | Revisar categoría, unidad y ponderación; mientras tanto, no incorporarlos al núcleo. |
-| Interacciones | Se eligió mapa interactivo con imágenes: no hay selección cruzada en StoryMaps. Las cifras y medianas permanecen fijas. Las cinco acciones del mapa están en revisión final. |
-| Montaje en cuenta | Historia, mapa y capa guardados; cuatro escenas, cinco acciones de mapa, cierre y fuentes incorporados. Revisión final en curso. |
-| Guion final | Textos y notas preparados; falta ensayo completo con la historia montada. |
+| Interacciones | Se eligió mapa interactivo con imágenes: no hay selección cruzada en StoryMaps. Las cinco acciones y sus leyendas fueron comprobadas; las cifras y medianas permanecen fijas. |
+| Montaje en cuenta | Historia, mapa y capa guardados; cuatro escenas de resultados y metodología incorporada por Ana Laura. Refuerzos 11.9–11.12 finalizados y verificados en la vista previa. Créditos, estructura y vistas del mapa conservados. |
+| Guion final | Textos y notas preparados; falta incorporar al recorrido oral la metodología añadida y ensayar los diez minutos. |
 | Publicación | Historia en borrador; mapa y capa con acceso de propietario. El tema violeta fue publicado de forma privada para aplicarlo. Falta definir acceso de la audiencia. |
 
 La recreación estará terminada cuando exista una historia guardada y revisada que conserve los tres visuales centrales, use violetas, explique correctamente las unidades, mantenga Sumapaz sin imputación, distinga resultados firmes de provisionales y permita presentar el proyecto en aproximadamente diez minutos.
@@ -492,7 +494,7 @@ El orden siguiente organiza la ejecución. Si una revisión cambia una cifra, se
     - **10.4. Reproducir color por acceso y tamaño por población cuando la herramienta lo permita; documentar cualquier simplificación visual necesaria** (FINALIZADAS)
     - **10.5. Probar el resaltado o selección de localidades entre mapa y gráfico, manteniendo fijas las cifras generales y la base territorial de comparación** (FINALIZADAS)
 
-11. **Montar la historia completa en StoryMaps** (FINALIZADAS)
+11. **Montar la historia completa en StoryMaps y cerrar los refuerzos puntuales de los tres módulos** (FINALIZADAS)
 
     - **11.1. Crear la portada con título, subtítulo, equipo, referencia a la DataJam y fecha del evento** (FINALIZADAS)
     - **11.2. Incorporar la pregunta central, las fuentes y las tres cifras principales con sus etiquetas corregidas** (FINALIZADAS)
@@ -500,6 +502,24 @@ El orden siguiente organiza la ejecución. Si una revisión cambia una cifra, se
     - **11.4. Configurar las acciones que permitan cambiar de indicador o recorrer localidades sin saturar la presentación** (FINALIZADAS)
     - **11.5. Añadir el cierre, los próximos pasos propuestos, los créditos, las fuentes enlazadas y los límites relevantes** (FINALIZADAS)
     - **11.6. Aplicar el tema violeta, una tipografía legible y textos alternativos; guardar la historia** (FINALIZADAS)
+    - **11.7. Registrar la aceptación del corte enero–marzo de 2026 y las adiciones manuales de Ana Laura: metodología, fuentes del proyecto y aclaración del periodo de la presentación** (FINALIZADAS)
+    - **11.8. Evaluar los nueve puntos de problema público, metodología y resultados contra la historia actual, sin modificarla, y registrar únicamente los ajustes necesarios** (FINALIZADAS)
+    - **11.9. Aclarar el alcance de las fuentes y armonizar las referencias temporales con el trimestre aceptado, conservando el catálogo del proyecto** (FINALIZADAS)
+      - Identificar las fuentes que alimentan las cifras presentadas y las fuentes adicionales del proyecto, sin eliminar estas últimas ni atribuirles resultados que no se muestran.
+      - Describir junio de 2025–marzo de 2026 como fechas de los cortes disponibles del proyecto, evitando presentarlo como un intervalo de atenciones independientes ya reconstruido.
+      - Verificar la corrección del cierre realizada por Ana Laura, sin reemplazarla innecesariamente.
+      - Conservar los créditos exactamente como están por instrucción expresa de Ana Laura: describen las fuentes originales del proyecto. Se retiran de esta tarea la corrección de sus fechas, la edición de sus rótulos y la ampliación de su catálogo.
+      - Explicar la distinción entre fuentes del proyecto y fuentes de los resultados en el apartado de fuentes del cuerpo de la historia, sin modificar los créditos.
+    - **11.10. Reforzar en dos intervenciones breves la relevancia del problema y la aplicación de los resultados al sector público** (FINALIZADAS)
+      - En la apertura, explicar la consecuencia de evaluar necesidades solo con registros que llegan al sistema.
+      - En el cierre, concretar un uso posible: orientar una revisión territorial de barreras y rutas con los equipos locales, sin convertir el índice en asignación automática de recursos ni afirmar impacto ya demostrado.
+    - **11.11. Ajustar el lenguaje de la metodología existente para explicar el recorrido completo, desde la preparación hasta la comparación territorial, sin extender el apartado** (FINALIZADAS)
+      - Conservar la sección añadida por Ana Laura. Resumir los tecnicismos en reunir, organizar, verificar, calcular y comparar.
+      - Relacionar las herramientas ya usadas con su función: Python/Pandas y GeoPandas para preparar datos; indicadores, posiciones y medianas para comparar; Tableau para el tablero original y ArcGIS StoryMaps para comunicarlo. No agregar técnicas o resultados nuevos.
+    - **11.12. Añadir a la metodología una síntesis breve de la evaluación efectiva de calidad de datos** (FINALIZADAS)
+      - Explicar que se revisaron periodos para no sumar acumulados solapados, códigos y unidades para comparar localidades, y correspondencia de cifras entre tabla, capa y gráficos.
+      - Indicar que los faltantes se conservan como faltantes —especialmente Sumapaz— y que una atención no equivale a una persona única.
+      - Diferenciar controles superados de límites que permanecen; no afirmar que se resolvió todo problema de calidad ni que se validó causalidad o representatividad de todos los indicadores.
 
 12. **Revisar, ensayar y entregar la versión preparada para el evento** (EN PROCESO)
 
@@ -510,6 +530,8 @@ El orden siguiente organiza la ejecución. Si una revisión cambia una cifra, se
     - **12.5. Verificar el guardado, entregar el enlace de la historia y organizar los recursos de respaldo** (EN PROCESO)
     - **12.6. Definir el acceso para la audiencia y, si se solicita publicar, comprobar los permisos de historia, mapa y capas y verificar el enlace de lectura**
     - **12.7. Actualizar esta lista con el estado real de cada tarea y dejar registrados los pendientes que no se hayan resuelto** (EN PROCESO)
+
+**Orden de continuación:** las tareas 11.9–11.12 se ejecutaron en ese orden y la tarea principal 11 vuelve a quedar finalizada. El siguiente bloque es la tarea 12; no reconstruir el mapa ni repetir las comprobaciones de datos ya superadas. La revisión pendiente debe concentrarse en los apartados añadidos o modificados y el ensayo debe incluir ahora la metodología. La ejecución de este turno se limitó a los cuatro ajustes solicitados.
 
 ## 14. Verificación posterior y versión de trabajo para StoryMaps
 
@@ -578,7 +600,7 @@ Los archivos originales de `outputs` y `data`, el Tableau adjunto y su auditorí
 
 Las 16 comprobaciones de `auditoria/verificacion_resultados_2026t1.json` resultaron correctas: coincidencia de capa y tabla, 20 códigos únicos, 19 rangos comparables, conteos, medianas, 12 cambios de al menos cuatro puestos, nulos de Sumapaz y concordancia con los CSV del proyecto. La revisión geométrica cubre estructura, cierre de anillos y coordenadas; no constituye una nueva auditoría topológica.
 
-Se revisaron visualmente los siete recursos finales: nombres, contraste, escalas y rótulos. Se corrigió la superposición de la mediana horizontal con las marcas del eje y se conservaron pies de figura con los periodos. La inspección dentro de StoryMaps y en móvil sigue pendiente.
+Se revisaron visualmente los siete recursos finales: nombres, contraste, escalas y rótulos. Se corrigió la superposición de la mediana horizontal con las marcas del eje y se conservaron pies de figura con los periodos. La inspección del montaje base dentro de StoryMaps y en móvil se realizó después; su resultado se registra en 14.8. La revisión posterior de los ajustes de texto y de la metodología en pantalla amplia está en 15.1; no sustituye una nueva revisión móvil de los apartados modificados.
 
 Por instrucción de Ana Laura, **desde este punto no se harán nuevas búsquedas ni consultas de fuentes**. Se trabajará con los archivos, evidencias y enlaces ya disponibles. El acceso a la cuenta de StoryMaps se utilizará para el montaje autorizado, no para ampliar la investigación.
 
@@ -586,7 +608,7 @@ Por instrucción de Ana Laura, **desde este punto no se harán nuevas búsquedas
 
 Ana Laura indicó: usar los restablecimientos cuando quede **10 % o menos del límite** y, cuando quede **un solo restablecimiento**, detener la tarea en curso y registrar aquí el punto de detención. La sesión no expone un contador consultable de límite restante ni de restablecimientos disponibles; no se afirmará haber aplicado ese umbral sin una señal verificable del sistema. Si esa señal aparece, se anotarán la tarea activa, lo guardado y el siguiente paso antes de detenerse.
 
-Estado actual: no se ha recibido una señal verificable de que quede un solo restablecimiento. Continúa el montaje. El editor de StoryMaps ya permite iniciar una historia; su pantalla anterior ocultaba las opciones porque el tamaño de ventana era insuficiente.
+Estado actual: no se ha recibido una señal verificable de que quede un solo restablecimiento. El montaje y los refuerzos narrativos están guardados; continúa el cierre de revisión enumerado en la tarea 12. No se atribuye un valor al contador de restablecimientos.
 
 ### 14.7 Montaje guardado en ArcGIS
 
@@ -619,3 +641,73 @@ Las cinco vistas del mapa quedaron guardadas con escalas violetas, etiquetas pú
 - Implementación final elegida (8.4): mapa interactivo con cinco acciones y ventanas emergentes, acompañado por imágenes de ranking y dispersión que preservan nombres, tamaño, color y medianas. Las cifras generales y los gráficos permanecen fijos al cambiar la vista del mapa.
 - Se añadieron el cierre, los próximos pasos como propuestas, los límites de interpretación, autores y cuatro fuentes con enlaces a las páginas ya conocidas. Se simplificaron las nueve etiquetas de navegación para evitar títulos truncados.
 - Las tareas de montaje 8, 10 y 11 están finalizadas con la limitación de vinculación documentada. Comienza la revisión completa de la tarea 12. El ensayo oral del equipo y la elección de acceso público no se dan por realizados.
+
+### 14.8 Revisión efectuada del montaje base
+
+Antes de las últimas adiciones manuales se recorrió la vista previa en pantalla amplia y teléfono:
+
+- Se revisaron portada, navegación, mapa de violencia visible, ranking, dispersión y créditos. Las tres imágenes del relato conservan su contenido completo y texto alternativo.
+- Se activaron las cinco acciones del mapa y se comprobó que cada una muestra la leyenda de su indicador, con unidades y Sumapaz identificado como dato no disponible.
+- Se consultó Sumapaz: campos de encuesta y razones sin estimación, con explicación de los valores vacíos. Se consultó Ciudad Bolívar y se cotejaron sus cifras con la tabla local: 28,06 % de violencia visible, 2,81/5 de acceso, 10,12 de cobertura estimada, 6,19 de cobertura administrativa y 68,95 de INA, redondeadas.
+- En teléfono se comprobó navegación, ajuste del texto, fuentes y ampliación del mapa con su leyenda. Los gráficos de 19 localidades se ven más pequeños: la exposición principal se prepara para pantalla amplia.
+- Se verificó el estado **Saved / Draft**. No se publicó la historia para una audiencia abierta.
+- Se guardaron `auditoria/storymap_escritorio_mapa.jpg`, `auditoria/storymap_escritorio_dispersion.jpg`, `auditoria/storymap_movil_creditos.jpg` y `auditoria/storymap_texto_visible_revision.txt`. Estas evidencias corresponden al montaje anterior a la nueva metodología y a la ampliación manual de fuentes; no son una captura de la última versión.
+
+Las notas de exposición distribuyen el recorrido en diez minutos, pero **no se ha realizado un ensayo oral completo del equipo**. La inclusión de metodología exige reajustar ese reparto; no se da por validada automáticamente la duración de la versión actual. Tampoco se ha creado todavía un paquete ZIP final de entrega: los recursos están organizados en las carpetas existentes.
+
+### 14.9 Decisiones y cambios de Ana Laura — 24 de noviembre de 2026
+
+Ana Laura aceptó expresamente utilizar **enero–marzo de 2026** para esta presentación, después de aclarar por qué los cortes acumulados del proyecto no se pueden sumar como periodos independientes. Este trimestre es una ventana más acotada; no se presenta como equivalente a todo el conjunto de cortes de junio de 2025–marzo de 2026. La encuesta sigue correspondiendo a 2025.
+
+Ana Laura informó que añadió metodología a partir del README, amplió las fuentes originales del proyecto y escribió expresamente el trimestre de la presentación. La revisión de lectura del editor confirmó:
+
+- Sección **Metodología**, accesible desde la navegación, con un Sidecar adicional: explicación de preparación e integración de fuentes, Pandas/GeoPandas y lista de limpieza, organización, normalización, validación y exportación.
+- Nota visible: «Para esta presentación, se toma el corte del trimestre de enero a marzo de 2026».
+- Encuesta Bienal de Cultura Ciudadana incorporada al apartado de fuentes; créditos ampliados con esa encuesta, delitos sexuales, violencia intrafamiliar y llamadas de la línea 123, además de las cuatro fuentes ya enlazadas.
+- Ajustes de redacción y énfasis en cifras, fuentes y lectura de los ejes; subtítulo y firma de portada simplificados por Ana Laura. Se respetan esas decisiones.
+- Borrador guardado. Se conservaron las cinco vistas del mapa configuradas manualmente por Ana Laura.
+
+La enumeración ampliada se registra como **catálogo del proyecto**, no como prueba de que todas esas fuentes intervienen en los gráficos de esta presentación. La revisión inicial detectó dos fuentes complementarias del README —consumo problemático de sustancias y malnutrición— que no aparecían en los créditos. **Decisión posterior de Ana Laura:** conservar los créditos exactamente como están, porque recogen las fuentes originales del proyecto. No queda pendiente ampliar ni corregir ese catálogo dentro de la tarea 11.9.
+
+**Observaciones de la primera revisión y resolución posterior:** el cierre decía «atenciones de 2025-2026»; Ana Laura lo cambió manualmente a «atenciones de 2026» y se verificó esa corrección. Las expresiones de los créditos «junio–marzo de 2026» y «junio de de 2025» se mantienen por su instrucción expresa y se retiran de las tareas de edición. La distinción entre fechas de cortes disponibles del proyecto y trimestre de los resultados quedó explicada en el cuerpo de fuentes, sin recalcular datos ni modificar mapas.
+
+## 15. Evaluación de los tres módulos solicitados
+
+**Base de evaluación:** historia guardada el 24 de noviembre de 2026, README existente y auditoría ya documentada. La evaluación inicial identificó seis puntos cubiertos y tres refuerzos necesarios. Después de la autorización de Ana Laura se ejecutaron los ajustes 11.9–11.12 y se comprobó su presencia en la vista previa. No se consultaron fuentes nuevas.
+
+**Los nueve puntos tienen ahora contenido explícito.** Esto acredita la cobertura temática; la duración y fluidez de la exposición deberán comprobarse durante el ensayo. Se conserva la metodología añadida por Ana Laura, con su imagen y lista de preparación, y se ajusta únicamente la redacción de sus párrafos.
+
+| Módulo y punto | Evaluación actual | Evidencia en la historia guardada | Tarea relacionada |
+|---|---|---|---|
+| 1.1. Problema público: pregunta | Cubierto | «¿Qué cambia cuando miramos más allá de los casos registrados?» y apertura que reúne registros y encuesta. | Se conserva. |
+| 1.2. Problema público: por qué es relevante | Cubierto | La apertura explica que evaluar la atención solo con lo que llega a las instituciones puede dejar poco visibles necesidades y barreras territoriales. | 11.10 (FINALIZADAS). |
+| 1.3. Problema público: datos usados | Cubierto | El cuerpo distingue los cortes disponibles del proyecto y el trimestre enero–marzo de 2026 utilizado con encuesta 2025 y referencia territorial; aclara que no todas las fuentes de los créditos intervienen en estos resultados. | 11.9 (FINALIZADAS). Créditos conservados por instrucción expresa. |
+| 2.1. Metodología: paso a paso sencillo | Cubierto | Reunir fuentes, organizar nombres y localidades, revisar periodos y faltantes, calcular indicadores y comparar mediante posiciones, mapas y referencias. | 11.11 (FINALIZADAS). |
+| 2.2. Metodología: técnicas y herramientas | Cubierto | Python/Pandas para tablas; GeoPandas para información geográfica; posiciones y medianas para comparar; Tableau para el tablero original y StoryMaps para comunicar. | 11.11 (FINALIZADAS). |
+| 2.3. Metodología: evaluación de calidad de datos | Cubierto | Controles de periodos, códigos, unidades y coincidencia de cifras; trimestre común para evitar solapamientos; faltantes conservados y límites sobre violencia total y personas únicas. | 11.12 (FINALIZADAS). |
+| 3.1. Resultados: datos relevantes | Cubierto | 20,1 %, 12 de 19, 2,874/5; ejemplos de ranking; dispersión; cinco lecturas del mapa. | Se conservan cifras y recursos. |
+| 3.2. Resultados: aplicación al sector público | Cubierto | Equipos distritales y locales podrían orientar una revisión de barreras y rutas con quienes conocen cada territorio; la lectura no determina por sí sola la asignación de recursos. | 11.10 (FINALIZADAS). |
+| 3.3. Resultados: recomendaciones | Cubierto | Contrastar los hallazgos con operadores territoriales e incorporar información sobre violencia que no llega a hacerse visible. | Se conservan como propuestas, sin atribuir impacto ya demostrado. |
+
+### 15.1 Ejecución de los ajustes autorizados — 24 de noviembre de 2026
+
+Se actualizaron **nueve bloques de texto existentes**, en el orden solicitado, sin añadir secciones ni cambiar la estructura:
+
+1. **11.9 — Fuentes y alcance:** se ajustaron las descripciones de Línea Púrpura/Duplas y riesgo, y la nota del periodo. Junio de 2025–marzo de 2026 identifica fechas de cortes disponibles del proyecto; enero–marzo de 2026 identifica la ventana administrativa de esta presentación. Se verificó y conservó la corrección del cierre realizada por Ana Laura. Los créditos quedaron intactos.
+2. **11.10 — Relevancia y uso público:** se añadió una frase al párrafo de apertura y otra al párrafo del aporte del proyecto en el cierre. Se explicitan el problema de necesidades poco visibles y un posible uso por equipos distritales y locales, sin afirmar implementación, efectividad ni asignación automática de recursos.
+3. **11.11 — Metodología comprensible:** se ajustaron el párrafo del recorrido, el de herramientas y la introducción de la lista. Se conservaron la sección, la imagen, la lista y el Sidecar añadidos por Ana Laura. Las herramientas se relacionan con su función y la comparación se explica mediante posiciones y medianas.
+4. **11.12 — Calidad de datos:** se sustituyó el párrafo técnico extenso por una síntesis de controles efectivamente documentados: periodos acumulados, códigos, unidades, concordancia de cifras y faltantes. Se mantienen explícitos los límites: Sumapaz sin encuesta no significa ausencia de violencia, las atenciones pueden corresponder a una misma persona y los controles no estiman toda la violencia existente.
+
+**Comprobaciones del resultado:**
+
+- El editor indicó **Saved / Draft**. Al abrir la vista previa se encontraron los nueve textos finales completos, lo que confirma que quedaron guardados.
+- La comparación de los textos del cuerpo antes y después no detectó cambios fuera de los nueve bloques previstos. Los textos de créditos registrados al inicio permanecen presentes y no se editó ningún control de créditos.
+- Se revisó visualmente la metodología en pantalla amplia: texto legible, tema violeta e imagen original conservados. No se modificaron datos, cifras, imágenes, títulos, orden de escenas ni vistas o acciones del mapa. La lectura de la vista previa no modifica esas configuraciones.
+- Se guardaron `auditoria/storymap_ajustes_metodologia_20261124.jpg` y `auditoria/revision_ajustes_11_9_a_11_12.json`. El segundo archivo conserva los nueve textos finales y sus comprobaciones en la vista previa.
+- La historia continúa como borrador: [vista previa](https://storymaps.arcgis.com/stories/d8fe4e13f51c42c3b4a7617e04907871/preview). No se cambió el acceso ni se publicó.
+
+### 15.2 Pendientes posteriores a estos ajustes
+
+Las tareas **11.9–11.12 están (FINALIZADAS)** y no queda pendiente editar los créditos. La tarea 12 conserva el cierre de revisión y entrega: revisar los apartados afectados en móvil, adaptar las notas orales a la metodología y ensayar los diez minutos, organizar el respaldo final y definir el acceso para la audiencia. La inspección puntual realizada aquí no se presenta como un ensayo oral ni como una nueva prueba integral del mapa.
+
+No se actualizaron todavía las notas orales ni se creó el paquete ZIP final. No se requieren nuevos datos, otra investigación, cambios en las vistas del mapa ni una reorganización de la historia para completar estos pendientes.
